@@ -11,12 +11,13 @@ using Microsoft.Xna.Framework.Input;
 namespace worldgenerator {
     abstract public class Context {
 
-
-        public Content<Texture2D>[] TextureToLoad { get; set; }
-        public Content<SpriteFont>[] FontToLoad { get; set; }
-        public abstract int Update(GameTime gameTime);
+        public static Game Game;
+        // public Content<Texture2D>[] TextureToLoad { get; set; }
+        // public Content<SpriteFont>[] FontToLoad { get; set; }
+        public abstract Action Update(GameTime gameTime);
         public abstract void Draw(ref SpriteBatch spriteBatch);
         public abstract void Initialize();
-        
+        public abstract void Load();
+
     }
 }

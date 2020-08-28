@@ -9,25 +9,18 @@ namespace worldgenerator {
         private Vector2[,] _displayGrid;
         private Map map;
         private Dictionary<int, Texture2D> blockDictionary = new Dictionary<int, Texture2D>();
-        //private float _mapOffSetX = 0f;
-        //private float _mapOffSetY = 0f;
+        private Texture2D _grass;
+        private Texture2D _sand;
+        private Texture2D _water;
+        private Texture2D _dirt;
         
         public MapContext(int x,int y) {
-            TextureToLoad = new Content<Texture2D>[4];
-            TextureToLoad[0] = new Content<Texture2D>("grass");
-            TextureToLoad[1] = new Content<Texture2D>("sand");
-            TextureToLoad[2] = new Content<Texture2D>("water");
-            TextureToLoad[3] = new Content<Texture2D>("dirt");
             map = new Map(x, y, (GameConfig.config.Resolution.Width / Block.Width) + 1, (GameConfig.config.Resolution.Hight / Block.High) + 1);
             map.Save("map.wg");
             InitializeGrid();
         }
         public MapContext(string filename) {
-            TextureToLoad = new Content<Texture2D>[4];
-            TextureToLoad[0] = new Content<Texture2D>("grass");
-            TextureToLoad[1] = new Content<Texture2D>("sand");
-            TextureToLoad[2] = new Content<Texture2D>("water");
-            TextureToLoad[3] = new Content<Texture2D>("dirt");
+          
             map = new Map(filename,(GameConfig.config.Resolution.Width / Block.Width) +1, (GameConfig.config.Resolution.Hight / Block.High) + 1);
             InitializeGrid();
         }
@@ -41,7 +34,14 @@ namespace worldgenerator {
             
         }
 
-        public override int Update(GameTime gameTime) {
+        public override void Load(){
+            _grass = Game.Content.Load<Texture2D>("grass");
+            _sand = Game.Content.Load<Texture2D>("sand");
+            _water = Game.Content.Load<Texture2D>("water");
+            _dirt = Game.Content.Load<Texture2D>("dirt");
+        }
+
+        public override Action Update(GameTime gameTime) {
 
             if (Keyboard.IsPressed(Keys.Left)) {
                 map.moveViewLeft();
@@ -57,9 +57,10 @@ namespace worldgenerator {
                 //_mapOffSetY -= GameConfig.config.Sensivity;
             }
             if (Keyboard.IsPressed(Keys.Escape)) {
-                return 4;
+                return Action.ChangeToMainUi;
             }
-            return -1;
+
+            return Action.None;
         }
         private Texture2D PraseBlock(int ID) {
             Texture2D tmp;
@@ -67,10 +68,10 @@ namespace worldgenerator {
             return tmp;
         }
         private void InitializeDictonary() {
-            blockDictionary.Add(0, TextureToLoad[0].Value);
-            blockDictionary.Add(1, TextureToLoad[1].Value);
-            blockDictionary.Add(2, TextureToLoad[2].Value);
-            blockDictionary.Add(3, TextureToLoad[3].Value);
+            blockDictionary.Add(0, _grass);
+            blockDictionary.Add(1, _sand);
+            blockDictionary.Add(2, _water);
+            blockDictionary.Add(3, _dirt);
         }
         private void InitializeGrid() {
             var x = (GameConfig.config.Resolution.Width / Block.Width) + 1;
@@ -86,9 +87,7 @@ namespace worldgenerator {
             var tmp = new Vector2(0, 0);
             
             for (int i = map.ViewBeginningPointerX; i < map.ViewEndPointerX; i++) {
-
                 for (int j = map.ViewBeginningPointerY; j < map.ViewEndPointerY; j++) {
-                    
                     spriteBatch.Draw(PraseBlock(map[i, j].BlockID), tmp, Color.White);
                     tmp.Y += Block.High;
                 }

@@ -12,14 +12,14 @@ namespace worldgenerator {
         }
     }
 
-    public class Content<T> {
-        public T Value;
-        public string Name;
-
-        public Content(string name) {
-            Name = name;
-        }
-    }
+    // public class Content<T> {
+    //     public T Value;
+    //     public string Name;
+    //
+    //     public Content(string name) {
+    //         Name = name;
+    //     }
+    // }
     
 }
   

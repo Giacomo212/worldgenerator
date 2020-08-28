@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using Myra;
 
 namespace worldgenerator {
     
@@ -11,15 +12,16 @@ namespace worldgenerator {
         private GraphicsDeviceManager graphics;
         private SpriteBatch _spriteBatch;
         private Context _currentContext;
-
-        public Game1() {
-            
+       
+        public Game1(){
+            Context.Game = this;
+            MyraEnvironment.Game = this;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            
             GameConfig.config.Load();
             _currentContext = new MainUiContext();
+            
         }
 
 
@@ -39,16 +41,7 @@ namespace worldgenerator {
 
         protected override void LoadContent() {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            foreach (var texture in _currentContext.TextureToLoad) {
-                texture.Value = Content.Load<Texture2D>(texture.Name);
-            }
-
-            if (_currentContext.FontToLoad != null)
-                foreach (var font in _currentContext.FontToLoad) {
-                    font.Value = Content.Load<SpriteFont>(font.Name);
-                }
-
-           
+            _currentContext.Load();
         }
 
         protected override void UnloadContent() {
@@ -58,19 +51,23 @@ namespace worldgenerator {
         protected override void Update(GameTime gameTime) {
             Keyboard.UpdateState();
             switch (_currentContext.Update(gameTime)) {
-                case 0:
+                case Action.ChangeToNewMap:
                     _currentContext = new MapContext(200,200);
-                    ReloadContent(); break;
-                case 1:
-                    _currentContext = new MapContext("./map.wg");
-                    ReloadContent(); break;
-                case 2:; break;
-                case 3: Exit(); break;
-                case 4:
-                    _currentContext = new MainUiContext();
+                    //_currentContext.Load();
                     ReloadContent();
                     break;
-                case -1: break;
+                case Action.ChangeToMap:
+                    _currentContext = new MapContext("./map.wg");
+                    //_currentContext.Load();
+                    ReloadContent();
+                    break;
+                case Action.Quit: Exit(); break;
+                case Action.ChangeToMainUi:
+                    _currentContext = new MainUiContext();
+                    //_currentContext.Load();
+                    ReloadContent();
+                    break;
+                case Action.None: break;
 
             }
             base.Update(gameTime);
