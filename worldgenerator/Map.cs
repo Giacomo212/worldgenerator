@@ -11,39 +11,39 @@ namespace worldgenerator {
 
         private int _width;
         private int _hight;
-        private int _viewBeginningPointerX;
-        private int _viewEndPointerX;
-        private int _viewBeginningPointerY;
-        private int _viewEndPointerY;
-        private int _viewSizeX;
-        private int _viewSizeY;
+        // private int _viewBeginningPointerX;
+        // private int _viewEndPointerX;
+        // private int _viewBeginningPointerY;
+        // private int _viewEndPointerY;
+        // private int _viewSizeX;
+        // private int _viewSizeY;
 
         public int Width => _width;
         public int Hight => _hight;
-        public int ViewSizeX { get => _viewSizeX; }
-        public int ViewSizeY { get => _viewSizeY; }
-        public int ViewBeginningPointerX { get => _viewBeginningPointerX;}
-        public int ViewEndPointerX { get => _viewEndPointerX; }
-        public int ViewBeginningPointerY { get => _viewBeginningPointerY;}
-        public int ViewEndPointerY { get => _viewEndPointerY;}
+        // public int ViewSizeX { get => _viewSizeX; }
+        // public int ViewSizeY { get => _viewSizeY; }
+        // public int ViewBeginningPointerX { get => _viewBeginningPointerX;}
+        // public int ViewEndPointerX { get => _viewEndPointerX; }
+        // public int ViewBeginningPointerY { get => _viewBeginningPointerY;}
+        // public int ViewEndPointerY { get => _viewEndPointerY;}
 
         Block[,] _grid;
         public Block this[int x, int y]
         {
             get { return _grid[x, y]; }
         }
-        public Map(int width, int hight, int viewSizeX, int viewsizeY)
+        public Map(int width, int hight)
         {
             _grid = new Block[width, hight];
             _width = width;
             _hight = hight;
             CreateNewMap(_width, _hight);
-            setViewSize(viewSizeX, viewsizeY);
+            //setViewSize(viewSizeX, viewsizeY);
 
         }
-        public Map(string filename, int viewSizeX, int viewsizeY) {
+        public Map(string filename) {
             Load(filename);
-            setViewSize(viewSizeX, viewsizeY);
+            //setViewSize(viewSizeX, viewsizeY);
         }
         void CreateNewMap(int width, int hight) {
             
@@ -92,47 +92,47 @@ namespace worldgenerator {
         public void SaveToImage() {
            
         }
-        public void setViewSize(int xSize, int ySize) {
-            if(xSize > Width || ySize > Width) {
-                throw new IndexOutOfRangeException();
-            }
-            _viewBeginningPointerX = 0;
-            _viewBeginningPointerY = 0;
-            _viewEndPointerX = xSize;
-            _viewEndPointerY = ySize;
-            _viewSizeX = xSize;
-            _viewSizeY = ySize;
-
-        }
-        public void moveViewLeft() {
-            if (_viewBeginningPointerX > 0) {
-                _viewBeginningPointerX--;
-                _viewEndPointerX--;
-
-            }
-        }
-        public void moveViewRight() {
-            
-            if (_viewEndPointerX < Width) {
-                _viewBeginningPointerX++;
-                _viewEndPointerX++;
-
-            }
-        }
-        public void moveViewUp() {
-            if (_viewBeginningPointerY > 0) {
-                _viewBeginningPointerY--;
-                _viewEndPointerY--;
-
-            }
-        }
-        public void moveViewDown() {
-            if (_viewEndPointerY < Hight) {
-                _viewBeginningPointerY++;
-                _viewEndPointerY++;
-
-            }
-        }
+        // public void setViewSize(int xSize, int ySize) {
+        //     if(xSize > Width || ySize > Width) {
+        //         throw new IndexOutOfRangeException();
+        //     }
+        //     _viewBeginningPointerX = 0;
+        //     _viewBeginningPointerY = 0;
+        //     _viewEndPointerX = xSize;
+        //     _viewEndPointerY = ySize;
+        //     _viewSizeX = xSize;
+        //     _viewSizeY = ySize;
+        //
+        // }
+        // public void moveViewLeft() {
+        //     if (_viewBeginningPointerX > 0) {
+        //         _viewBeginningPointerX--;
+        //         _viewEndPointerX--;
+        //
+        //     }
+        // }
+        // public void moveViewRight() {
+        //     
+        //     if (_viewEndPointerX < Width) {
+        //         _viewBeginningPointerX++;
+        //         _viewEndPointerX++;
+        //
+        //     }
+        // }
+        // public void moveViewUp() {
+        //     if (_viewBeginningPointerY > 0) {
+        //         _viewBeginningPointerY--;
+        //         _viewEndPointerY--;
+        //
+        //     }
+        // }
+        // public void moveViewDown() {
+        //     if (_viewEndPointerY < Hight) {
+        //         _viewBeginningPointerY++;
+        //         _viewEndPointerY++;
+        //
+        //     }
+        // }
         
     }
 }

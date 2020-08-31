@@ -19,7 +19,6 @@ namespace worldgenerator {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            GameConfig.config.Load();
             _currentContext = new MainUiContext();
             
         }
@@ -31,9 +30,9 @@ namespace worldgenerator {
             Keyboard.Initialize();
             
           
-            graphics.PreferredBackBufferWidth = GameConfig.config.Resolution.Width;
-            graphics.PreferredBackBufferHeight = GameConfig.config.Resolution.Hight;
-            graphics.IsFullScreen = GameConfig.config.Resolution.IsFullScreen;
+            graphics.PreferredBackBufferWidth = GameConfig.Config.Resolution.Width;
+            graphics.PreferredBackBufferHeight = GameConfig.Config.Resolution.Hight;
+            graphics.IsFullScreen = GameConfig.Config.Resolution.IsFullScreen;
             graphics.ApplyChanges();
 
         }
