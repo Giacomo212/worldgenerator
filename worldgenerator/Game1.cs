@@ -49,28 +49,36 @@ namespace worldgenerator {
         }
 
         protected override void Update(GameTime gameTime) {
+            
             Keyboard.UpdateState();
-            switch (_currentContext.Update(gameTime)) {
-                case Action.ChangeToNewMap:
-                    _currentContext = new MapContext(200,200);
-                    //_currentContext.Load();
-                    ReloadContent();
-                    break;
-                case Action.ChangeToMap:
-                    _currentContext = new MapContext("./map.wg");
-                    //_currentContext.Load();
-                    ReloadContent();
-                    break;
-                case Action.Quit: Exit(); break;
-                case Action.ChangeToMainUi:
-                    _currentContext = new MainUiContext();
-                    //_currentContext.Load();
-                    ReloadContent();
-                    break;
-                case Action.None: break;
-
+            var action = _currentContext.Update(gameTime);
+            if (action != null){
+                _currentContext = action.ReturnNewContext();
+                ReloadContent();
             }
+                
             base.Update(gameTime);
+            // switch () {
+            //     case Action.ChangeToNewMap:
+            //         _currentContext = new MapContext(200,200);
+            //         //_currentContext.Load();
+            //         ReloadContent();
+            //         break;
+            //     case Action.ChangeToMap:
+            //         _currentContext = new MapContext("./map.wg");
+            //         //_currentContext.Load();
+            //         ReloadContent();
+            //         break;
+            //     case Action.Quit: Exit(); break;
+            //     case Action.ChangeToMainUi:
+            //         _currentContext = new MainUiContext();
+            //         //_currentContext.Load();
+            //         ReloadContent();
+            //         break;
+            //     case Action.None: break;
+            //
+            // }
+            
         }
 
        
@@ -84,14 +92,14 @@ namespace worldgenerator {
 
         private void ReloadContent() {
             Content.Unload();
-            LoadContent();
-            Initialize();
+            _currentContext.Load();
+            _currentContext.Initialize();
         }
         void Window_ClientSizeChanged(object sender, EventArgs e)
         {
-            // _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
-            // _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
-            // _graphics.ApplyChanges();
+            _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
+            _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
+            _graphics.ApplyChanges();
             GameConfig.Config. Resolution = new Resolution(Window.ClientBounds.Width,Window.ClientBounds.Height,false);
             _currentContext.OnWindowResize();
         }

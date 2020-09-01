@@ -8,15 +8,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 
-namespace worldgenerator {
-    abstract public class Context {
-
+namespace worldgenerator{
+    abstract public class Context{
+        protected IAction _action = null;
         public static Game Game;
-        public abstract Action Update(GameTime gameTime);
+        public abstract IAction Update(GameTime gameTime);
         public abstract void Draw(ref SpriteBatch spriteBatch);
         public abstract void Initialize();
         public abstract void Load();
         public abstract void OnWindowResize();
-
     }
 }
