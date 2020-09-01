@@ -16,6 +16,7 @@ namespace worldgenerator {
         public abstract void Draw(ref SpriteBatch spriteBatch);
         public abstract void Initialize();
         public abstract void Load();
+        public abstract void OnWindowResize();
 
     }
 }

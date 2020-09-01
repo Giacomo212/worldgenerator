@@ -7,14 +7,15 @@ namespace worldgenerator{
         //values of the class
         private float _vectorX = 0;
         private float _vectorY = 0;
-        //view variable represent the map with is seen on screen
+        //view variable represent the map which is seen on the screen
         // 
         private int _viewBeginningPointerX;
         private int _viewBeginningPointerY;
         private int _viewEndPointerX;
         private int _viewEndPointerY;
-        private int _MapWidth;
-        private int _MapHight;
+        //max
+        private int _mapWidth;
+        private int _mapHight;
         
         // propertes
         public float VectorX => _vectorX;
@@ -28,9 +29,9 @@ namespace worldgenerator{
         public CameraController(int mapWidth, int mapHight, int viewWidth, int viewHight){
             if(mapHight < 0 || mapWidth < 0)
                 throw new InvalidDataException();
-            _MapHight = mapHight;
-            _MapWidth = mapWidth;
-            ChangeCameraViewSize(viewWidth,viewHight);
+            _mapHight = mapHight;
+            _mapWidth = mapWidth;
+            InitializeViewSize(viewWidth,viewHight);
         }
         
         //private methods
@@ -57,16 +58,14 @@ namespace worldgenerator{
                 MoveMapUp();
             }
         }
-        private void ChangeCameraViewSize(int width, int hight) {
-            if(width > _MapWidth || hight > _MapHight) {
+        private void InitializeViewSize(int width, int hight) {
+            if(width > _mapWidth || hight > _mapHight) {
                 throw new IndexOutOfRangeException();
             }
             _viewBeginningPointerX = 0;
             _viewBeginningPointerY = 0;
-            _viewEndPointerX = width - 1;
-            _viewEndPointerY = hight - 1 ;
-            // _viewSizeX = xSize;
-            // _viewSizeY = ySize;
+            _viewEndPointerX = width;
+            _viewEndPointerY = hight;
 
         }
         private void MoveMapLeft() {
@@ -78,7 +77,7 @@ namespace worldgenerator{
         }
         private void MoveMapRight() {
             
-            if (_viewEndPointerX < _MapWidth) {
+            if (_viewEndPointerX < _mapWidth) {
                 _viewBeginningPointerX++;
                 _viewEndPointerX++;
 
@@ -92,14 +91,14 @@ namespace worldgenerator{
             }
         }
         private void MoveMapDown() {
-            if (_viewEndPointerY < _MapHight) {
+            if (_viewEndPointerY < _mapHight) {
                 _viewBeginningPointerY++;
                 _viewEndPointerY++;
             }
         }
         //public methods
         public void MoveRight(){
-            if (_vectorX - GameConfig.Config.Sensivity < 0 && ViewEndPointerX == _MapWidth)
+            if (_vectorX - GameConfig.Config.Sensivity < 0 && ViewEndPointerX == _mapWidth)
                 _vectorX = 0;
             else
                 MoveVectorX(-GameConfig.Config.Sensivity);
@@ -119,7 +118,7 @@ namespace worldgenerator{
         }
 
         public void MoveDown(){
-            if (_vectorY - GameConfig.Config.Sensivity < 0 && ViewEndPointerY == _MapHight)
+            if (_vectorY - GameConfig.Config.Sensivity < 0 && ViewEndPointerY == _mapHight)
                 _vectorY = 0;
             else
                 MoveVectorY(-GameConfig.Config.Sensivity);

@@ -9,18 +9,19 @@ namespace worldgenerator {
     
     public class Game1 : Game {
         
-        private GraphicsDeviceManager graphics;
+        private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Context _currentContext;
        
         public Game1(){
             Context.Game = this;
             MyraEnvironment.Game = this;
-            graphics = new GraphicsDeviceManager(this);
+            _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             _currentContext = new MainUiContext();
-            
+            Window.AllowUserResizing = true;
+            Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
         }
 
 
@@ -28,12 +29,12 @@ namespace worldgenerator {
             base.Initialize();
             _currentContext.Initialize();
             Keyboard.Initialize();
-            
+            GameConfig.Config.Save();
           
-            graphics.PreferredBackBufferWidth = GameConfig.Config.Resolution.Width;
-            graphics.PreferredBackBufferHeight = GameConfig.Config.Resolution.Hight;
-            graphics.IsFullScreen = GameConfig.Config.Resolution.IsFullScreen;
-            graphics.ApplyChanges();
+            _graphics.PreferredBackBufferWidth = GameConfig.Config.Resolution.Width;
+            _graphics.PreferredBackBufferHeight = GameConfig.Config.Resolution.Hight;
+            _graphics.IsFullScreen = GameConfig.Config.Resolution.IsFullScreen;
+            _graphics.ApplyChanges();
 
         }
 
@@ -85,6 +86,14 @@ namespace worldgenerator {
             Content.Unload();
             LoadContent();
             Initialize();
+        }
+        void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            // _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
+            // _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
+            // _graphics.ApplyChanges();
+            GameConfig.Config. Resolution = new Resolution(Window.ClientBounds.Width,Window.ClientBounds.Height,false);
+            _currentContext.OnWindowResize();
         }
     }
 }

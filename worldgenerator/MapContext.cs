@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
 
 namespace worldgenerator {
@@ -16,12 +15,12 @@ namespace worldgenerator {
         public MapContext(int x,int y) {
             _map = new Map(x, y);
             _map.Save("map.wg");
-            _controller = new CameraController(x,y, (GameConfig.Config.Resolution.Width / Block.Width) + 3, (GameConfig.Config.Resolution.Hight / Block.High) + 3);
+            _controller = new CameraController(x,y, (GameConfig.Config.Resolution.Width / Block.Width) + 1, (GameConfig.Config.Resolution.Hight / Block.High) + 1);
             
         }
         public MapContext(string filename) {
             _map = new Map(filename);
-            _controller = new CameraController(_map.Width,_map.Hight, (GameConfig.Config.Resolution.Width / Block.Width) + 3, (GameConfig.Config.Resolution.Hight / Block.High) + 3);
+            _controller = new CameraController(_map.Width,_map.Hight, (GameConfig.Config.Resolution.Width / Block.Width) + 1, (GameConfig.Config.Resolution.Hight / Block.High) + 1);
             
         }
 
@@ -39,6 +38,12 @@ namespace worldgenerator {
             _sand = Game.Content.Load<Texture2D>("sand");
             _water = Game.Content.Load<Texture2D>("water");
             _dirt = Game.Content.Load<Texture2D>("dirt");
+        }
+
+        public override void OnWindowResize(){
+            double tmp = (GameConfig.Config.Resolution.Width / Block.Width) + 1;
+            double tmp2 = (GameConfig.Config.Resolution.Hight / Block.High) + 2;
+            _controller = new CameraController(_map.Width,_map.Hight, (GameConfig.Config.Resolution.Width / Block.Width) + 2, (GameConfig.Config.Resolution.Hight / Block.High) + 2);
         }
 
         public override Action Update(GameTime gameTime) {
