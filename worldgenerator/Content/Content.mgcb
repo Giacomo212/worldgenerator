@@ -25,13 +25,6 @@
 /processorParam:TextureFormat=Color
 /build:background.png
 
-#begin baseFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:baseFont.spritefont
-
 #begin dirt.png
 /importer:TextureImporter
 /processor:TextureProcessor

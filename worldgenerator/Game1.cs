@@ -30,12 +30,10 @@ namespace worldgenerator {
             _currentContext.Initialize();
             Keyboard.Initialize();
             GameConfig.Config.Save();
-          
             _graphics.PreferredBackBufferWidth = GameConfig.Config.Resolution.Width;
             _graphics.PreferredBackBufferHeight = GameConfig.Config.Resolution.Hight;
             _graphics.IsFullScreen = GameConfig.Config.Resolution.IsFullScreen;
             _graphics.ApplyChanges();
-
         }
 
 
@@ -83,11 +81,11 @@ namespace worldgenerator {
 
        
         protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            base.Draw(gameTime);
+            GraphicsDevice.Clear(Color.Black);
             _spriteBatch.Begin();
-            _currentContext.Draw(ref _spriteBatch);
+            _currentContext.Draw(gameTime);
             _spriteBatch.End();
+            base.Draw(gameTime);
         }
 
         private void ReloadContent() {

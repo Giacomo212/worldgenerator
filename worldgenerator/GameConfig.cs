@@ -20,7 +20,7 @@ namespace worldgenerator {
             if (Environment.OSVersion.Platform == PlatformID.Unix)
                 GameFilesPath = Environment.GetEnvironmentVariable("HOME") + "/.worldgenerator";
             else if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-                GameFilesPath =  GameFilesPath = Environment.GetEnvironmentVariable("%appdata%") + "\\.worldgenerator";
+                GameFilesPath =  GameFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.worldgenerator";
             else{
                 throw  new PlatformNotSupportedException("your platform is not supported");
             }

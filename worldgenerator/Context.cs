@@ -13,7 +13,7 @@ namespace worldgenerator{
         protected IAction _action = null;
         public static Game Game;
         public abstract IAction Update(GameTime gameTime);
-        public abstract void Draw(ref SpriteBatch spriteBatch);
+        public abstract void Draw(GameTime gameTime);
         public abstract void Initialize();
         public abstract void Load();
         public abstract void OnWindowResize();

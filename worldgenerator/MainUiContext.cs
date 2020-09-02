@@ -8,40 +8,62 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Myra.Graphics2D;
+using Myra.Graphics2D.TextureAtlases;
 using Myra.Graphics2D.UI;
 
 
 namespace worldgenerator{
     public class MainUiContext : Context{
+        private SpriteBatch _spriteBatch;
         //private Action _action = Action.None;
         private Desktop _desktop;
-
+        private MapContext _mapContext = new MapContext(80,80);
         private Grid _grid;
-
         //main buttons
         private TextButton _startGameButton;
         private TextButton _configButton;
-
         private TextButton _exitButton;
         //config button
-
+        private int _direction = 3;
 
         //map creation buttons
         public MainUiContext(){
         }
 
         public override IAction Update(GameTime gameTime){
+            var random = new Random();
+             if(gameTime.TotalGameTime.Milliseconds%1000000 == 0) 
+                 _direction = random.Next(0, 4);
+            switch (_direction){
+                case 0:
+                    _mapContext.MoveDown(); break;
+                case 1:
+                    _mapContext.MoveUp(); break;
+                case 2:
+                    _mapContext.MoveLeft(); break;
+                case 3:
+                    _mapContext.MoveRight(); break;
+            }
             return _action;
         }
 
-        public override void Draw(ref SpriteBatch spriteBatch){
+        public override void Draw(GameTime gameTime){
+            Texture2D tmp = new Texture2D(Game.GraphicsDevice, 200, 200);
+            
+            _spriteBatch.Begin();
+            _mapContext.Draw(gameTime);
+            _spriteBatch.Draw(tmp,Vector2.Zero,Color.Blue);
+            _spriteBatch.End();
             _desktop.Render();
         }
 
         public override void Initialize(){
+            _mapContext.Initialize();
         }
 
         public override void Load(){
+            _spriteBatch = new SpriteBatch(Game.GraphicsDevice);
+            _mapContext.Load();
             _grid = new Grid {
                 RowSpacing = 8,
                 ColumnSpacing = 8,
@@ -58,9 +80,11 @@ namespace worldgenerator{
             _desktop.Root = _grid;
             SetupMainButtons();
             AddMainButtons();
+            
         }
 
         public override void OnWindowResize(){
+            _mapContext.OnWindowResize();
         }
 
         private void SetupMainButtons(){
