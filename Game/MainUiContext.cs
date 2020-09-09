@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,8 +10,6 @@ using Myra.Graphics2D.UI;
 
 namespace worldgenerator{
     public class MainUiContext : Context{
-        private SpriteBatch _spriteBatch;
-        //private Action _action = Action.None;
         private Desktop _desktop;
         private MapContext _mapContext = new MapContext(80,80);
         private Grid _grid;
@@ -24,9 +18,15 @@ namespace worldgenerator{
         private TextButton _configButton;
         private TextButton _exitButton;
         //config button
+        
+        
+        //utility values
         private int _direction = 3;
-
-        //map creation buttons
+        private int _worldCount = 0;
+        //map creation ui
+        private ScrollViewer _scrollViewer;
+        private TextButton[] _worldButtons;
+        private TextButton _createWorldButton;
         public MainUiContext(){
         }
 
@@ -48,12 +48,7 @@ namespace worldgenerator{
         }
 
         public override void Draw(GameTime gameTime){
-            Texture2D tmp = new Texture2D(Game.GraphicsDevice, 200, 200);
-            
-            _spriteBatch.Begin();
             _mapContext.Draw(gameTime);
-            _spriteBatch.Draw(tmp,Vector2.Zero,Color.Blue);
-            _spriteBatch.End();
             _desktop.Render();
         }
 
@@ -70,7 +65,6 @@ namespace worldgenerator{
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
                 GridColumn = 1,
-                GridRow = 4,
             };
             _grid.ColumnsProportions.Add(new Proportion(ProportionType.Auto));
             _grid.ColumnsProportions.Add(new Proportion(ProportionType.Auto));
@@ -108,15 +102,66 @@ namespace worldgenerator{
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Width = 100,
             };
-            _startGameButton.Click += (s, a) => { _action = new ChangeToNewMap(200, 200); };
+            _startGameButton.Click += (s, a) => {SetupMapUi(); };//_action = new ChangeToNewMap(200, 200); };
             _exitButton.Click += (s, a) => { System.Environment.Exit(0); };
         }
 
+        private void SetupMapUi(){
+            _grid.Widgets.Clear();
+            _createWorldButton = new TextButton(){
+                Text = "crate new world",
+                GridRow = 2,
+            };
+            _createWorldButton.Click += (sender, args) => { 
+                _action = new ChangeToNewMap(200, 200, "world" + _worldCount);
+                _worldCount++;
+            };
+            var grid = new Grid(){
+                RowSpacing = 8,
+                ColumnSpacing = 8,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                GridColumn = 1,
+            };
+            _scrollViewer = new ScrollViewer(){
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Height = 200,
+                MaxHeight = 200,
+            };
+            _scrollViewer.Content = grid;
+            _grid.Widgets.Add(_scrollViewer);
+            _grid.Widgets.Add(_createWorldButton);
+            GetAllWorlds();
+            foreach (var worldButton in _worldButtons){
+                grid.Widgets.Add(worldButton);
+            }
+            
+        }
         private void AddMainButtons(){
             _grid.Widgets.Clear();
             _grid.Widgets.Add(_startGameButton);
             _grid.Widgets.Add(_configButton);
             _grid.Widgets.Add(_exitButton);
+        }
+
+        private void GetAllWorlds(){
+            
+            DirectoryInfo d = new DirectoryInfo(GameConfig.Config.GameFilesPath + Utility.Separator + "worlds");
+            FileInfo[] files = d.GetFiles("*.wg"); //Getting Text files
+            _worldCount = files.Length;
+            _worldButtons = new TextButton[files.Length];
+            for(var i = 0; i < files.Length;i++ ){
+                _worldButtons[i] = new TextButton(){
+                    Text = files[i].Name,
+                    Padding = new Thickness(10),
+                    GridRow = i,
+                };
+                _worldButtons[i].Click += (sender, args) => { 
+                    var tmp = sender as TextButton;
+                        _action = new ChangeToMap(tmp.Text);
+                     };
+            }
         }
     }
 }

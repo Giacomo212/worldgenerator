@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1082
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "worldgenerator", "worldgenerator\worldgenerator.csproj", "{1A8B821D-917F-4FFD-9048-D416B1A043E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Game", "Game\Game.csproj", "{1A8B821D-917F-4FFD-9048-D416B1A043E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "Generator\Generator.csproj", "{FE82F18A-F263-427E-BFDF-06CCA5500DAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{1A8B821D-917F-4FFD-9048-D416B1A043E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A8B821D-917F-4FFD-9048-D416B1A043E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A8B821D-917F-4FFD-9048-D416B1A043E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE82F18A-F263-427E-BFDF-06CCA5500DAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE82F18A-F263-427E-BFDF-06CCA5500DAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE82F18A-F263-427E-BFDF-06CCA5500DAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE82F18A-F263-427E-BFDF-06CCA5500DAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

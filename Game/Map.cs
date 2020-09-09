@@ -53,12 +53,11 @@ namespace worldgenerator {
         }
         public void Save(string fileName) {
             var separator = Path.DirectorySeparatorChar;
-            Directory.CreateDirectory(GameConfig.Config.GameFilesPath);
-            Directory.CreateDirectory(GameConfig.Config.GameFilesPath + $"{separator}worlds");
+            
             if(fileName.Contains("/") || fileName.Contains("\\"))
                 throw new IOException("invalid file name");
             fileName = GameConfig.Config.GameFilesPath + separator + $"worlds{separator}" + fileName; 
-            using (var file = new BinaryWriter(File.Open(fileName, FileMode.Create))) {
+            using (var file = new BinaryWriter(File.Open(fileName + ".wg", FileMode.Create))) {
                 file.Write(Width);
                 file.Write(Hight);
                 foreach (var t in _grid) {
@@ -68,9 +67,13 @@ namespace worldgenerator {
 
             }
         }
-        public void Load(string FileName) {
-            
-            using (var file = new BinaryReader(File.Open(FileName, FileMode.Open))) {
+        public void Load(string fileName) {
+            var separator = Path.DirectorySeparatorChar;
+
+            if (fileName.Contains("/") || fileName.Contains("\\"))
+                throw new IOException("invalid file name");
+            fileName = GameConfig.Config.GameFilesPath + separator + $"worlds{separator}" + fileName;
+            using (var file = new BinaryReader(File.Open(fileName, FileMode.Open))) {
                 _width = file.ReadInt32();
                 _hight = file.ReadInt32();
                 _grid = new Block[_width, _hight];

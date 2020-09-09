@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace worldgenerator{
     public class MapContext : Context{
-        private SpriteBatch _spriteBatch;
         private Map _map;
         private Dictionary<int, Texture2D> _blockDictionary = new Dictionary<int, Texture2D>();
         private Texture2D _grass;
@@ -17,6 +16,12 @@ namespace worldgenerator{
         public MapContext(int x, int y){
             _map = new Map(x, y);
             
+            _controller = new CameraController(x, y, (GameConfig.Config.Resolution.Width / Block.Width) + 2,
+                (GameConfig.Config.Resolution.Hight / Block.High) + 2);
+        }
+        public MapContext(int x, int y, string name){
+            _map = new Map(x, y);
+            _map.Save(name);
             _controller = new CameraController(x, y, (GameConfig.Config.Resolution.Width / Block.Width) + 2,
                 (GameConfig.Config.Resolution.Hight / Block.High) + 2);
         }
@@ -48,8 +53,6 @@ namespace worldgenerator{
         }
 
         public override void OnWindowResize(){
-            // double tmp = (GameConfig.Config.Resolution.Width / Block.Width) + 1;
-            // double tmp2 = (GameConfig.Config.Resolution.Hight / Block.High) + 2;
             _controller = new CameraController(_map.Width, _map.Hight,
                 (GameConfig.Config.Resolution.Width / Block.Width) + 2,
                 (GameConfig.Config.Resolution.Hight / Block.High) + 2);

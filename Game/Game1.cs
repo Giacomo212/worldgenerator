@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using Myra;
+using System.IO;
 
 namespace worldgenerator {
     
@@ -14,6 +15,9 @@ namespace worldgenerator {
         private Context _currentContext;
        
         public Game1(){
+            var separator = Path.DirectorySeparatorChar;
+            Directory.CreateDirectory(GameConfig.Config.GameFilesPath);
+            Directory.CreateDirectory(GameConfig.Config.GameFilesPath + $"{separator}worlds");
             Context.Game = this;
             MyraEnvironment.Game = this;
             _graphics = new GraphicsDeviceManager(this);
