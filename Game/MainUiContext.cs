@@ -8,7 +8,7 @@ using Myra.Graphics2D.TextureAtlases;
 using Myra.Graphics2D.UI;
 
 
-namespace worldgenerator{
+namespace Game{
     public class MainUiContext : Context{
         private Desktop _desktop;
         private MapContext _mapContext = new MapContext(80,80);

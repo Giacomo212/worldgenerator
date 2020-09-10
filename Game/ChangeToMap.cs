@@ -1,4 +1,4 @@
-namespace worldgenerator{
+namespace Game{
     public class ChangeToNewMap : IAction{
         private int _x, _y;
         private string _name;

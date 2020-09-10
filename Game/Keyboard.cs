@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Input;
 
-namespace worldgenerator {
+namespace Game {
     static class Keyboard {
         private static KeyboardState _currentKeyState;
         private static KeyboardState _previousKeyState;

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
-namespace worldgenerator{
+namespace Game{
     public class MapContext : Context{
         private Map _map;
         private Dictionary<int, Texture2D> _blockDictionary = new Dictionary<int, Texture2D>();

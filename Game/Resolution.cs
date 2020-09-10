@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace worldgenerator {
+namespace Game {
     public class Resolution {
         private int _width;
         private int _hight;

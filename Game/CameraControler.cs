@@ -2,7 +2,7 @@ using System;
 using System.IO;
 
 
-namespace worldgenerator{
+namespace Game{
     public class CameraController{
         //values of the class
         private float _vectorX = 0;

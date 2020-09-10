@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 
-namespace worldgenerator {
+namespace Game {
     public static class Utility {
         public static char Separator = Path.DirectorySeparatorChar;
         public static PropertyInfo[] GetTypeProperties(object obj) {

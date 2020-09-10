@@ -1,4 +1,4 @@
-namespace worldgenerator{
+namespace Game{
     public interface IAction{
         public Context ReturnNewContext();
     }

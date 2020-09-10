@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace worldgenerator {
+namespace Game {
     public class Map{
         public readonly string Name;
         private int _width;

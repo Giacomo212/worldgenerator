@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace worldgenerator {
+namespace Game {
     public class PerlinNoiseGenerator {
  
         FastNoise fastNoise;

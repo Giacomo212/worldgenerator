@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace worldgenerator
+namespace Game
 {
     /// <summary>
     /// The main class.

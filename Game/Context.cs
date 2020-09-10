@@ -8,11 +8,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 
-namespace worldgenerator{
+namespace Game{
     abstract public class Context{
         protected IAction _action = null;
         protected SpriteBatch _spriteBatch = null;
-        public static Game Game;
+        public static Microsoft.Xna.Framework.Game Game;
         public abstract IAction Update(GameTime gameTime);
         public abstract void Draw(GameTime gameTime);
         public abstract void Initialize();
