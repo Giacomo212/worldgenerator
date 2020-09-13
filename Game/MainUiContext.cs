@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using Myra.Graphics2D;
 using Myra.Graphics2D.TextureAtlases;
 using Myra.Graphics2D.UI;
-
+using Libraries;
 
 namespace Game{
     public class MainUiContext : Context{
@@ -147,7 +147,7 @@ namespace Game{
 
         private void GetAllWorlds(){
             
-            DirectoryInfo d = new DirectoryInfo(GameConfig.Config.GameFilesPath + Utility.Separator + "worlds");
+            DirectoryInfo d = new DirectoryInfo(EnvironmentVariables.GameFiles + Path.DirectorySeparatorChar + "worlds");
             FileInfo[] files = d.GetFiles("*.wg"); //Getting Text files
             _worldCount = files.Length;
             _worldButtons = new TextButton[files.Length];

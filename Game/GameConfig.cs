@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
+using Libraries;
 using Newtonsoft.Json;
 
 namespace Game {
@@ -13,29 +10,23 @@ namespace Game {
         public static GameConfig Config = new GameConfig();
         public float Sensivity { get; set; } = 2.0f;
         public Resolution Resolution { get; set; } 
-        public readonly string  GameFilesPath;
+        //public readonly string  GameFilesPath;
 
         private GameConfig() {
             Resolution = new Resolution(1280, 720, false);
-            if (Environment.OSVersion.Platform == PlatformID.Unix)
-                GameFilesPath = Environment.GetEnvironmentVariable("HOME") + "/.worldgenerator";
-            else if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-                GameFilesPath =  GameFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.worldgenerator";
-            else{
-                throw  new PlatformNotSupportedException("your platform is not supported");
-            }
+            
             
         }
         public void Save(){
             var separator = Path.DirectorySeparatorChar;
-            Directory.CreateDirectory(GameFilesPath);
+            Directory.CreateDirectory(EnvironmentVariables.GameFiles);
             var settingsToSave = "";
             settingsToSave += JsonConvert.SerializeObject(Config.Sensivity);
             settingsToSave += "\n";
             settingsToSave += JsonConvert.SerializeObject(Config.Resolution);
             settingsToSave += "\n";
             try{
-                using var file = new StreamWriter(GameFilesPath + $"{separator}settings.json");
+                using var file = new StreamWriter(EnvironmentVariables.GameFiles + $"{separator}settings.json");
                 file.Write(settingsToSave);
             }
             catch {

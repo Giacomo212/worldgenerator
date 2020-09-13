@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-
+using Generator;
 namespace Game{
     public class MapContext : Context{
         private Map _map;
@@ -11,6 +11,7 @@ namespace Game{
         private Texture2D _sand;
         private Texture2D _water;
         private Texture2D _dirt;
+        private Texture2D _snow;
         private CameraController _controller;
 
         public MapContext(int x, int y){
@@ -49,7 +50,7 @@ namespace Game{
             _sand = Game.Content.Load<Texture2D>("sand");
             _water = Game.Content.Load<Texture2D>("water");
             _dirt = Game.Content.Load<Texture2D>("dirt");
-            
+            _snow = Game.Content.Load<Texture2D>("snow");
         }
 
         public override void OnWindowResize(){

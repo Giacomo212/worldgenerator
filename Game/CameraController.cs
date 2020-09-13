@@ -1,13 +1,15 @@
 using System;
 using System.IO;
+using Generator;
 
 
 namespace Game{
     public class CameraController{
         //values of the class
+        //vectors which are responsible for map 
         private float _vectorX = 0;
         private float _vectorY = 0;
-        //view variable represent the map which is seen on the screen
+        //view variable represent the map which part of map is seen on the screen
         // 
         private int _viewBeginningPointerX;
         private int _viewBeginningPointerY;

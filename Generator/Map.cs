@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
+using Libraries;
 
-
-namespace Game {
+namespace Generator {
     public class Map{
         public readonly string Name;
         private int _width;
@@ -15,10 +10,8 @@ namespace Game {
         public int Hight => _hight;
         
         Block[,] _grid;
-        public Block this[int x, int y]
-        {
-            get { return _grid[x, y]; }
-        }
+        public Block this[int x, int y] => _grid[x, y];
+
         public Map(int width, int hight)
         {
             _grid = new Block[width, hight];
@@ -56,7 +49,7 @@ namespace Game {
             
             if(fileName.Contains("/") || fileName.Contains("\\"))
                 throw new IOException("invalid file name");
-            fileName = GameConfig.Config.GameFilesPath + separator + $"worlds{separator}" + fileName; 
+            fileName = EnvironmentVariables.GameFiles + $"{separator}worlds{separator}" + fileName; 
             using (var file = new BinaryWriter(File.Open(fileName + ".wg", FileMode.Create))) {
                 file.Write(Width);
                 file.Write(Hight);
@@ -72,7 +65,7 @@ namespace Game {
 
             if (fileName.Contains("/") || fileName.Contains("\\"))
                 throw new IOException("invalid file name");
-            fileName = GameConfig.Config.GameFilesPath + separator + $"worlds{separator}" + fileName;
+            fileName = EnvironmentVariables.GameFiles + separator + $"worlds{separator}" + fileName;
             using (var file = new BinaryReader(File.Open(fileName, FileMode.Open))) {
                 _width = file.ReadInt32();
                 _hight = file.ReadInt32();

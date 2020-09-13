@@ -6,23 +6,20 @@ using System.Threading.Tasks;
 
 namespace Game {
     public class Resolution {
-        private int _width;
-        private int _hight;
-        //private double _centerWidth;
-        //private double _centerHight;
-        private bool _isFullScreen;
         public Resolution(int width, int hight, bool fullscreen) {
-            _width = width;
-            _hight = hight;
+            Width = width;
+            Hight = hight;
             //_centerHight = Hight / 2;
             //_centerWidth = Width / 2;
-            _isFullScreen = fullscreen;
+            IsFullScreen = fullscreen;
         }
 
-        public double CenterWidth { get => _width/2;  }
-        public double CenterHight { get => _hight/2;  }
-        public bool IsFullScreen { get => _isFullScreen; }
-        public int Width { get => _width;}
-        public int Hight { get => _hight;}
+        // public double CenterWidth => _width/2;
+        // public double CenterHight => _hight/2;
+        public bool IsFullScreen{ get; }
+
+        public int Width{ get; }
+
+        public int Hight{ get; }
     }
     }

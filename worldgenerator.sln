@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Game", "Game\Game.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "Generator\Generator.csproj", "{FE82F18A-F263-427E-BFDF-06CCA5500DAA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libraries", "Libraries\Libraries.csproj", "{4F029470-F3EE-4555-AF3C-11C85E63C0D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{FE82F18A-F263-427E-BFDF-06CCA5500DAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE82F18A-F263-427E-BFDF-06CCA5500DAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE82F18A-F263-427E-BFDF-06CCA5500DAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F029470-F3EE-4555-AF3C-11C85E63C0D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F029470-F3EE-4555-AF3C-11C85E63C0D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F029470-F3EE-4555-AF3C-11C85E63C0D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F029470-F3EE-4555-AF3C-11C85E63C0D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

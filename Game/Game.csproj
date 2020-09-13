@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
+        <OutputType>WinExe</OutputType>
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
+    
 
     <ItemGroup>
         <MonoGameContentReference Include="**\*.mgcb" />
@@ -18,6 +19,9 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Generator\Generator.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Libraries\Libraries.csproj" />
     </ItemGroup>
 
 </Project>

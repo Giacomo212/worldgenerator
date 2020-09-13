@@ -1,23 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
 using Myra;
 using System.IO;
+using Libraries;
 
 namespace Game {
     
     public class Game1 : Microsoft.Xna.Framework.Game {
         
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
         private Context _currentContext;
        
         public Game1(){
             var separator = Path.DirectorySeparatorChar;
-            Directory.CreateDirectory(GameConfig.Config.GameFilesPath);
-            Directory.CreateDirectory(GameConfig.Config.GameFilesPath + $"{separator}worlds");
+            Directory.CreateDirectory(EnvironmentVariables.GameFiles);
+            Directory.CreateDirectory(EnvironmentVariables.GameFiles+ $"{separator}worlds");
             Context.Game = this;
             MyraEnvironment.Game = this;
             _graphics = new GraphicsDeviceManager(this);
@@ -25,7 +22,7 @@ namespace Game {
             IsMouseVisible = true;
             _currentContext = new MainUiContext();
             Window.AllowUserResizing = true;
-            Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
+            Window.ClientSizeChanged += Window_ClientSizeChanged;
         }
 
 
@@ -42,7 +39,7 @@ namespace Game {
 
 
         protected override void LoadContent() {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            
             _currentContext.Load();
         }
 
@@ -60,35 +57,12 @@ namespace Game {
             }
                 
             base.Update(gameTime);
-            // switch () {
-            //     case Action.ChangeToNewMap:
-            //         _currentContext = new MapContext(200,200);
-            //         //_currentContext.Load();
-            //         ReloadContent();
-            //         break;
-            //     case Action.ChangeToMap:
-            //         _currentContext = new MapContext("./map.wg");
-            //         //_currentContext.Load();
-            //         ReloadContent();
-            //         break;
-            //     case Action.Quit: Exit(); break;
-            //     case Action.ChangeToMainUi:
-            //         _currentContext = new MainUiContext();
-            //         //_currentContext.Load();
-            //         ReloadContent();
-            //         break;
-            //     case Action.None: break;
-            //
-            // }
-            
         }
 
        
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.Black);
-            _spriteBatch.Begin();
             _currentContext.Draw(gameTime);
-            _spriteBatch.End();
             base.Draw(gameTime);
         }
 
