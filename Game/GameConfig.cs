@@ -10,7 +10,7 @@ namespace Game {
         public static GameConfig Config = new GameConfig();
         public float Sensivity { get; set; } = 2.0f;
         public Resolution Resolution { get; set; } 
-        //public readonly string  GameFilesPath;
+        
 
         private GameConfig() {
             Resolution = new Resolution(1280, 720, false);

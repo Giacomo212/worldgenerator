@@ -6,7 +6,7 @@ using Generator;
 namespace Game{
     public class MapContext : Context{
         private Map _map;
-        private Dictionary<int, Texture2D> _blockDictionary = new Dictionary<int, Texture2D>();
+        private Dictionary<BlockType, Texture2D> _blockDictionary = new Dictionary<BlockType, Texture2D>();
         private Texture2D _grass;
         private Texture2D _sand;
         private Texture2D _water;
@@ -14,16 +14,16 @@ namespace Game{
         private Texture2D _snow;
         private CameraController _controller;
 
-        public MapContext(int x, int y){
-            _map = new Map(x, y);
+        public MapContext(WorldSize worldSize){
+            _map = new Map(worldSize);
             
-            _controller = new CameraController(x, y, (GameConfig.Config.Resolution.Width / Block.Width) + 2,
+            _controller = new CameraController((int)worldSize, (int)worldSize, (GameConfig.Config.Resolution.Width / Block.Width) + 2,
                 (GameConfig.Config.Resolution.Hight / Block.High) + 2);
         }
-        public MapContext(int x, int y, string name){
-            _map = new Map(x, y);
+        public MapContext(WorldSize worldSize, string name){
+            _map = new Map(worldSize);
             _map.Save(name);
-            _controller = new CameraController(x, y, (GameConfig.Config.Resolution.Width / Block.Width) + 2,
+            _controller = new CameraController((int)worldSize, (int)worldSize, (GameConfig.Config.Resolution.Width / Block.Width) + 2,
                 (GameConfig.Config.Resolution.Hight / Block.High) + 2);
         }
 
@@ -41,7 +41,7 @@ namespace Game{
         }
 
         public override void Initialize(){
-            InitializeDictonary();
+            InitializeDirectory();
         }
 
         public override void Load(){
@@ -60,34 +60,29 @@ namespace Game{
         }
 
         public override IAction Update(GameTime gameTime){
+            //move map horizontally 
             if (Keyboard.IsPressed(Keys.Left))
                 _controller.MoveLeft();
             else if (Keyboard.IsPressed(Keys.Right))
                 _controller.MoveRight();
-
-
+            // move map vertically 
             if (Keyboard.IsPressed(Keys.Up))
                 _controller.MoveUp();
             else if (Keyboard.IsPressed(Keys.Down))
                 _controller.MoveDown();
-
-            if (Keyboard.IsPressed(Keys.Escape))
-                return new ChangeToMainUi();
-
-
-            return null;
+            return Keyboard.IsPressed(Keys.Escape) ? new ChangeToMainUi() : null;
         }
 
-        private Texture2D PraseBlock(int id){
-            _blockDictionary.TryGetValue(id, out var tmp);
+        private Texture2D ParseBlock(BlockType type){
+            _blockDictionary.TryGetValue(type, out var tmp);
             return tmp;
         }
 
-        private void InitializeDictonary(){
-            _blockDictionary.Add(0, _grass);
-            _blockDictionary.Add(1, _sand);
-            _blockDictionary.Add(2, _water);
-            _blockDictionary.Add(3, _dirt);
+        private void InitializeDirectory(){
+            _blockDictionary.Add(BlockType.Grass, _grass);
+            _blockDictionary.Add(BlockType.Sand, _sand);
+            _blockDictionary.Add(BlockType.Water, _water);
+            _blockDictionary.Add(BlockType.Dirt, _dirt);
         }
 
         private void DrawMap(ref SpriteBatch spriteBatch){
@@ -96,7 +91,7 @@ namespace Game{
 
             for (int i = _controller.ViewBeginningPointerX; i < _controller.ViewEndPointerX; i++){
                 for (int j = _controller.ViewBeginningPointerY; j < _controller.ViewEndPointerY; j++){
-                    spriteBatch.Draw(PraseBlock(_map[i, j].BlockID), tmp, Color.White);
+                    spriteBatch.Draw(ParseBlock(_map[i, j].BlockType), tmp, Color.White);
                     tmp.Y += Block.High;
                 }
 

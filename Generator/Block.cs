@@ -3,13 +3,14 @@ namespace Generator {
     public class Block {
         public static int Width { get; } = 40;
         public static int High { get; } = 40;
-        private int _blockID;
+        private BiomeType _biomeType;
+        private BlockType _blockType;
         private Item _item;
         
-        public int BlockID => _blockID;
-
-        public Block(int blockID) {
-            _blockID = blockID;
+        public BlockType BlockType => _blockType;
+        public BiomeType BiomeType => _biomeType;
+        public Block(BlockType blockBlockType){
+            _blockType = blockBlockType;
         }
     }
 }

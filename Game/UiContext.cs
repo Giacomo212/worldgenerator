@@ -1,17 +1,19 @@
 ﻿using System;
 using System.IO;
+using Generator;
+using Libraries;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Myra.Graphics2D;
 using Myra.Graphics2D.TextureAtlases;
 using Myra.Graphics2D.UI;
-using Libraries;
+
 
 namespace Game{
     public class MainUiContext : Context{
         private Desktop _desktop;
-        private MapContext _mapContext = new MapContext(80,80);
+        private MapContext _mapContext = new MapContext(WorldSize.Small);
         private Grid _grid;
         //main buttons
         private TextButton _startGameButton;
@@ -113,7 +115,7 @@ namespace Game{
                 GridRow = 2,
             };
             _createWorldButton.Click += (sender, args) => { 
-                _action = new ChangeToNewMap(200, 200, "world" + _worldCount);
+                _action = new ChangeToNewMap(WorldSize.Large, "world" + _worldCount);
                 _worldCount++;
             };
             var grid = new Grid(){
@@ -121,8 +123,10 @@ namespace Game{
                 ColumnSpacing = 8,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
-                GridColumn = 1,
             };
+            
+            
+            
             _scrollViewer = new ScrollViewer(){
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
@@ -148,7 +152,7 @@ namespace Game{
         private void GetAllWorlds(){
             
             DirectoryInfo d = new DirectoryInfo(EnvironmentVariables.GameFiles + Path.DirectorySeparatorChar + "worlds");
-            FileInfo[] files = d.GetFiles("*.wg"); //Getting Text files
+            FileInfo[] files = d.GetFiles("*.wg"); //Getting files
             _worldCount = files.Length;
             _worldButtons = new TextButton[files.Length];
             for(var i = 0; i < files.Length;i++ ){

@@ -6,7 +6,7 @@ using Generator;
 namespace Game{
     public class CameraController{
         //values of the class
-        //vectors which are responsible for map 
+        //vectors which are responsible for map shift
         private float _vectorX = 0;
         private float _vectorY = 0;
         //view variable represent the map which part of map is seen on the screen
@@ -15,7 +15,7 @@ namespace Game{
         private int _viewBeginningPointerY;
         private int _viewEndPointerX;
         private int _viewEndPointerY;
-        //max
+        //maximal values of pointers
         private int _mapWidth;
         private int _mapHight;
         

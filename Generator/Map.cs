@@ -3,7 +3,8 @@ using Libraries;
 
 namespace Generator {
     public class Map{
-        public readonly string Name;
+        // public readonly string Name;
+        // public readonly string filename; 
         private int _width;
         private int _hight;
         public int Width => _width;
@@ -12,20 +13,19 @@ namespace Generator {
         Block[,] _grid;
         public Block this[int x, int y] => _grid[x, y];
 
-        public Map(int width, int hight)
-        {
-            _grid = new Block[width, hight];
-            _width = width;
-            _hight = hight;
-            CreateNewMap(_width, _hight);
+        public Map(WorldSize worldSize){
+            var size = (int) worldSize;
+            _grid = new Block[size,size];
+            _width = size;
+            _hight = size;
+            CreateNewMap();
 
         }
         public Map(string filename) {
             Load(filename);
             
         }
-        void CreateNewMap(int width, int hight) {
-            
+        private void CreateNewMap() {
             PerlinNoiseGenerator perlinNoiseGenerator = new PerlinNoiseGenerator();
             for (int i = 0; i < Width; i++) {
                 for (int j = 0; j < Hight; j++) {
@@ -33,15 +33,15 @@ namespace Generator {
                 }
             }
         }
-        Block PerlinNoseParser(PerlinNoiseGenerator  perlinNoise, int x, int y) {
+        private Block PerlinNoseParser(PerlinNoiseGenerator  perlinNoise, int x, int y) {
             var tmp = perlinNoise.getValue(x, y);
 
             if (tmp <= 0)
-                return new Block(0);
+                return new Block(BlockType.Grass);
             else if (tmp <= 0.5)
-                return new Block(1);
+                return new Block(BlockType.Sand);
             else if (tmp <= 1)
-                return new Block(2);
+                return new Block(BlockType.Water);
             return null;
         }
         public void Save(string fileName) {
@@ -49,18 +49,15 @@ namespace Generator {
             
             if(fileName.Contains("/") || fileName.Contains("\\"))
                 throw new IOException("invalid file name");
-            fileName = EnvironmentVariables.GameFiles + $"{separator}worlds{separator}" + fileName; 
-            using (var file = new BinaryWriter(File.Open(fileName + ".wg", FileMode.Create))) {
-                file.Write(Width);
-                file.Write(Hight);
-                foreach (var t in _grid) {
-                    
-                    file.Write(t.BlockID);
-                }
-
+            fileName = EnvironmentVariables.GameFiles + $"{separator}worlds{separator}" + fileName;
+            using var file = new BinaryWriter(File.Open(fileName + ".wg", FileMode.Create));
+            file.Write(Width);
+            file.Write(Hight);
+            foreach (var t in _grid) {
+                file.Write((int)t.BlockType);
             }
         }
-        public void Load(string fileName) {
+        private void Load(string fileName) {
             var separator = Path.DirectorySeparatorChar;
 
             if (fileName.Contains("/") || fileName.Contains("\\"))
@@ -72,7 +69,7 @@ namespace Generator {
                 _grid = new Block[_width, _hight];
                 for (var i = 0; i < _width; i++) 
                     for(var j = 0; j < _hight; j++) 
-                        _grid[i, j] = new Block(file.ReadInt32());
+                        _grid[i, j] = new Block((BlockType)file.ReadInt32());
                 
             }
         }

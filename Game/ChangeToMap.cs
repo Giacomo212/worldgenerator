@@ -1,15 +1,16 @@
+using Generator;
+
 namespace Game{
     public class ChangeToNewMap : IAction{
-        private int _x, _y;
+        private WorldSize _worldSize;
         private string _name;
-        public ChangeToNewMap(int x, int y, string name){
-            _x = x;
-            _y = y;
+        public ChangeToNewMap(WorldSize worldSize, string name){
+            _worldSize = worldSize;
             _name = name;
         }
 
         public Context ReturnNewContext(){
-            return new MapContext(_x, _y,_name);
+            return new MapContext(_worldSize,_name);
         }
     }
 
