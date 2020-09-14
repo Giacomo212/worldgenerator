@@ -7,12 +7,18 @@ namespace Game{
     public class MapContext : Context{
         private Map _map;
         private Dictionary<BlockType, Texture2D> _blockDictionary = new Dictionary<BlockType, Texture2D>();
+        private Dictionary<ItemType, Texture2D> _itemDictionary = new Dictionary<ItemType, Texture2D>();
+        //textures
         private Texture2D _grass;
         private Texture2D _sand;
         private Texture2D _water;
         private Texture2D _dirt;
         private Texture2D _snow;
+        private Texture2D _tree;
+        private Texture2D _stone;
+        
         private CameraController _controller;
+        
 
         public MapContext(WorldSize worldSize){
             _map = new Map(worldSize);
@@ -41,7 +47,8 @@ namespace Game{
         }
 
         public override void Initialize(){
-            InitializeDirectory();
+            InitializeBlockDirectory();
+            InitializeItemDirectory();
         }
 
         public override void Load(){
@@ -51,6 +58,8 @@ namespace Game{
             _water = Game.Content.Load<Texture2D>("water");
             _dirt = Game.Content.Load<Texture2D>("dirt");
             _snow = Game.Content.Load<Texture2D>("snow");
+            _stone = Game.Content.Load<Texture2D>("stone");
+            _tree = Game.Content.Load<Texture2D>("tree");
         }
 
         public override void OnWindowResize(){
@@ -77,14 +86,22 @@ namespace Game{
             _blockDictionary.TryGetValue(type, out var tmp);
             return tmp;
         }
-
-        private void InitializeDirectory(){
+        private Texture2D ParseItem(ItemType type){
+            _itemDictionary.TryGetValue(type, out var tmp);
+            return tmp;
+        }
+        private void InitializeBlockDirectory(){
             _blockDictionary.Add(BlockType.Grass, _grass);
             _blockDictionary.Add(BlockType.Sand, _sand);
             _blockDictionary.Add(BlockType.Water, _water);
             _blockDictionary.Add(BlockType.Dirt, _dirt);
+            _blockDictionary.Add(BlockType.Snow,_snow);
+            _blockDictionary.Add(BlockType.Stone,_stone);
         }
 
+        private void InitializeItemDirectory(){
+            _itemDictionary.Add(ItemType.Tree, _tree);
+        }
         private void DrawMap(ref SpriteBatch spriteBatch){
             var yZero = -_dirt.Height + _controller.VectorY;
             var tmp = new Vector2(-_dirt.Width + _controller.VectorX, yZero);
@@ -92,6 +109,9 @@ namespace Game{
             for (int i = _controller.ViewBeginningPointerX; i < _controller.ViewEndPointerX; i++){
                 for (int j = _controller.ViewBeginningPointerY; j < _controller.ViewEndPointerY; j++){
                     spriteBatch.Draw(ParseBlock(_map[i, j].BlockType), tmp, Color.White);
+                    if (_map[i, j].ItemType != ItemType.None){
+                        spriteBatch.Draw(ParseItem(_map[i, j].ItemType), tmp, Color.White);
+                    }
                     tmp.Y += Block.High;
                 }
 

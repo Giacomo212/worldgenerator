@@ -26,24 +26,15 @@ namespace Generator {
             
         }
         private void CreateNewMap() {
-            PerlinNoiseGenerator perlinNoiseGenerator = new PerlinNoiseGenerator();
+            //PerlinNoiseGenerator perlinNoiseGenerator = new PerlinNoiseGenerator();
+            var mapGenerator = new MapGenerator();
             for (int i = 0; i < Width; i++) {
-                for (int j = 0; j < Hight; j++) {
-                    _grid[i, j] = PerlinNoseParser( perlinNoiseGenerator, i, j);
+                for (int j = 0; j < Hight; j++){
+                    _grid[i, j] = mapGenerator.GetBlock(i,j);
                 }
             }
         }
-        private Block PerlinNoseParser(PerlinNoiseGenerator  perlinNoise, int x, int y) {
-            var tmp = perlinNoise.getValue(x, y);
-
-            if (tmp <= 0)
-                return new Block(BlockType.Grass);
-            else if (tmp <= 0.5)
-                return new Block(BlockType.Sand);
-            else if (tmp <= 1)
-                return new Block(BlockType.Water);
-            return null;
-        }
+        
         public void Save(string fileName) {
             var separator = Path.DirectorySeparatorChar;
             
@@ -55,6 +46,8 @@ namespace Generator {
             file.Write(Hight);
             foreach (var t in _grid) {
                 file.Write((int)t.BlockType);
+                file.Write((int)t.ItemType);
+                file.Write((int)t.BiomeType);
             }
         }
         private void Load(string fileName) {
@@ -69,7 +62,7 @@ namespace Generator {
                 _grid = new Block[_width, _hight];
                 for (var i = 0; i < _width; i++) 
                     for(var j = 0; j < _hight; j++) 
-                        _grid[i, j] = new Block((BlockType)file.ReadInt32());
+                        _grid[i, j] = new Block((BlockType)file.ReadInt32(),(ItemType)file.ReadInt32(),(BiomeType)file.ReadInt32());
                 
             }
         }

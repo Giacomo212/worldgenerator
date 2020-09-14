@@ -4,6 +4,7 @@ namespace Generator{
         Ocean,
         Grassland,
         Forest,
-        Swamp
+        Taiga,
+        Beach,
     }
 }
