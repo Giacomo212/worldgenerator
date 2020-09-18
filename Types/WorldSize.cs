@@ -1,4 +1,4 @@
-namespace World{
+namespace Types{
     public enum WorldSize{
         Small = 300,
         Medium = 500,

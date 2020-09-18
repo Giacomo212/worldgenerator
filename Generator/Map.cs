@@ -8,6 +8,9 @@ namespace Generator {
         // public readonly string filename; 
         private int _width;
         private int _hight;
+        private WorldSize _worldType;
+        public WorldSize WorldType => _worldType;
+
         //private Chunk _Currentchunk;
         public int Width => _width;
         public int Hight => _hight;
@@ -16,8 +19,9 @@ namespace Generator {
         private Block[,] _grid;
         public Block this[int x, int y] => _grid[x, y];
 
-        public SurfaceMap(WorldSize worldSize){
-            var size = (int) worldSize;
+        public SurfaceMap(WorldSize worldWorldType){
+            _worldType = worldWorldType;
+            var size = (int) worldWorldType;
             _grid = new Block[size,size];
             _width = size;
             _hight = size;

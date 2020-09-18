@@ -1,4 +1,4 @@
-namespace World{
+namespace Types{
     public enum BiomeType{
         Mountains,
         Ocean,

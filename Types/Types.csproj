@@ -3,8 +3,5 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\Types\Types.csproj" />
-    </ItemGroup>
 
 </Project>

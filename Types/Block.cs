@@ -1,8 +1,9 @@
 ﻿
-namespace World {
+namespace Types {
     public class Block {
         public static int Width { get; } = 40;
         public static int High { get; } = 40;
+        public static int SizeOf{ get; } = sizeof(int) * 3;
         private BiomeType _biomeType;
         private BlockType _blockType;
         private ItemType _itemType = ItemType.None;
