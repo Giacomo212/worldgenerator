@@ -1,19 +1,22 @@
 ﻿using System.IO;
 using Libraries;
+using Types;
 
 namespace Generator {
-    public class Map{
+    public class SurfaceMap{
         // public readonly string Name;
         // public readonly string filename; 
         private int _width;
         private int _hight;
+        //private Chunk _Currentchunk;
         public int Width => _width;
         public int Hight => _hight;
+
         
-        Block[,] _grid;
+        private Block[,] _grid;
         public Block this[int x, int y] => _grid[x, y];
 
-        public Map(WorldSize worldSize){
+        public SurfaceMap(WorldSize worldSize){
             var size = (int) worldSize;
             _grid = new Block[size,size];
             _width = size;
@@ -21,7 +24,7 @@ namespace Generator {
             CreateNewMap();
 
         }
-        public Map(string filename) {
+        public SurfaceMap(string filename) {
             Load(filename);
             
         }

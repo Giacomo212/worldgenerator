@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using Myra.Graphics2D;
 using Myra.Graphics2D.TextureAtlases;
 using Myra.Graphics2D.UI;
+using Types;
 
 
 namespace Game{

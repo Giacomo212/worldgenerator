@@ -1,4 +1,4 @@
-namespace Generator{
+namespace World{
     public class Biome{
         private BiomeType _type;
         public BiomeType Type => _type;

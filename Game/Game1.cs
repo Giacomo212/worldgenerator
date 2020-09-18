@@ -3,6 +3,7 @@ using System;
 using Myra;
 using System.IO;
 using Libraries;
+using Types;
 
 namespace Game {
     
@@ -38,7 +39,7 @@ namespace Game {
         }
 
 
-        protected override void LoadContent() {
+        protected override void LoadContent(){
             
             _currentContext.Load();
         }

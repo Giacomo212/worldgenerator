@@ -1,4 +1,4 @@
-namespace Generator{
+namespace World{
     public enum BiomeType{
         Mountains,
         Ocean,
@@ -6,5 +6,6 @@ namespace Generator{
         Forest,
         Taiga,
         Beach,
+        Desert,
     }
 }

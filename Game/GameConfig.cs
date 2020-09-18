@@ -8,7 +8,7 @@ namespace Game {
         
         //sigleton
         public static GameConfig Config = new GameConfig();
-        public float Sensivity { get; set; } = 40.0f;
+        public float Sensivity { get; set; } = 4.0f;
         public Resolution Resolution { get; set; } 
         
 

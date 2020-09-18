@@ -16,12 +16,10 @@
         <PackageReference Include="Myra" Version="1.0.1.209" />
         <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     </ItemGroup>
-
     <ItemGroup>
         <ProjectReference Include="..\Generator\Generator.csproj" />
-    </ItemGroup>
-    <ItemGroup>
         <ProjectReference Include="..\Libraries\Libraries.csproj" />
+        <ProjectReference Include="..\Types\Types.csproj" />
     </ItemGroup>
 
 </Project>

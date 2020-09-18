@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Generator</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Libraries\Libraries.csproj" />

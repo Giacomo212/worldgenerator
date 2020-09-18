@@ -1,4 +1,5 @@
 using Generator;
+using Types;
 
 namespace Game{
     public class ChangeToNewMap : IAction{

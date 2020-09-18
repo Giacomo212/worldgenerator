@@ -3,9 +3,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using Generator;
+using Types;
+
 namespace Game{
     public class MapContext : Context{
-        private Map _map;
+        private SurfaceMap m_surfaceMap;
         private Dictionary<BlockType, Texture2D> _blockDictionary = new Dictionary<BlockType, Texture2D>();
         private Dictionary<ItemType, Texture2D> _itemDictionary = new Dictionary<ItemType, Texture2D>();
         //textures
@@ -21,21 +23,21 @@ namespace Game{
         
 
         public MapContext(WorldSize worldSize){
-            _map = new Map(worldSize);
+            m_surfaceMap = new SurfaceMap(worldSize);
             
             _controller = new CameraController((int)worldSize, (int)worldSize, (GameConfig.Config.Resolution.Width / Block.Width) + 2,
                 (GameConfig.Config.Resolution.Hight / Block.High) + 2);
         }
         public MapContext(WorldSize worldSize, string name){
-            _map = new Map(worldSize);
-            _map.Save(name);
+            m_surfaceMap = new SurfaceMap(worldSize);
+            m_surfaceMap.Save(name);
             _controller = new CameraController((int)worldSize, (int)worldSize, (GameConfig.Config.Resolution.Width / Block.Width) + 2,
                 (GameConfig.Config.Resolution.Hight / Block.High) + 2);
         }
 
         public MapContext(string filename){
-            _map = new Map(filename);
-            _controller = new CameraController(_map.Width, _map.Hight,
+            m_surfaceMap = new SurfaceMap(filename);
+            _controller = new CameraController(m_surfaceMap.Width, m_surfaceMap.Hight,
                 (GameConfig.Config.Resolution.Width / Block.Width) + 2,
                 (GameConfig.Config.Resolution.Hight / Block.High) + 2);
         }
@@ -63,7 +65,7 @@ namespace Game{
         }
 
         public override void OnWindowResize(){
-            _controller = new CameraController(_map.Width, _map.Hight,
+            _controller = new CameraController(m_surfaceMap.Width, m_surfaceMap.Hight,
                 (GameConfig.Config.Resolution.Width / Block.Width) + 2,
                 (GameConfig.Config.Resolution.Hight / Block.High) + 2);
         }
@@ -108,9 +110,9 @@ namespace Game{
 
             for (int i = _controller.ViewBeginningPointerX; i < _controller.ViewEndPointerX; i++){
                 for (int j = _controller.ViewBeginningPointerY; j < _controller.ViewEndPointerY; j++){
-                    spriteBatch.Draw(ParseBlock(_map[i, j].BlockType), tmp, Color.White);
-                    if (_map[i, j].ItemType != ItemType.None){
-                        spriteBatch.Draw(ParseItem(_map[i, j].ItemType), tmp, Color.White);
+                    spriteBatch.Draw(ParseBlock(m_surfaceMap[i, j].BlockType), tmp, Color.White);
+                    if (m_surfaceMap[i, j].ItemType != ItemType.None){
+                        spriteBatch.Draw(ParseItem(m_surfaceMap[i, j].ItemType), tmp, Color.White);
                     }
                     tmp.Y += Block.High;
                 }

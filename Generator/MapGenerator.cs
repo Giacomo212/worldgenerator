@@ -1,6 +1,6 @@
 using System;
 
-namespace Generator{
+namespace World{
     public class MapGenerator{
         private FastNoise _blockNoise;
         private FastNoise _biomeNoise;
@@ -15,19 +15,12 @@ namespace Generator{
 
         private void SetupNoise(int seed){
             _blockNoise = new FastNoise(seed);
-            _biomeNoise = new FastNoise(seed + 433916);
+            _biomeNoise = new FastNoise(seed + 2137);
             _blockNoise.SetNoiseType(FastNoise.NoiseType.Perlin);
             _biomeNoise.SetNoiseType(FastNoise.NoiseType.Simplex);
-            _blockNoise.SetFrequency(0.1f);
+            _blockNoise.SetFrequency(0.2f);
             _biomeNoise.SetFrequency(0.04f);
         }
-        private Block PerlinNoseParser(int x, int y) {
-            
-        
-           
-            return null;
-        }
-
         private BiomeType GetBiome(int x, int y){
             var noiseValue = _biomeNoise.GetValue(x, y);
             if (noiseValue < -0.6f)
@@ -44,7 +37,7 @@ namespace Generator{
         public Block GetBlock(int x, int y){
             var biome = GetBiome(x, y);
             switch (biome){
-                case BiomeType.Forest: return GenerateForest();
+                case BiomeType.Forest: return GenerateForest(x,y);
                 case BiomeType.Grassland: return GenerateGrassland(); 
                 case BiomeType.Ocean : return new Block(BlockType.Water,BiomeType.Ocean); 
                 case BiomeType.Mountains: return GenerateMountains(); 
@@ -55,10 +48,15 @@ namespace Generator{
             return null;
         }
 
-        private Block GenerateForest(){
-            //return _random.Next() % 4 == 0
+        private Block GenerateForest(int x, int y){
+            var random = new Random( );
+            var noise = random.Next() % 12;
+            if (noise < 3)
+                return new Block(BlockType.Grass, ItemType.Tree, BiomeType.Forest);
+            if(noise < 6)
+                return new Block(BlockType.Grass,BiomeType.Forest);
             return new Block(BlockType.Grass, ItemType.Tree, BiomeType.Forest);
-            //: new Block(BlockType.Grass, BiomeType.Forest);
+           
         }
 
         private Block GenerateMountains(){

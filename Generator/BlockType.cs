@@ -1,4 +1,4 @@
-namespace Generator{
+namespace World{
     public enum BlockType{
         Grass,
         Sand,
