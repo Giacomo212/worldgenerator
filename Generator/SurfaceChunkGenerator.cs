@@ -2,17 +2,17 @@ using System;
 using Types;
 
 namespace Generator{
-    public class MapGenerator{
+    public class SurfaceChunkGenerator : IChunkGenerator{
         private FastNoise _blockNoise;
         private FastNoise _biomeNoise;
         private Random _random = new Random();
 
-        public MapGenerator(){
+        public SurfaceChunkGenerator(){
             var random = new Random();
             SetupNoise(random.Next());
         }
 
-        public MapGenerator(int seed){
+        public SurfaceChunkGenerator(int seed){
             SetupNoise(seed);
         }
 
@@ -38,7 +38,7 @@ namespace Generator{
             return BiomeType.Ocean;
         }
 
-        public Block GetBlock(int x, int y){
+        private Block GetBlock(int x, int y){
             var biome = GetBiome(x, y);
             switch (biome){
                 case BiomeType.Forest: return GenerateForest(x, y);
@@ -70,6 +70,10 @@ namespace Generator{
             return _random.Next() % 100 == 0
                 ? new Block(BlockType.Grass, ItemType.Tree, BiomeType.Grassland)
                 : new Block(BlockType.Grass, BiomeType.Grassland);
+        }
+
+        public Chunk GenerateChunk(){
+            throw new NotImplementedException();
         }
     }
 }
