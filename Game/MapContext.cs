@@ -2,12 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using Generator;
 using Types;
 
 namespace Game{
     public class MapContext : Context{
-        private SurfaceMap m_surfaceMap;
+        private Map _map;
         private Dictionary<BlockType, Texture2D> _blockDictionary = new Dictionary<BlockType, Texture2D>();
         private Dictionary<ItemType, Texture2D> _itemDictionary = new Dictionary<ItemType, Texture2D>();
         //textures
@@ -19,28 +18,17 @@ namespace Game{
         private Texture2D _tree;
         private Texture2D _stone;
         
-        private CameraController _controller;
-        
+        private CameraController _cameraController;
+        //private ChunkController _chunkController;
 
-        public MapContext(WorldSize worldSize){
-            m_surfaceMap = new SurfaceMap(worldSize);
+        public MapContext(Map map){
+            _map = map;
             
-            _controller = new CameraController((int)worldSize, (int)worldSize, (GameConfig.Config.Resolution.Width / Block.Width) + 2,
+            _cameraController = new CameraController((int)map.WorldType, (int)map.WorldType, (GameConfig.Config.Resolution.Width / Block.Width) + 2,
                 (GameConfig.Config.Resolution.Hight / Block.High) + 2);
         }
-        public MapContext(WorldSize worldSize, string name){
-            m_surfaceMap = new SurfaceMap(worldSize);
-            m_surfaceMap.Save(name);
-            _controller = new CameraController((int)worldSize, (int)worldSize, (GameConfig.Config.Resolution.Width / Block.Width) + 2,
-                (GameConfig.Config.Resolution.Hight / Block.High) + 2);
-        }
-
-        public MapContext(string filename){
-            m_surfaceMap = new SurfaceMap(filename);
-            _controller = new CameraController(m_surfaceMap.Width, m_surfaceMap.Hight,
-                (GameConfig.Config.Resolution.Width / Block.Width) + 2,
-                (GameConfig.Config.Resolution.Hight / Block.High) + 2);
-        }
+        
+      
 
         public override void Draw(GameTime gameTime){
             _spriteBatch.Begin();
@@ -65,7 +53,7 @@ namespace Game{
         }
 
         public override void OnWindowResize(){
-            _controller = new CameraController(m_surfaceMap.Width, m_surfaceMap.Hight,
+            _cameraController = new CameraController((int)_map.WorldType, (int)_map.WorldType,
                 (GameConfig.Config.Resolution.Width / Block.Width) + 2,
                 (GameConfig.Config.Resolution.Hight / Block.High) + 2);
         }
@@ -73,14 +61,14 @@ namespace Game{
         public override IAction Update(GameTime gameTime){
             //move map horizontally 
             if (Keyboard.IsPressed(Keys.Left))
-                _controller.MoveLeft();
+                _cameraController.MoveLeft();
             else if (Keyboard.IsPressed(Keys.Right))
-                _controller.MoveRight();
+                _cameraController.MoveRight();
             // move map vertically 
             if (Keyboard.IsPressed(Keys.Up))
-                _controller.MoveUp();
+                _cameraController.MoveUp();
             else if (Keyboard.IsPressed(Keys.Down))
-                _controller.MoveDown();
+                _cameraController.MoveDown();
             return Keyboard.IsPressed(Keys.Escape) ? new ChangeToMainUi() : null;
         }
 
@@ -105,14 +93,14 @@ namespace Game{
             _itemDictionary.Add(ItemType.Tree, _tree);
         }
         private void DrawMap(ref SpriteBatch spriteBatch){
-            var yZero = -_dirt.Height + _controller.VectorY;
-            var tmp = new Vector2(-_dirt.Width + _controller.VectorX, yZero);
+            var yZero = -_dirt.Height + _cameraController.VectorY;
+            var tmp = new Vector2(-_dirt.Width + _cameraController.VectorX, yZero);
 
-            for (int i = _controller.ViewBeginningPointerX; i < _controller.ViewEndPointerX; i++){
-                for (int j = _controller.ViewBeginningPointerY; j < _controller.ViewEndPointerY; j++){
-                    spriteBatch.Draw(ParseBlock(m_surfaceMap[i, j].BlockType), tmp, Color.White);
-                    if (m_surfaceMap[i, j].ItemType != ItemType.None){
-                        spriteBatch.Draw(ParseItem(m_surfaceMap[i, j].ItemType), tmp, Color.White);
+            for (int i = _cameraController.ViewBeginningPointerX; i < _cameraController.ViewEndPointerX; i++){
+                for (int j = _cameraController.ViewBeginningPointerY; j < _cameraController.ViewEndPointerY; j++){
+                    spriteBatch.Draw(ParseBlock(_map[i, j].BlockType), tmp, Color.White);
+                    if (_map[i, j].ItemType != ItemType.None){
+                        spriteBatch.Draw(ParseItem(_map[i, j].ItemType), tmp, Color.White);
                     }
                     tmp.Y += Block.High;
                 }
@@ -123,18 +111,18 @@ namespace Game{
         }
 
         public void MoveLeft(){
-            _controller.MoveLeft();
+            _cameraController.MoveLeft();
         }
         public void MoveRight(){
-            _controller.MoveRight();
+            _cameraController.MoveRight();
         }
 
         public void MoveUp(){
-            _controller.MoveUp();
+            _cameraController.MoveUp();
         }
 
         public void MoveDown(){
-            _controller.MoveDown();
+            _cameraController.MoveDown();
         }
     }
 }

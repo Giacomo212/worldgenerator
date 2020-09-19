@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Generator;
 using Libraries;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,7 +13,7 @@ using Types;
 namespace Game{
     public class MainUiContext : Context{
         private Desktop _desktop;
-        private MapContext _mapContext = new MapContext(WorldSize.Small);
+        //private MapContext _mapContext = new MapContext(WorldSize.Small);
         private Grid _grid;
         //main buttons
         private TextButton _startGameButton;
@@ -34,34 +33,34 @@ namespace Game{
         }
 
         public override IAction Update(GameTime gameTime){
-            var random = new Random();
-             if(gameTime.TotalGameTime.Milliseconds%1000000 == 0) 
-                 _direction = random.Next(0, 4);
-            switch (_direction){
-                case 0:
-                    _mapContext.MoveDown(); break;
-                case 1:
-                    _mapContext.MoveUp(); break;
-                case 2:
-                    _mapContext.MoveLeft(); break;
-                case 3:
-                    _mapContext.MoveRight(); break;
-            }
+            // var random = new Random();
+            //  if(gameTime.TotalGameTime.Milliseconds%1000000 == 0) 
+            //      _direction = random.Next(0, 4);
+            // switch (_direction){
+            //     case 0:
+            //         _mapContext.MoveDown(); break;
+            //     case 1:
+            //         _mapContext.MoveUp(); break;
+            //     case 2:
+            //         _mapContext.MoveLeft(); break;
+            //     case 3:
+            //         _mapContext.MoveRight(); break;
+            // }
             return _action;
         }
 
         public override void Draw(GameTime gameTime){
-            _mapContext.Draw(gameTime);
+            //_mapContext.Draw(gameTime);
             _desktop.Render();
         }
 
         public override void Initialize(){
-            _mapContext.Initialize();
+           // _mapContext.Initialize();
         }
 
         public override void Load(){
             _spriteBatch = new SpriteBatch(Game.GraphicsDevice);
-            _mapContext.Load();
+            //_mapContext.Load();
             _grid = new Grid {
                 RowSpacing = 8,
                 ColumnSpacing = 8,
@@ -81,7 +80,7 @@ namespace Game{
         }
 
         public override void OnWindowResize(){
-            _mapContext.OnWindowResize();
+            //_mapContext.OnWindowResize();
         }
 
         private void SetupMainButtons(){

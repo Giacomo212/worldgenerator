@@ -2,6 +2,7 @@
 using System.IO;
 using Libraries;
 using Newtonsoft.Json;
+using Types;
 
 namespace Game {
     public class GameConfig{

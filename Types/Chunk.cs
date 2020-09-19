@@ -6,27 +6,17 @@ using Types;
 namespace Types{
     public class Chunk : IEnumerable{
     private Block[,] _blocks = new Block[Size, Size];
-    private Position _position;
-
-    public Position Position => _position;
-
+    
     public static readonly int Size = 16;
-    public static int SizeOf{ get; } = Block.SizeOf * Size * Size; 
-    public Chunk(Position position){
-        _position = position;
-    }
+    public static int SizeOf{ get; } = Block.SizeOf * Size * Size;
 
-    public Block this[int i, int j] => _blocks[i, j];
+
+    public Block this[int i, int j]{
+        get => _blocks[i, j];
+        set => _blocks[i, j] = value;
+    } 
 
     
-
-    public void Save(ref BinaryWriter binaryWriter){
-        foreach (var block in _blocks){
-            //binaryWriter.Write();
-        }
-    }
-
-
     public IEnumerator GetEnumerator(){
         return new ChunkEnum(_blocks);
     }

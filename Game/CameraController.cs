@@ -27,6 +27,9 @@ namespace Game{
         public int ViewBeginningPointerY => _viewBeginningPointerY;
         public int ViewEndPointerX => _viewEndPointerX;
         public int ViewEndPointerY => _viewEndPointerY;
+        public int XSize => _viewEndPointerX - _viewBeginningPointerX;
+        public int YSize => _viewEndPointerX - _viewBeginningPointerX;
+        
         
         //constructor
         public CameraController(int mapWidth, int mapHight, int viewWidth, int viewHight){

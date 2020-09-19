@@ -56,10 +56,10 @@ namespace Generator{
             var random = new Random();
             var noise = random.Next() % 12;
             if (noise < 3)
-                return new Block(BlockType.Grass, ItemType.Tree, BiomeType.Forest);
+                return new Block(BlockType.Grass, BiomeType.Forest, ItemType.Tree);
             if (noise < 6)
                 return new Block(BlockType.Grass, BiomeType.Forest);
-            return new Block(BlockType.Grass, ItemType.Tree, BiomeType.Forest);
+            return new Block(BlockType.Grass, BiomeType.Forest, ItemType.Tree);
         }
 
         private Block GenerateMountains(){
@@ -68,7 +68,7 @@ namespace Generator{
 
         private Block GenerateGrassland(){
             return _random.Next() % 100 == 0
-                ? new Block(BlockType.Grass, ItemType.Tree, BiomeType.Grassland)
+                ? new Block(BlockType.Grass, BiomeType.Grassland, ItemType.Tree)
                 : new Block(BlockType.Grass, BiomeType.Grassland);
         }
 

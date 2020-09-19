@@ -1,9 +1,12 @@
 using System;
+using System.IO;
 
-namespace Libraries{
+namespace Types{
     public static class EnvironmentVariables{
         private static string _gameFiles;
-
+        private static char _separator;
+        private static string _worldfiles;
+        
         static EnvironmentVariables(){
             if (Environment.OSVersion.Platform == PlatformID.Unix)
                 _gameFiles = Environment.GetEnvironmentVariable("HOME") + "/.worldgenerator";
@@ -12,7 +15,12 @@ namespace Libraries{
             else{
                 throw  new PlatformNotSupportedException("your platform is not supported");
             }
+
+            _separator = Path.DirectorySeparatorChar;
+            _worldfiles = _gameFiles + _separator + "worlds" + _separator;
         }
         public static string GameFiles => _gameFiles;
+        public static char Separator => _separator;
+        public static string Worldfiles => _worldfiles;
     }
 }

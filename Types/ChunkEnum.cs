@@ -13,7 +13,7 @@ namespace Types{
                 _i = 0;
                 ++_j;
             }
-            return _j > Chunk.Size;
+            return _j < Chunk.Size;
         }
 
         public void Reset(){

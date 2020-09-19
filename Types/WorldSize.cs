@@ -1,7 +1,7 @@
 namespace Types{
     public enum WorldSize{
-        Small = 300,
-        Medium = 500,
-        Large = 1000
+        Small = 400,
+        Medium = 800,
+        Large = 1600
     }
 }

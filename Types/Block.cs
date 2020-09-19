@@ -16,7 +16,7 @@ namespace Types {
             _blockType = blockBlockType;
             _biomeType = biomeType;
         }
-        public Block(BlockType blockBlockType, ItemType itemType,BiomeType biomeType){
+        public Block(BlockType blockBlockType,BiomeType biomeType,ItemType itemType){
             _blockType = blockBlockType;
             _itemType = itemType;
             _biomeType = biomeType;
