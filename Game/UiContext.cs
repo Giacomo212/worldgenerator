@@ -4,6 +4,7 @@ using World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Myra.Attributes;
 using Myra.Graphics2D;
 using Myra.Graphics2D.TextureAtlases;
 using Myra.Graphics2D.UI;
@@ -21,18 +22,17 @@ namespace Game{
         private TextButton _exitButton;
         //config button
         private Random _random = new Random();
-        
         //utility values
-        private int _direction = 3;
         private int _worldCount = 0;
         //map creation ui
         private ScrollViewer _scrollViewer;
         private TextButton[] _worldButtons;
         private TextButton _createWorldButton;
+        private Texture2D _filler;
         public MainUiContext(){
         }
 
-        public override IAction Update(GameTime gameTime){
+        public override IChangeContext Update(GameTime gameTime){
             // var random = new Random();
             //  if(gameTime.TotalGameTime.Milliseconds%1000000 == 0) 
             //      _direction = random.Next(0, 4);
@@ -46,10 +46,18 @@ namespace Game{
             //     case 3:
             //         _mapContext.MoveRight(); break;
             // }
-            return _action;
+            return ChangeContext;
         }
 
         public override void Draw(GameTime gameTime){
+            
+            _spriteBatch.Begin();
+            for (var vector = Vector2.Zero; vector.X < GameConfig.Config.Resolution.Width; vector.X+=Block.Size){
+                for (; vector.Y < GameConfig.Config.Resolution.Hight; vector.Y+=Block.Size){
+                    _spriteBatch.Draw(_filler,vector,Color.White);
+                }
+            }
+            _spriteBatch.End();
             //_mapContext.Draw(gameTime);
             _desktop.Render();
         }
@@ -76,7 +84,7 @@ namespace Game{
             _desktop.Root = _grid;
             SetupMainButtons();
             AddMainButtons();
-            
+            _filler = Game.Content.Load<Texture2D>("dirt");
         }
 
         public override void OnWindowResize(){
@@ -117,7 +125,7 @@ namespace Game{
             _createWorldButton.Click += (sender, args) => {
                 //_random.Next()
                 
-                _action = new ChangeToNewMap(new Map("world"+_worldCount,WorldSize.Large,2137));;
+                ChangeContext = new ChangeToNewMap(new Map("world"+_worldCount,WorldSize.Large,2137));;
                 _worldCount++;
             };
             var grid = new Grid(){
@@ -159,13 +167,13 @@ namespace Game{
             _worldButtons = new TextButton[files.Length];
             for(var i = 0; i < files.Length;i++ ){
                 _worldButtons[i] = new TextButton(){
-                    Text = files[i].Name,
+                    Text = files[i].Name.Replace(".wg",string.Empty),
                     Padding = new Thickness(10),
                     GridRow = i,
                 };
                 _worldButtons[i].Click += (sender, args) => { 
                     var tmp = sender as TextButton;
-                        //_action = new ChangeToMap(tmp.Text);
+                        ChangeContext = new ChangeToMap(tmp.Text);
                      };
             }
         }

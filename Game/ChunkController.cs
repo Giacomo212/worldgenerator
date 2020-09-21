@@ -1,9 +1,10 @@
+using System;
 using System.IO;
 using Types;
 using World;
 
 namespace Game{
-    public class ChunkController{
+    public class ChunkController : IDisposable{
         private Chunk[,] _currentChunks;
 
         private int _mapSize;
@@ -69,6 +70,11 @@ namespace Game{
                 _chunkEnd.Y++;
                 GetCurrentChunks();
             }
+        }
+
+
+        public void Dispose(){
+            _mapReader?.Dispose();
         }
     }
 }

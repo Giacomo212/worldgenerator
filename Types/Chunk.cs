@@ -7,6 +7,7 @@ namespace Types{
     public class Chunk : IEnumerable{
     private Block[,] _blocks = new Block[Size, Size];
     public const int Size = 16;
+    public static readonly int PixelSize = Size*Block.Size;
     public static readonly int SizeOf = Block.SizeOf * Size * Size;
 
 

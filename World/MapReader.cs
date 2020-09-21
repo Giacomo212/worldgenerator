@@ -3,7 +3,7 @@ using System.IO;
 using Types;
 
 namespace World{
-    public class MapReader{
+    public class MapReader : IDisposable{
         private FileStream _fileStream;
         private BinaryReader _binaryReader;
         private Map _map;
@@ -50,6 +50,11 @@ namespace World{
             WorldSize worldSize = (WorldSize)file.ReadInt32();
             file.Close();
             return new Map(mapName, worldSize,seed);
+        }
+
+        public void Dispose(){
+            _fileStream?.Dispose();
+            _binaryReader?.Dispose();
         }
     }
 }

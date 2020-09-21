@@ -26,10 +26,9 @@ namespace Game{
 
         public MapContext(Map map){
              _map = map;
-             _chunkController = new ChunkController(new Position(4,4),map );
-             _cameraController = new CameraController((int) map.WorldType, (int) map.WorldType,
-                (GameConfig.Config.Resolution.Width / Block.Size) + 2,
-                (GameConfig.Config.Resolution.Hight / Block.Size) + 2);
+             var pos = new Position(GameConfig.Config.Resolution.Width/Chunk.PixelSize + 1 ,GameConfig.Config.Resolution.Hight/Chunk.PixelSize + 2 );
+             _chunkController = new ChunkController(pos,map );
+             _cameraController = new CameraController();
         }
 
 
@@ -56,31 +55,32 @@ namespace Game{
         }
 
         public override void OnWindowResize(){
-            _cameraController = new CameraController((int) _map.WorldType, (int) _map.WorldType,
-                (GameConfig.Config.Resolution.Width / Block.Size) + 2,
-                (GameConfig.Config.Resolution.Hight / Block.Size) + 2);
+            _chunkController.Dispose();
+            var pos = new Position(GameConfig.Config.Resolution.Width/Chunk.PixelSize + 1 ,GameConfig.Config.Resolution.Hight/Chunk.PixelSize + 2 );
+            _chunkController = new ChunkController(pos,_map);
+            _cameraController = new CameraController();
         }
 
-        public override IAction Update(GameTime gameTime){
-            // //move map horizontally 
-            // if (Keyboard.IsPressed(Keys.Left))
-            //     _cameraController.MoveLeft();
-            // else if (Keyboard.IsPressed(Keys.Right))
-            //     _cameraController.MoveRight();
-            // // move map vertically 
-            // if (Keyboard.IsPressed(Keys.Up))
-            //     _cameraController.MoveUp();
-            // else if (Keyboard.IsPressed(Keys.Down))
-            //     _cameraController.MoveDown();
-            //move map horizontally 
-            if (Keyboard.HasBeenPressed(Keys.Left))
+        public override IChangeContext Update(GameTime gameTime){
+            //  //move map horizontally 
+            //  if (Keyboard.IsPressed(Keys.Left))
+            //      _cameraController.MoveLeft();
+            //  else if (Keyboard.IsPressed(Keys.Right))
+            //      _cameraController.MoveRight();
+            //  // move map vertically 
+            //  if (Keyboard.IsPressed(Keys.Up))
+            //      _cameraController.MoveUp();
+            //  else if (Keyboard.IsPressed(Keys.Down))
+            //      _cameraController.MoveDown();
+            // move map horizontally 
+            if (Keyboard.IsPressed(Keys.Left) && _cameraController.MoveLeft())
                 _chunkController.MoveLeft();
-            else if (Keyboard.HasBeenPressed(Keys.Right))
+            else if (Keyboard.IsPressed(Keys.Right) && _cameraController.MoveRight())
                 _chunkController.MoveRight();
             // move map vertically 
-            if (Keyboard.HasBeenPressed(Keys.Up))
+            if (Keyboard.IsPressed(Keys.Up) && _cameraController.MoveUp())
                 _chunkController.MoveUp();
-            else if (Keyboard.HasBeenPressed(Keys.Down))
+            else if (Keyboard.IsPressed(Keys.Down) && _cameraController.MoveDown())
                 _chunkController.MoveDown();
             return Keyboard.HasBeenPressed(Keys.Escape) ? new ChangeToMainUi() : null;
         }
@@ -109,14 +109,14 @@ namespace Game{
         }
 
         private void DrawMap(){
-            var offset = Vector2.Zero;
+            var offset = new Vector2(_cameraController.VectorX - Chunk.PixelSize,_cameraController.VectorY - Chunk.PixelSize);
             var chunks = _chunkController.Chunks;
             for (int i = 0; i < chunks.GetLength(0); i++){
                 for (int j = 0; j < chunks.GetLength(1); j++){
                     DrawChunk(ref chunks[i,j],offset);
                     offset.Y += Chunk.Size * Block.Size;
                 }
-                offset.Y = 0;
+                offset.Y = _cameraController.VectorY - Chunk.PixelSize;
                 offset.X += Chunk.Size * Block.Size;
             }
             // var yZero = -_dirt.Height + _cameraController.VectorY;
@@ -153,20 +153,20 @@ namespace Game{
             
         }
 
-        public void MoveLeft(){
-            _cameraController.MoveLeft();
-        }
-
-        public void MoveRight(){
-            _cameraController.MoveRight();
-        }
-
-        public void MoveUp(){
-            _cameraController.MoveUp();
-        }
-
-        public void MoveDown(){
-            _cameraController.MoveDown();
-        }
+        // public void MoveLeft(){
+        //     _cameraController.MoveLeft();
+        // }
+        //
+        // public void MoveRight(){
+        //     _cameraController.MoveRight();
+        // }
+        //
+        // public void MoveUp(){
+        //     _cameraController.MoveUp();
+        // }
+        //
+        // public void MoveDown(){
+        //     _cameraController.MoveDown();
+        // }
     }
 }

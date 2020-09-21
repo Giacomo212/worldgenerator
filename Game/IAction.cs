@@ -1,8 +1,8 @@
 namespace Game{
-    public interface IAction{
+    public interface IChangeContext{
         public Context ReturnNewContext();
     }
-    public class ChangeToMainUi : IAction{
+    public class ChangeToMainUi : IChangeContext{
         public Context ReturnNewContext(){
             return new MainUiContext();
         }
