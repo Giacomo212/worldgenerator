@@ -44,10 +44,10 @@ namespace Game{
         private void MoveVectorX(float vector){
             _vectorX += vector;
             if (_vectorX < 0  ){
-                _vectorX = Block.Width;
+                _vectorX = Block.Size;
                 MoveMapRight();
             } 
-            if (_vectorX > Block.Width){
+            if (_vectorX > Block.Size){
                 _vectorX = 0;
                 MoveMapLeft();
             }
@@ -56,10 +56,10 @@ namespace Game{
         private void MoveVectorY(float vector){
             _vectorY += vector;
             if (_vectorY < 0  ){
-                _vectorY = Block.High ;
+                _vectorY = Block.Size ;
                 MoveMapDown();
             } 
-            if (_vectorY > Block.High){
+            if (_vectorY > Block.Size){
                 _vectorY = 0;
                 MoveMapUp();
             }
@@ -110,15 +110,15 @@ namespace Game{
                 MoveVectorX(-GameConfig.Config.Sensivity);
         }
         public void MoveLeft(){
-            if (_vectorX + GameConfig.Config.Sensivity > Block.Width && ViewBeginningPointerX == 0)
-                _vectorX = Block.Width;
+            if (_vectorX + GameConfig.Config.Sensivity > Block.Size && ViewBeginningPointerX == 0)
+                _vectorX = Block.Size;
             else
                 MoveVectorX(GameConfig.Config.Sensivity);
         }
 
         public void MoveUp(){
-            if (_vectorY + GameConfig.Config.Sensivity > Block.High && ViewBeginningPointerY == 0)
-                _vectorY = Block.High;
+            if (_vectorY + GameConfig.Config.Sensivity > Block.Size && ViewBeginningPointerY == 0)
+                _vectorY = Block.Size;
             else
                 MoveVectorY(GameConfig.Config.Sensivity);
         }

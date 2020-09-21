@@ -1,28 +1,31 @@
+using System.IO;
 using Types;
+using World;
 
 namespace Game{
     public class ChangeToNewMap : IAction{
-        private WorldSize _worldSize;
-        private string _name;
-        public ChangeToNewMap(WorldSize worldSize, string name){
-            _worldSize = worldSize;
-            _name = name;
+        private Map _map;
+        public ChangeToNewMap(Map map){
+            _map = map;
         }
-
+    
         public Context ReturnNewContext(){
-            return new MapContext(_worldSize,_name);
+            MapGenerator mapGenerator = new MapGenerator(_map,new SurfaceChunkGenerator(_map.Seed));
+            mapGenerator.GenerateNewWorld();
+            return new MapContext(_map);
         }
     }
 
     public class ChangeToMap : IAction{
         private string _name;
-
+    
         public ChangeToMap(string name){
             _name = name;
         }
-
+    
         public Context ReturnNewContext(){
-            return new MapContext(_name);
+            
+            return new MapContext(MapReader.ReadMap(_name));
         }
     }
 }

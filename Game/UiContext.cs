@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Libraries;
+using World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -20,7 +20,7 @@ namespace Game{
         private TextButton _configButton;
         private TextButton _exitButton;
         //config button
-        
+        private Random _random = new Random();
         
         //utility values
         private int _direction = 3;
@@ -114,8 +114,10 @@ namespace Game{
                 Text = "crate new world",
                 GridRow = 2,
             };
-            _createWorldButton.Click += (sender, args) => { 
-                _action = new ChangeToNewMap(WorldSize.Large, "world" + _worldCount);
+            _createWorldButton.Click += (sender, args) => {
+                //_random.Next()
+                
+                _action = new ChangeToNewMap(new Map("world"+_worldCount,WorldSize.Large,2137));;
                 _worldCount++;
             };
             var grid = new Grid(){
@@ -163,7 +165,7 @@ namespace Game{
                 };
                 _worldButtons[i].Click += (sender, args) => { 
                     var tmp = sender as TextButton;
-                        _action = new ChangeToMap(tmp.Text);
+                        //_action = new ChangeToMap(tmp.Text);
                      };
             }
         }

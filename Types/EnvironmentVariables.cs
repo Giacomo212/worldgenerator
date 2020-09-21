@@ -17,7 +17,7 @@ namespace Types{
             }
 
             _separator = Path.DirectorySeparatorChar;
-            _worldfiles = _gameFiles + _separator + "worlds" + _separator;
+            _worldfiles = _gameFiles + _separator + "worlds";
         }
         public static string GameFiles => _gameFiles;
         public static char Separator => _separator;

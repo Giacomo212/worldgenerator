@@ -1,16 +1,13 @@
 using System;
 using Types;
 
-namespace Generator{
+namespace World{
     public class SurfaceChunkGenerator : IChunkGenerator{
         private FastNoise _blockNoise;
         private FastNoise _biomeNoise;
         private Random _random = new Random();
 
-        public SurfaceChunkGenerator(){
-            var random = new Random();
-            SetupNoise(random.Next());
-        }
+       
 
         public SurfaceChunkGenerator(int seed){
             SetupNoise(seed);
@@ -72,8 +69,16 @@ namespace Generator{
                 : new Block(BlockType.Grass, BiomeType.Grassland);
         }
 
-        public Chunk GenerateChunk(){
-            throw new NotImplementedException();
+        public Chunk GenerateChunk(Position chunkPosition){
+            var tmp = new Position(chunkPosition.X * Chunk.Size, chunkPosition.Y * Chunk.Size);
+            var chunk = new Chunk();
+            for (var x = 0; x <  Chunk.Size; x++){
+                for (var y = 0; y < Chunk.Size; y++){
+                    chunk[x, y] = GetBlock(x + tmp.X, y + tmp.Y);
+                }
+            }
+
+            return chunk;
         }
     }
 }

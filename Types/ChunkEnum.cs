@@ -9,7 +9,7 @@ namespace Types{
             _blocks = blocks;
         }
         public bool MoveNext(){
-            if (++_i > Chunk.Size){
+            if (++_i >= Chunk.Size ){
                 _i = 0;
                 ++_j;
             }

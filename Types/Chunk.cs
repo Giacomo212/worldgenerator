@@ -6,9 +6,8 @@ using Types;
 namespace Types{
     public class Chunk : IEnumerable{
     private Block[,] _blocks = new Block[Size, Size];
-    
-    public static readonly int Size = 16;
-    public static int SizeOf{ get; } = Block.SizeOf * Size * Size;
+    public const int Size = 16;
+    public static readonly int SizeOf = Block.SizeOf * Size * Size;
 
 
     public Block this[int i, int j]{

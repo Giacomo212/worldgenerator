@@ -2,20 +2,17 @@
 using System;
 using Myra;
 using System.IO;
-using Libraries;
 using Types;
 
-namespace Game {
-    
-    public class Game1 : Microsoft.Xna.Framework.Game {
-        
+namespace Game{
+    public class Game1 : Microsoft.Xna.Framework.Game{
         private GraphicsDeviceManager _graphics;
         private Context _currentContext;
-       
+
         public Game1(){
             var separator = Path.DirectorySeparatorChar;
             Directory.CreateDirectory(EnvironmentVariables.GameFiles);
-            Directory.CreateDirectory(EnvironmentVariables.GameFiles+ $"{separator}worlds");
+            Directory.CreateDirectory(EnvironmentVariables.GameFiles + $"{separator}worlds");
             Context.Game = this;
             MyraEnvironment.Game = this;
             _graphics = new GraphicsDeviceManager(this);
@@ -27,7 +24,7 @@ namespace Game {
         }
 
 
-        protected override void Initialize() {
+        protected override void Initialize(){
             base.Initialize();
             _currentContext.Initialize();
             Keyboard.Initialize();
@@ -40,44 +37,42 @@ namespace Game {
 
 
         protected override void LoadContent(){
-            
             _currentContext.Load();
         }
 
-        protected override void UnloadContent() {
+        protected override void UnloadContent(){
             Content.Unload();
         }
 
-        protected override void Update(GameTime gameTime) {
-            
+        protected override void Update(GameTime gameTime){
             Keyboard.UpdateState();
             var action = _currentContext.Update(gameTime);
             if (action != null){
                 _currentContext = action.ReturnNewContext();
                 ReloadContent();
             }
-                
+
             base.Update(gameTime);
         }
 
-       
-        protected override void Draw(GameTime gameTime) {
+
+        protected override void Draw(GameTime gameTime){
             GraphicsDevice.Clear(Color.Black);
             _currentContext.Draw(gameTime);
             base.Draw(gameTime);
         }
 
-        private void ReloadContent() {
+        private void ReloadContent(){
             Content.Unload();
             _currentContext.Load();
             _currentContext.Initialize();
         }
-        void Window_ClientSizeChanged(object sender, EventArgs e)
-        {
+
+        void Window_ClientSizeChanged(object sender, EventArgs e){
             _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
             _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
             _graphics.ApplyChanges();
-            GameConfig.Config. Resolution = new Resolution(Window.ClientBounds.Width,Window.ClientBounds.Height,false);
+            GameConfig.Config.Resolution = new Resolution(Window.ClientBounds.Width, Window.ClientBounds.Height, false);
             _currentContext.OnWindowResize();
         }
     }

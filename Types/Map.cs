@@ -5,7 +5,7 @@ namespace Types {
          public readonly string Name;
          public readonly int Seed;
          private WorldSize _worldType;
-         private int _seed;
+       
          
 
          public WorldSize WorldType => _worldType;

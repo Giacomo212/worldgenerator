@@ -1,10 +1,12 @@
 namespace Types{
     public class Position{
-        private int _x, y;
+        public int X{ get; set; }
+
+        public int Y{ get; set; }
 
         public Position(int x, int y){
-            _x = x;
-            this.y = y;
+            X = x;
+            Y = y;
         }
 
         public static bool operator <(Position a, Position b){
@@ -13,8 +15,7 @@ namespace Types{
         public static bool operator >(Position a, Position b){
             return a.X > b.X && a.Y > b.Y;
         }
-        public int X => _x;
-        public int Y => y;
+        
         public static Position Zero => new Position(0, 0);
         
 
