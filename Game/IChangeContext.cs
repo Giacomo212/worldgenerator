@@ -3,7 +3,7 @@ using Types;
 using World;
 
 namespace Game{
-    public class ChangeToNewMap : IAction{
+    public class ChangeToNewMap : IChangeContext{
         private Map _map;
         public ChangeToNewMap(Map map){
             _map = map;
@@ -16,7 +16,7 @@ namespace Game{
         }
     }
 
-    public class ChangeToMap : IAction{
+    public class ChangeToMap : IChangeContext{
         private string _name;
     
         public ChangeToMap(string name){

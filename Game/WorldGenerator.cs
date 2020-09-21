@@ -5,11 +5,11 @@ using System.IO;
 using Types;
 
 namespace Game{
-    public class Game1 : Microsoft.Xna.Framework.Game{
+    public class WorldGenerator : Microsoft.Xna.Framework.Game{
         private GraphicsDeviceManager _graphics;
         private Context _currentContext;
 
-        public Game1(){
+        public WorldGenerator(){
             var separator = Path.DirectorySeparatorChar;
             Directory.CreateDirectory(EnvironmentVariables.GameFiles);
             Directory.CreateDirectory(EnvironmentVariables.GameFiles + $"{separator}worlds");
