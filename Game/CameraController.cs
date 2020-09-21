@@ -10,39 +10,17 @@ namespace Game{
         //vectors which are responsible for map shift
         private float _vectorX = 0;
         private float _vectorY = 0;
-
-        //private readonly int _chunkSize = Chunk.Size*Block.Size;
-        //view variable represent the map which part of map is seen on the screen
-        // 
-        // private int _viewBeginningPointerX;
-        // private int _viewBeginningPointerY;
-        // private int _viewEndPointerX;
-        // private int _viewEndPointerY;
-        //maximal values of pointers
-        // private int _mapWidth;
-        // private int _mapHight;
+        private Position _start = new Position(1,1);
+        private Position _end;
         
         // propertes
         public float VectorX => _vectorX;
         public float VectorY => _vectorY;
-        // public int ViewBeginningPointerX => _viewBeginningPointerX;
-        // public int ViewBeginningPointerY => _viewBeginningPointerY;
-        // public int ViewEndPointerX => _viewEndPointerX;
-        // public int ViewEndPointerY => _viewEndPointerY;
-        // public int XSize => _viewEndPointerX - _viewBeginningPointerX;
-        // public int YSize => _viewEndPointerX - _viewBeginningPointerX;
-        
-        
-        //constructor
-        
-        // public CameraController(int mapWidth, int mapHight, int viewWidth, int viewHight){
-        //     if(mapHight < 0 || mapWidth < 0)
-        //         throw new InvalidDataException();
-        //     // _mapHight = mapHight;
-        //     // _mapWidth = mapWidth;
-        //     InitializeViewSize(viewWidth,viewHight);
-        // }
-        
+
+
+        public CameraController(Map map){
+            _end = new Position((int)map.WorldType,(int)map.WorldType);
+        }
         //private methods
         public bool MoveRight(){
             _vectorX -= GameConfig.Config.Sensivity;
@@ -53,8 +31,9 @@ namespace Game{
             return false;
         }
         public bool MoveLeft(){
+            
             _vectorX += GameConfig.Config.Sensivity;
-            if (_vectorX > Chunk.PixelSize){
+            if (_vectorX > Chunk.PixelSize  ){
                 _vectorX = 0;
                 return true;
             }

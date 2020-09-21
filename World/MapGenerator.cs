@@ -4,7 +4,7 @@ using Types;
 
 
 namespace World{
-    public class MapGenerator{
+    public class MapGenerator : IDisposable{
         private BinaryWriter _binaryWriter;
         private Map _map;
         private IChunkGenerator _chunkGenerator;
@@ -54,6 +54,10 @@ namespace World{
                 }
             }
             Close();
+        }
+
+        public void Dispose(){
+            _binaryWriter?.Dispose();
         }
     }
 }

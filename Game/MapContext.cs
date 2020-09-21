@@ -28,7 +28,7 @@ namespace Game{
              _map = map;
              var pos = new Position(GameConfig.Config.Resolution.Width/Chunk.PixelSize + 1 ,GameConfig.Config.Resolution.Hight/Chunk.PixelSize + 2 );
              _chunkController = new ChunkController(pos,map );
-             _cameraController = new CameraController();
+             _cameraController = new CameraController(_map);
         }
 
 
@@ -58,21 +58,10 @@ namespace Game{
             _chunkController.Dispose();
             var pos = new Position(GameConfig.Config.Resolution.Width/Chunk.PixelSize + 1 ,GameConfig.Config.Resolution.Hight/Chunk.PixelSize + 2 );
             _chunkController = new ChunkController(pos,_map);
-            _cameraController = new CameraController();
+            _cameraController = new CameraController(_map);
         }
 
         public override IChangeContext Update(GameTime gameTime){
-            //  //move map horizontally 
-            //  if (Keyboard.IsPressed(Keys.Left))
-            //      _cameraController.MoveLeft();
-            //  else if (Keyboard.IsPressed(Keys.Right))
-            //      _cameraController.MoveRight();
-            //  // move map vertically 
-            //  if (Keyboard.IsPressed(Keys.Up))
-            //      _cameraController.MoveUp();
-            //  else if (Keyboard.IsPressed(Keys.Down))
-            //      _cameraController.MoveDown();
-            // move map horizontally 
             if (Keyboard.IsPressed(Keys.Left) && _cameraController.MoveLeft())
                 _chunkController.MoveLeft();
             else if (Keyboard.IsPressed(Keys.Right) && _cameraController.MoveRight())

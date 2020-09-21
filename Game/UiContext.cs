@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Myra.Attributes;
 using Myra.Graphics2D;
+using Myra.Graphics2D.Brushes;
 using Myra.Graphics2D.TextureAtlases;
 using Myra.Graphics2D.UI;
 using Types;
@@ -14,6 +15,7 @@ using Types;
 namespace Game{
     public class MainUiContext : Context{
         private Desktop _desktop;
+        
         //private MapContext _mapContext = new MapContext(WorldSize.Small);
         private Grid _grid;
         //main buttons
@@ -50,16 +52,18 @@ namespace Game{
         }
 
         public override void Draw(GameTime gameTime){
-            
+            var vector = new Vector2(0,0);
             _spriteBatch.Begin();
-            for (var vector = Vector2.Zero; vector.X < GameConfig.Config.Resolution.Width; vector.X+=Block.Size){
-                for (; vector.Y < GameConfig.Config.Resolution.Hight; vector.Y+=Block.Size){
+            for (; vector.X < GameConfig.Config.Resolution.Width; vector.X+=Block.Size){
+                for (vector.Y = 0; vector.Y < GameConfig.Config.Resolution.Hight; vector.Y+=Block.Size){
                     _spriteBatch.Draw(_filler,vector,Color.White);
                 }
+                
             }
             _spriteBatch.End();
             //_mapContext.Draw(gameTime);
             _desktop.Render();
+           
         }
 
         public override void Initialize(){
@@ -67,6 +71,7 @@ namespace Game{
         }
 
         public override void Load(){
+         
             _spriteBatch = new SpriteBatch(Game.GraphicsDevice);
             //_mapContext.Load();
             _grid = new Grid {
@@ -74,7 +79,6 @@ namespace Game{
                 ColumnSpacing = 8,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
-                GridColumn = 1,
             };
             _grid.ColumnsProportions.Add(new Proportion(ProportionType.Auto));
             _grid.ColumnsProportions.Add(new Proportion(ProportionType.Auto));
@@ -125,7 +129,7 @@ namespace Game{
             _createWorldButton.Click += (sender, args) => {
                 //_random.Next()
                 
-                ChangeContext = new ChangeToNewMap(new Map("world"+_worldCount,WorldSize.Large,2137));;
+                ChangeContext = new ChangeToNewMap(new Map("world"+_worldCount,WorldSize.Large,_random.Next()));;
                 _worldCount++;
             };
             var grid = new Grid(){
@@ -134,8 +138,6 @@ namespace Game{
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
             };
-            
-            
             
             _scrollViewer = new ScrollViewer(){
                 HorizontalAlignment = HorizontalAlignment.Center,

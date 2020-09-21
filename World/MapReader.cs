@@ -7,7 +7,7 @@ namespace World{
         private FileStream _fileStream;
         private BinaryReader _binaryReader;
         private Map _map;
-        private int _sizeofMap;
+        private  readonly int _sizeofMap;
         public MapReader( Map map){
             _fileStream = File.Open(EnvironmentVariables.Worldfiles + EnvironmentVariables.Separator + map.Name + ".wg",
                 FileMode.Open);
@@ -17,7 +17,7 @@ namespace World{
             _sizeofMap = Chunk.SizeOf * (int) _map.WorldType / Chunk.Size;
         }
 
-        public Chunk ReadChunk(){
+        private Chunk ReadChunk(){
             var chunk = new Chunk();
             for (int i = 0; i < Chunk.Size; i++){
                 for (int j = 0; j < Chunk.Size; j++){

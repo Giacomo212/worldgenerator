@@ -6,15 +6,12 @@ using World;
 namespace Game{
     public class ChunkController : IDisposable{
         private Chunk[,] _currentChunks;
-
         private int _mapSize;
-
-        //private CameraController _camera;
         private Position _chunkBeginnig = Position.Zero;
         private Position _chunkEnd;
         private MapReader _mapReader;
         private readonly Position _bufferSize;
-
+        
         public ChunkController(Chunk[,] chunks){
             _currentChunks = chunks;
         }
