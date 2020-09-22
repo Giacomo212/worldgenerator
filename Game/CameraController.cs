@@ -10,7 +10,7 @@ namespace Game{
         //vectors which are responsible for map shift
         private float _vectorX = 0;
         private float _vectorY = 0;
-        private Position _start = new Position(1,1);
+        private Position _start = new Position(0,0);
         private Position _end;
         
         // propertes
@@ -31,23 +31,30 @@ namespace Game{
             return false;
         }
         public bool MoveLeft(){
-            
-            _vectorX += GameConfig.Config.Sensivity;
-            if (_vectorX > Chunk.PixelSize  ){
-                _vectorX = 0;
-                return true;
+            var tmp =  _vectorX + GameConfig.Config.Sensivity;
+            if ( tmp < Chunk.PixelSize){
+                _vectorX = tmp;
+                return false;
             }
-
-            return false;
+            if (_start.X > 0){
+                _start.X--;
+                _vectorX = 0;    
+            }
+            
+            return true;
         }
         public bool MoveUp(){
-            _vectorY += GameConfig.Config.Sensivity;
-            if (_vectorY > Chunk.PixelSize){
-                _vectorY = 0;
-                return true;
+            var tmp =  _vectorY + GameConfig.Config.Sensivity;
+            if ( tmp < Chunk.PixelSize){
+                _vectorY = tmp;
+                return false;
             }
-
-            return false;
+            if (_start.Y > 0){
+                _start.Y--;
+                _vectorY = 0;    
+            }
+            
+            return true;
         }
         public bool MoveDown(){
             _vectorY -= GameConfig.Config.Sensivity;
