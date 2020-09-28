@@ -20,9 +20,6 @@ namespace World{
         }
 
         private void Write(Chunk chunk){
-            // foreach (Block block in chunk){
-            //     Write(block);
-            // }
             for (int i = 0; i < Chunk.Size; i++){
                 for (int j = 0; j < Chunk.Size; j++){
                     Write( chunk[i, j]);

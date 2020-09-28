@@ -9,7 +9,7 @@ namespace Game{
         //vectors which are responsible for map shift
         private float _vectorX = 0;
         private float _vectorY = 0;
-        private Position _start = new Position(0, 0);
+        private Position _renderPosition = new Position(0, 0);
         private readonly Map _map;
         
         // propertes
@@ -24,8 +24,8 @@ namespace Game{
         //private methods
         public bool MoveRight(){
             var tmp = _vectorX - GameConfig.Config.Sensivity;
-            if (_start.X < _map.ChunkCount && tmp <= 0){
-                _start.X++;
+            if (_renderPosition.X < _map.ChunkCount && tmp <= 0){
+                _renderPosition.X++;
                 _vectorX = Chunk.PixelSize;
                 return true;
             }
@@ -35,8 +35,8 @@ namespace Game{
 
         public bool MoveLeft(){
             var tmp = _vectorX + GameConfig.Config.Sensivity;
-            if (_start.X > 0 && tmp >= Chunk.PixelSize){
-                _start.X--;
+            if (_renderPosition.X > 0 && tmp >= Chunk.PixelSize){
+                _renderPosition.X--;
                 _vectorX = 0;
                 return true;
             }
@@ -46,8 +46,8 @@ namespace Game{
 
         public bool MoveUp(){
             var tmp = _vectorY + GameConfig.Config.Sensivity;
-            if (_start.Y > 0 && tmp >= Chunk.PixelSize){
-                _start.Y--;
+            if (_renderPosition.Y > 0 && tmp >= Chunk.PixelSize){
+                _renderPosition.Y--;
                 _vectorY = 0;
                 return true;
             }
@@ -57,8 +57,8 @@ namespace Game{
 
         public bool MoveDown(){
             var tmp = _vectorY - GameConfig.Config.Sensivity;
-            if (_start.Y < _map.ChunkCount && tmp <= 0){
-                _start.Y++;
+            if (_renderPosition.Y < _map.ChunkCount && tmp <= 0){
+                _renderPosition.Y++;
                 _vectorY = Chunk.PixelSize;
                 return true;
             }

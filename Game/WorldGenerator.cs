@@ -4,6 +4,7 @@ using Myra;
 using System.IO;
 using Types;
 
+
 namespace Game{
     public class WorldGenerator : Microsoft.Xna.Framework.Game{
         private GraphicsDeviceManager _graphics;
@@ -46,9 +47,9 @@ namespace Game{
 
         protected override void Update(GameTime gameTime){
             Keyboard.UpdateState();
-            var action = _currentContext.Update(gameTime);
-            if (action != null){
-                _currentContext = action.ReturnNewContext();
+            var changeContext = _currentContext.Update(gameTime);
+            if (changeContext != null){
+                _currentContext = changeContext.ReturnNewContext();
                 ReloadContent();
             }
 

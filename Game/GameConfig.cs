@@ -19,12 +19,8 @@ namespace Game {
         }
         public void Save(){
             var separator = Path.DirectorySeparatorChar;
-            Directory.CreateDirectory(EnvironmentVariables.GameFiles);
             var settingsToSave = "";
-            settingsToSave += JsonConvert.SerializeObject(Config.Sensivity);
-            settingsToSave += "\n";
-            settingsToSave += JsonConvert.SerializeObject(Config.Resolution);
-            settingsToSave += "\n";
+            settingsToSave += JsonConvert.SerializeObject(Config);
             try{
                 using var file = new StreamWriter(EnvironmentVariables.GameFiles + $"{separator}settings.json");
                 file.Write(settingsToSave);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using World;
 using Microsoft.Xna.Framework;
@@ -12,10 +13,11 @@ using Myra.Graphics2D.UI;
 using Types;
 
 
+
 namespace Game{
     public class MainUiContext : Context{
         private Desktop _desktop;
-        
+        private Stack<Desktop> _stack;
         //private MapContext _mapContext = new MapContext(WorldSize.Small);
         private Grid _grid;
         //main buttons
@@ -32,6 +34,11 @@ namespace Game{
         private TextButton _createWorldButton;
         private Texture2D _filler;
         public MainUiContext(){
+            
+            _stack = new Stack<Desktop>();
+            _stack.Push(new Desktop());
+            var a = _stack.Pop();
+
         }
 
         public override IChangeContext Update(GameTime gameTime){

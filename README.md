@@ -6,16 +6,16 @@ A Random world generator based on Perlin Noise and MonoGame
 [MonoGame](https://www.monogame.net/downloads/)
   
   
-# How to run
+# How to build & run
   
 Using dotnet CLI
   
 ```
-git clone https://github.com/giacomo212/worldgenerator  
+git clone https://github.com/Giacomo212/worldgenerator.git  
 cd ./worldgenerator/Game  
 dotnet run
-  
 ```
+  
  Using Visual Studio
    
 Just open sln file and hit run
