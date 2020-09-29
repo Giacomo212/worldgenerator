@@ -19,7 +19,7 @@ namespace Game{
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            _currentContext = new MainUiContext();
+            _currentContext = new StartingScreenContext();
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += Window_ClientSizeChanged;
         }
@@ -27,7 +27,6 @@ namespace Game{
 
         protected override void Initialize(){
             base.Initialize();
-            _currentContext.Initialize();
             Keyboard.Initialize();
             GameConfig.Config.Save();
             _graphics.PreferredBackBufferWidth = GameConfig.Config.Resolution.Width;
@@ -47,12 +46,11 @@ namespace Game{
 
         protected override void Update(GameTime gameTime){
             Keyboard.UpdateState();
-            var changeContext = _currentContext.Update(gameTime);
-            if (changeContext != null){
-                _currentContext = changeContext.ReturnNewContext();
+            var tmp = _currentContext.Update(gameTime);
+            if (tmp != null){
+                _currentContext = tmp;
                 ReloadContent();
             }
-
             base.Update(gameTime);
         }
 

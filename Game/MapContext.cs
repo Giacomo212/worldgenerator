@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using Game.UI;
 using World;
 using Types;
 
@@ -26,6 +27,8 @@ namespace Game{
         private ChunkController _chunkController;
 
         public MapContext(Map map){
+            
+            _spriteBatch = new SpriteBatch(Context.Game.GraphicsDevice);
              _map = map;
              var pos = new Position(GameConfig.Config.Resolution.Width/Chunk.PixelSize + 1 ,GameConfig.Config.Resolution.Hight/Chunk.PixelSize + 2 );
              _chunkController = new ChunkController(pos,map );
@@ -43,6 +46,7 @@ namespace Game{
             InitializeBlockDirectory();
             InitializeItemDirectory();
         }
+
 
         public override void Load(){
             _spriteBatch = new SpriteBatch(Game.GraphicsDevice);
@@ -62,7 +66,7 @@ namespace Game{
             _cameraController = new CameraController(_map);
         }
 
-        public override IChangeContext Update(GameTime gameTime){
+        public override Context Update(GameTime gameTime){
             if (Keyboard.IsPressed(Keys.Left) && _cameraController.MoveLeft())
                 _chunkController.MoveLeft();
             else if (Keyboard.IsPressed(Keys.Right) && _cameraController.MoveRight())
@@ -72,7 +76,7 @@ namespace Game{
                 _chunkController.MoveUp();
             else if (Keyboard.IsPressed(Keys.Down) && _cameraController.MoveDown())
                 _chunkController.MoveDown();
-            return Keyboard.HasBeenPressed(Keys.Escape) ? new ChangeToMainUi() : null;
+            return Keyboard.HasBeenPressed(Keys.Escape) ? new StartingScreenContext() : null;
         }
 
         private Texture2D ParseBlock(BlockType type){

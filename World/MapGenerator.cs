@@ -17,6 +17,7 @@ namespace World{
             _binaryWriter.Write(map.Seed);
             _binaryWriter.Write((int) map.WorldType);
             _chunkGenerator = generator;
+            GenerateNewWorld();
         }
 
         private void Write(Chunk chunk){
@@ -44,7 +45,7 @@ namespace World{
             _binaryWriter.Close();
         }
 
-        public void GenerateNewWorld(){
+        private void GenerateNewWorld(){
             for (int i = 0; i < (int)_map.WorldType /Chunk.Size; i++){
                 for (int j = 0; j < (int)_map.WorldType /Chunk.Size; j++){
                     Write(_chunkGenerator.GenerateChunk(new Position(i,j)));
@@ -54,7 +55,8 @@ namespace World{
         }
 
         public void Dispose(){
-            _binaryWriter?.Dispose();
+            _binaryWriter.Close();
+            _binaryWriter.Dispose();
         }
     }
 }
