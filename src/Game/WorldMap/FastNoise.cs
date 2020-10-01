@@ -37,7 +37,7 @@ using FN_DECIMAL = System.Single;
 
 using System;
 using System.Runtime.CompilerServices;
-namespace World {
+namespace Game.WorldMap {
 
     public class FastNoise {
         private const Int16 FN_INLINE = 256; //(Int16)MethodImplOptions.AggressiveInlining;

@@ -3,12 +3,12 @@ using System.IO;
 using Types;
 
 
-namespace World{
+namespace Game.WorldMap{
     public class MapGenerator : IDisposable{
         private BinaryWriter _binaryWriter;
-        private Map _map;
+        private Types.Map _map;
         private IChunkGenerator _chunkGenerator;
-        public MapGenerator(Map map, IChunkGenerator generator){
+        public MapGenerator(Types.Map map, IChunkGenerator generator){
             _map = map;
             _binaryWriter =
                 new BinaryWriter(File.Open(

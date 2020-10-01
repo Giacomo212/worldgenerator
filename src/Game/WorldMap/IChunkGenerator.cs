@@ -1,6 +1,6 @@
 using Types;
 
-namespace World{
+namespace Game.WorldMap{
     public interface IChunkGenerator{
         public Chunk GenerateChunk(Position position);
     }

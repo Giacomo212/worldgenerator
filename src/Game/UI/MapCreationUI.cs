@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Myra.Graphics2D;
 using Myra.Graphics2D.UI;
 using Types;
-using World;
+using Game.WorldMap;
 
 namespace Game.UI{
     public class MapCreationUI : UserInterface{
@@ -64,8 +64,8 @@ namespace Game.UI{
                 Content = _scrollGrid,
             };
 
-            MainGrid.Widgets.Add(_scrollViewer);
-            MainGrid.Widgets.Add(_buttonGrid);
+            Widgets.Add(_scrollViewer);
+            Widgets.Add(_buttonGrid);
             _buttonGrid.Widgets.Add(_createWorldButton);
             _buttonGrid.Widgets.Add(_deleteWorldButton);
             GetAllWorlds();

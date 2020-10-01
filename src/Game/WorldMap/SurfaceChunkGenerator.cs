@@ -1,7 +1,7 @@
 using System;
 using Types;
 
-namespace World{
+namespace Game.WorldMap{
     public class SurfaceChunkGenerator : IChunkGenerator{
         private FastNoise _blockNoise;
         private FastNoise _biomeNoise;

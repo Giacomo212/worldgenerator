@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using Types;
-using World;
+using Game.WorldMap;
 
 namespace Game{
     public class ChunkController : IDisposable{

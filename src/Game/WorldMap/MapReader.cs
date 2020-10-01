@@ -2,13 +2,13 @@ using System;
 using System.IO;
 using Types;
 
-namespace World{
+namespace Game.WorldMap{
     public class MapReader : IDisposable{
         private FileStream _fileStream;
         private BinaryReader _binaryReader;
-        private Map _map;
+        private Types.Map _map;
         private  readonly int _sizeofMap;
-        public MapReader( Map map){
+        public MapReader( Types.Map map){
             _fileStream = File.Open(EnvironmentVariables.Worldfiles + EnvironmentVariables.Separator + map.Name + ".wg",
                 FileMode.Open);
             _map = map;
@@ -42,14 +42,14 @@ namespace World{
             
         }
 
-        public static Map ReadMap(string mapName){
+        public static Types.Map ReadMap(string mapName){
             if (mapName.Contains("/") || mapName.Contains("\\"))
                 throw new IOException("invalid file name");
             using var file = new BinaryReader(File.Open(EnvironmentVariables.Worldfiles + EnvironmentVariables.Separator  + mapName + ".wg", FileMode.Open));
             int seed = file.ReadInt32();
             WorldSize worldSize = (WorldSize)file.ReadInt32();
             file.Close();
-            return new Map(mapName, worldSize,seed);
+            return new Types.Map(mapName, worldSize,seed);
         }
 
         public void Dispose(){

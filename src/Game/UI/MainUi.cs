@@ -4,20 +4,17 @@ using Myra.Graphics2D.UI;
 namespace Game.UI{
     public class MainUi : UserInterface{
         //main buttons
-        
         private TextButton _startGameButton;
         private TextButton _configButton;
         private TextButton _exitButton;
         
         public MainUi() : base(){
-            MainGrid.ColumnsProportions.Add(new Proportion(ProportionType.Auto));
-            MainGrid.ColumnsProportions.Add(new Proportion(ProportionType.Auto));
-            MainGrid.RowsProportions.Add(new Proportion(ProportionType.Auto));
-            MainGrid.RowsProportions.Add(new Proportion(ProportionType.Auto));
+            ColumnsProportions.Add(new Proportion(ProportionType.Auto));
+            ColumnsProportions.Add(new Proportion(ProportionType.Auto));
+            RowsProportions.Add(new Proportion(ProportionType.Auto));
+            RowsProportions.Add(new Proportion(ProportionType.Auto));
             SetupMainButtons();
-            MainGrid.Widgets.Add(_startGameButton);
-            MainGrid.Widgets.Add(_configButton);
-            MainGrid.Widgets.Add(_exitButton);
+            
         }
         private void SetupMainButtons(){
             _startGameButton = new TextButton{
@@ -43,6 +40,9 @@ namespace Game.UI{
             _startGameButton.Click += (s, a) => { _interface = new MapCreationUI(); };
             _configButton.Click += (sender, args) => _interface = new ConfigUI();
             _exitButton.Click += (s, a) => { System.Environment.Exit(0); };
+            Widgets.Add(_startGameButton);
+            Widgets.Add(_configButton);
+            Widgets.Add(_exitButton);
         }
 
         

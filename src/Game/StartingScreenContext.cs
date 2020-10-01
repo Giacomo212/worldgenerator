@@ -15,11 +15,13 @@ namespace Game{
         public override Context Update(GameTime gameTime){
             if (Keyboard.HasBeenPressed(Keys.Escape) && _userInterfaces.Count > 0){
                 _interface = _userInterfaces.Pop();
+                Desktop.Root = _interface;
             }
             var tmp = _interface.CreateNewUI();
             if (tmp == null) return _interface.CrateNewContext();
             _userInterfaces.Push(_interface);
             _interface = tmp;
+            Desktop.Root = _interface;
             return _interface.CrateNewContext();
         }
 
@@ -32,7 +34,7 @@ namespace Game{
                 }
             }
             _spriteBatch.End();
-            _interface.Render();
+            Desktop.Render();
         }
 
         public override void Initialize(){
@@ -41,6 +43,7 @@ namespace Game{
         public override void Load(){
             _spriteBatch = new SpriteBatch(Game.GraphicsDevice);
             _interface = new MainUi();
+            Desktop.Root = _interface;
             _filler = Game.Content.Load<Texture2D>("dirt");
         }
 

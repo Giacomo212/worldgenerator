@@ -7,7 +7,7 @@ using Myra.Graphics2D.UI;
 namespace Game.UI{
     public class ConfigUI : UserInterface{
         public ConfigUI() : base(){
-            MainGrid.RowSpacing = 0;
+            RowSpacing = 0;
             var scrollLabel = new Label{
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Text = "Scroll speed",
@@ -39,11 +39,11 @@ namespace Game.UI{
                 Text = "Test",
             };
             comboBox.Items.Add(item);
-            MainGrid.Widgets.Add(slider);
-            MainGrid.Widgets.Add(scrollLabel);
-            MainGrid.Widgets.Add(button);
-            MainGrid.Widgets.Add(comboText);
-            MainGrid.Widgets.Add(comboBox);
+            Widgets.Add(slider);
+            Widgets.Add(scrollLabel);
+            Widgets.Add(button);
+            Widgets.Add(comboText);
+            Widgets.Add(comboBox);
             
         }
     }

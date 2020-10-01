@@ -2,20 +2,18 @@ using Myra.Graphics2D.UI;
 
 
 namespace Game.UI{
-    public abstract class UserInterface : Desktop{
+    public abstract class UserInterface : Grid{
         protected UserInterface _interface = null;
-        protected Grid MainGrid;
+
         // public UserInterface Interface => _interface;
         protected Context StartUiContext = null;
+
         // public IChangeContext ContextCreator => _ContextCreator;
         protected UserInterface() : base(){
-            MainGrid = new Grid{
-                RowSpacing = 8,
-                ColumnSpacing = 8,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center
-            };
-            Root = MainGrid;
+            RowSpacing = 8;
+            ColumnSpacing = 8;
+            HorizontalAlignment = HorizontalAlignment.Center;
+            VerticalAlignment = VerticalAlignment.Center;
         }
 
         public UserInterface CreateNewUI(){
