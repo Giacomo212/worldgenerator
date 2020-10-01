@@ -3,8 +3,8 @@ using Types;
 
 namespace Game.WorldMap{
     public class SurfaceChunkGenerator : IChunkGenerator{
-        private FastNoise _blockNoise;
-        private FastNoise _biomeNoise;
+        private FastNoiseLite _blockNoise;
+        private FastNoiseLite _biomeNoise;
         private Random _random = new Random();
 
        
@@ -14,16 +14,16 @@ namespace Game.WorldMap{
         }
 
         private void SetupNoise(int seed){
-            _blockNoise = new FastNoise(seed);
-            _biomeNoise = new FastNoise(seed + 2137);
-            _blockNoise.SetNoiseType(FastNoise.NoiseType.Perlin);
-            _biomeNoise.SetNoiseType(FastNoise.NoiseType.Perlin);
+            _blockNoise = new FastNoiseLite(seed);
+            _biomeNoise = new FastNoiseLite(seed + 2137);
+            _blockNoise.SetNoiseType(FastNoiseLite.NoiseType.Perlin);
+            _biomeNoise.SetNoiseType(FastNoiseLite.NoiseType.Perlin);
             _blockNoise.SetFrequency(0.2f);
-            _biomeNoise.SetFrequency(0.04f);
+            _biomeNoise.SetFrequency(0.02f);
         }
 
         private BiomeType GetBiome(int x, int y){
-            var noiseValue = _biomeNoise.GetValue(x, y);
+            var noiseValue = _biomeNoise.GetNoise(x, y);
             if (noiseValue < -0.6f)
                 return BiomeType.Mountains;
             if (noiseValue < -0.2f)
