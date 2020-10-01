@@ -66,6 +66,10 @@ namespace Game{
             _cameraController = new CameraController(_map);
         }
 
+        public override void Unload(){
+            _chunkController.Dispose();
+        }
+
         public override Context Update(GameTime gameTime){
             if (Keyboard.IsPressed(Keys.Left) && _cameraController.MoveLeft())
                 _chunkController.MoveLeft();
@@ -113,21 +117,7 @@ namespace Game{
                 offset.Y = _cameraController.VectorY - Chunk.PixelSize;
                 offset.X += Chunk.Size * Block.Size;
             }
-            // var yZero = -_dirt.Height + _cameraController.VectorY;
-            // var tmp = new Vector2(-_dirt.Width + _cameraController.VectorX, yZero);
-            //
-            // for (int i = _cameraController.ViewBeginningPointerX; i < _cameraController.ViewEndPointerX; i++){
-            //     for (int j = _cameraController.ViewBeginningPointerY; j < _cameraController.ViewEndPointerY; j++){
-            //         spriteBatch.Draw(ParseBlock(_map[i, j].BlockType), tmp, Color.White);
-            //         if (_map[i, j].ItemType != ItemType.None){
-            //             spriteBatch.Draw(ParseItem(_map[i, j].ItemType), tmp, Color.White);
-            //         }
-            //         tmp.Y += Block.High;
-            //     }
-            //
-            //     tmp.X += Block.Width;
-            //     tmp.Y = yZero;
-            // }
+           
         }
 
         private void DrawChunk(ref Chunk chunk, Vector2 offset){

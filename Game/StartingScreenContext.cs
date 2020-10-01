@@ -46,5 +46,9 @@ namespace Game{
 
         public override void OnWindowResize(){
         }
+
+        public override void Unload(){
+            
+        }
     }
 }

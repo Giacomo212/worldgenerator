@@ -13,55 +13,64 @@ namespace Game.UI{
         private Random _random = new Random();
 
         //map creation ui
-        private Grid _grid;
+        private Grid _scrollGrid;
+        private Grid _buttonGrid;
         private ScrollViewer _scrollViewer;
         private TextButton[] _worldButtons;
         private TextButton _createWorldButton;
+        private TextButton _deleteWorldButton;
 
         public MapCreationUI() : base(){
-            _grid = new Grid{
-                RowSpacing = 8,
-                ColumnSpacing = 8,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Top
-            };
-            Root = _grid;
+            
             SetupMapUi();
         }
 
 
         private void SetupMapUi(){
-            _createWorldButton = new TextButton(){
-                Text = "crate new world",
-                GridRow = 2,
-                Padding = new Thickness(10),
-            };
-            _createWorldButton.Click += (sender, args) => {
-                var map = new Map("world" + _worldCount, WorldSize.Large, _random.Next());
-                using var mapGenerator = new MapGenerator(map, new SurfaceChunkGenerator(_random.Next()));
-                mapGenerator.Dispose();
-                StartUiContext = new MapContext(map);
-                _worldCount++;
-            };
-            var grid = new Grid(){
+            _scrollGrid = new Grid{
                 RowSpacing = 8,
                 ColumnSpacing = 8,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
             };
-
-            _scrollViewer = new ScrollViewer{
+            _buttonGrid = new Grid{
+                RowSpacing = 0,
+                ColumnSpacing = 0,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
-                GridRow = 1,
-                Content = grid,
+                GridRow = 2,
+            };
+            _createWorldButton = new TextButton(){
+                Text = "crate new world",
+                Padding = new Thickness(10),
+            };
+            _deleteWorldButton = new TextButton(){
+                Text = "Delete World",
+                GridColumn = 2,
+                Padding = new Thickness(10),
+            };
+            _deleteWorldButton.Click += (sender, args) => SetDelete();
+            _createWorldButton.Click += (sender, args) => {
+                var map = new Map("world" + _worldCount, WorldSize.Large, _random.Next());
+                var mapGenerator = new MapGenerator(map, new SurfaceChunkGenerator(_random.Next()));
+                mapGenerator.Dispose();
+                StartUiContext = new MapContext(map);
+                _worldCount++;
             };
 
-            _grid.Widgets.Add(_scrollViewer);
-            _grid.Widgets.Add(_createWorldButton);
+            _scrollViewer = new ScrollViewer{
+                
+                GridRow = 1,
+                Content = _scrollGrid,
+            };
+
+            MainGrid.Widgets.Add(_scrollViewer);
+            MainGrid.Widgets.Add(_buttonGrid);
+            _buttonGrid.Widgets.Add(_createWorldButton);
+            _buttonGrid.Widgets.Add(_deleteWorldButton);
             GetAllWorlds();
             foreach (var worldButton in _worldButtons){
-                grid.Widgets.Add(worldButton);
+                _scrollGrid.Widgets.Add(worldButton);
             }
         }
 
@@ -84,5 +93,15 @@ namespace Game.UI{
                 };
             }
         }
+
+        private void SetDelete(){
+            foreach (var button in _worldButtons){
+                button.Click += (sender, args) => {
+                    var tmp = sender as TextButton;
+                    tmp.Text = "asdf";
+                };
+            }
+        }
+        
     }
 }

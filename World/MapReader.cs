@@ -53,6 +53,7 @@ namespace World{
         }
 
         public void Dispose(){
+            _fileStream.Close();
             _fileStream?.Dispose();
             _binaryReader?.Dispose();
         }

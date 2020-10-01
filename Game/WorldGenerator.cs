@@ -48,6 +48,7 @@ namespace Game{
             Keyboard.UpdateState();
             var tmp = _currentContext.Update(gameTime);
             if (tmp != null){
+                _currentContext.Unload();
                 _currentContext = tmp;
                 ReloadContent();
             }

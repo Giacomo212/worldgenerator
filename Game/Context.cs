@@ -13,5 +13,6 @@ namespace Game{
         public abstract void Initialize();
         public abstract void Load();
         public abstract void OnWindowResize();
-    }
+        public abstract void Unload();
+     }
 }
