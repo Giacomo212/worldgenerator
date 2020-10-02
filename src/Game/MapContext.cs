@@ -136,21 +136,5 @@ namespace Game{
                 
             
         }
-
-        // public void MoveLeft(){
-        //     _cameraController.MoveLeft();
-        // }
-        //
-        // public void MoveRight(){
-        //     _cameraController.MoveRight();
-        // }
-        //
-        // public void MoveUp(){
-        //     _cameraController.MoveUp();
-        // }
-        //
-        // public void MoveDown(){
-        //     _cameraController.MoveDown();
-        // }
     }
 }
