@@ -1,7 +1,6 @@
 using System;
-using System.Drawing;
 using System.IO;
-using Microsoft.Xna.Framework.Graphics;
+using Game.GameContext;
 using Myra.Graphics2D;
 using Myra.Graphics2D.UI;
 using Types;
@@ -58,11 +57,11 @@ namespace Game.UI{
              };
              
              var cancelButton = CrateTextButton("cancel", 0, 2);
-            
+             cancelButton.Click += (sender, args) => RequestPreviousInterface();
             _deleteWorldButton.Click += DeleteWorldButtonOnClick;
             _stopDeleteWorldButton.Click += StopDeleteWorldButtonOnClick;
             createWorldButton.Click += (sender, args) => {
-                RequestNewInterface(new UiChangeRequestArgs(new MapCustomizerInterface()));
+                RequestNewInterface(new UiChangeRequestArgs(new MapCustomizer()));
             };
 
             var scrollViewer = new ScrollViewer{

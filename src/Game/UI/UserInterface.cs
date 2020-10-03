@@ -1,3 +1,4 @@
+using System;
 using Myra.Graphics2D;
 using Myra.Graphics2D.UI;
 using Types;
@@ -5,12 +6,9 @@ using Types;
 
 namespace Game.UI{
     public abstract class UserInterface : Grid{
-        protected UserInterface _interface = null;
-
-        public bool IsCanceled{ get; private set; } = false;
+        
         // public UserInterface Interface => _interface;
-        protected Context _context = null;
-
+        
         // public IChangeContext ContextCreator => _ContextCreator;
         protected UserInterface() : base(){
             RowSpacing = 8;
@@ -18,15 +16,22 @@ namespace Game.UI{
             HorizontalAlignment = HorizontalAlignment.Center;
             VerticalAlignment = VerticalAlignment.Center;
         }
+        
 
-        public UserInterface CreateNewUI(){
-            var tmp = _interface;
-            _interface = null;
-            return tmp;
+        public event EventHandler OnPreviousUIRequest;
+        public event EventHandler<UiChangeRequestArgs> OnNextUIRequest;
+        public event EventHandler<ContextChangeRequested> OnContextChangeRequest;
+
+        protected virtual void RequestContext(ContextChangeRequested contextChangeRequested){
+            OnContextChangeRequest?.Invoke(this, contextChangeRequested); ;
         }
 
-        public Context CrateNewContext(){
-            return _context;
+        protected virtual void RequestPreviousInterface(){
+            OnPreviousUIRequest?.Invoke(this,new EventArgs());
+        }
+
+        protected virtual void RequestNewInterface(UiChangeRequestArgs uiChangeRequestArgs){
+            OnNextUIRequest?.Invoke(this, uiChangeRequestArgs);
         }
 
         protected static TextButton CrateTextButton(string text, int row, int column){

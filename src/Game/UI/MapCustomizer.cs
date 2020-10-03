@@ -1,17 +1,14 @@
 using System;
-using System.Collections.ObjectModel;
-using System.Drawing;
 using System.IO;
 using System.Linq;
+using Game.GameContext;
 using Game.WorldMap;
 using Myra.Graphics2D;
-using Myra.Graphics2D.Brushes;
-using Myra.Graphics2D.TextureAtlases;
 using Myra.Graphics2D.UI;
 using Types;
 
 namespace Game.UI{
-    public class MapCustomizerInterface : UserInterface{
+    public class MapCustomizer : UserInterface{
         private TextBox _nameTextBox;
         private TextBox _seedTextBox;
         private ComboBox _sizeComboBox;
@@ -25,7 +22,7 @@ namespace Game.UI{
             //Background = new SolidBrush(Color.Red);
         };
 
-        public MapCustomizerInterface() : base(){
+        public MapCustomizer() : base(){
             var nameLabel = new Label{
                 Text = "Enter a name:",
                 GridRow = 0,
@@ -90,7 +87,7 @@ namespace Game.UI{
             //     Padding = new Thickness(10),
             //     Width = 200,
             // };
-
+            cancelButton.Click += (sender, args) => RequestPreviousInterface();
             _widgets.Add(nameLabel);
             _widgets.Add(_nameTextBox);
             _widgets.Add(_seedTextBox);
@@ -133,7 +130,11 @@ namespace Game.UI{
             var map = new Map(_nameTextBox.Text, Parse(_sizeComboBox.SelectedItem.Text), tmp);
             var generator = new MapGenerator(map, new SurfaceChunkGenerator(tmp));
             generator.Dispose();
-            _context = new MapContext(map);
+            //_context = new MapContext(map);
+            RequestContext(new ContextChangeRequested(new MapContext(map)));
+                
         }
+
+      
     }
 }

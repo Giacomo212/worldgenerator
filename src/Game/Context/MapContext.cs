@@ -7,7 +7,7 @@ using Game.WorldMap;
 using Types;
 
 
-namespace Game{
+namespace Game.GameContext{
     public class MapContext : Context{
         private Map _map;
         private Dictionary<BlockType, Texture2D> _blockDictionary = new Dictionary<BlockType, Texture2D>();

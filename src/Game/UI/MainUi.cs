@@ -37,12 +37,13 @@ namespace Game.UI{
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Width = 100,
             };
-            _startGameButton.Click += (s, a) => { _interface = new MapCreationUI(); };
-            _configButton.Click += (sender, args) => _interface = new ConfigUI();
+            _startGameButton.Click += (s, a) => { RequestNewInterface(new UiChangeRequestArgs(new MapCreationUI())); };
+            _configButton.Click += (sender, args) => RequestNewInterface(new UiChangeRequestArgs(new ConfigUI()));
             _exitButton.Click += (s, a) => { System.Environment.Exit(0); };
             Widgets.Add(_startGameButton);
             Widgets.Add(_configButton);
             Widgets.Add(_exitButton);
+            
         }
 
         

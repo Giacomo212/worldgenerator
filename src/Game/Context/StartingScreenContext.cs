@@ -1,16 +1,18 @@
-﻿using Game.UI;
+﻿using System.Collections.Generic;
+using Game.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Types;
 
 
-namespace Game{
+namespace Game.GameContext{
     public class StartingScreenContext : Context{
+        protected Stack<UserInterface> _userInterfaces = new Stack<UserInterface>();
         private Texture2D _filler;
-
         public override Context Update(GameTime gameTime){
-            RemoveUI();
+            if (Keyboard.IsPressed(Keys.Escape))
+                RemoveUI();
             return NewContext;
         }
 
@@ -34,6 +36,19 @@ namespace Game{
             _spriteBatch = new SpriteBatch(Game.GraphicsDevice);
             AddNewUI(new MainUi());
             _filler = Game.Content.Load<Texture2D>("dirt");
+        }
+        protected void AddNewUI(UserInterface userInterface){
+            _userInterfaces.Push(userInterface);
+            userInterface.OnContextChangeRequest += (sender, args) => NewContext = args.Context;
+            userInterface.OnNextUIRequest += (sender, args) => AddNewUI(args.Interface);
+            userInterface.OnPreviousUIRequest += (sender, args) => RemoveUI();
+            Desktop.Root = userInterface;
+        }
+
+        protected void RemoveUI(){
+            if (_userInterfaces.Count <= 1) return;
+            _userInterfaces.Pop();
+            Desktop.Root = _userInterfaces.Peek();
         }
     }
 }

@@ -5,9 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Myra.Graphics2D.UI;
 
 
-namespace Game{
+namespace Game.GameContext{
     public abstract class Context{
-        protected Stack<UserInterface> _userInterfaces = new Stack<UserInterface>();
         protected Context NewContext = null;
         protected SpriteBatch _spriteBatch = null;
         protected readonly Desktop Desktop = new Desktop();
@@ -26,17 +25,6 @@ namespace Game{
 
         public virtual void Unload(){
         }
-        protected void AddNewUI(UserInterface userInterface){
-            _userInterfaces.Push(userInterface);
-            userInterface.OnContextChangeRequest += (sender, args) => NewContext = args.Context;
-            userInterface.OnNextUIRequest += (sender, args) => AddNewUI(args.Interface);
-            userInterface.OnPreviousUIRequest += (sender, args) => RemoveUI();
-            Desktop.Root = userInterface;
-        }
-
-        protected void RemoveUI(){
-            _userInterfaces.Pop();
-            Desktop.Root = _userInterfaces.Peek();
-        }
+        
     }
 }
