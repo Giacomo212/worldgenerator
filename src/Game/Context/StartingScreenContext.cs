@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Game.UI;
+﻿using Game.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -9,20 +8,10 @@ using Types;
 namespace Game{
     public class StartingScreenContext : Context{
         private Texture2D _filler;
-        private Stack<UserInterface> _userInterfaces = new Stack<UserInterface>();
-        private UserInterface _interface;
 
         public override Context Update(GameTime gameTime){
-            if (Keyboard.HasBeenPressed(Keys.Escape) && _userInterfaces.Count > 0){
-                _interface = _userInterfaces.Pop();
-                Desktop.Root = _interface;
-            }
-            var tmp = _interface.CreateNewUI();
-            if (tmp == null) return _interface.CrateNewContext();
-            _userInterfaces.Push(_interface);
-            _interface = tmp;
-            Desktop.Root = _interface;
-            return _interface.CrateNewContext();
+            RemoveUI();
+            return NewContext;
         }
 
         public override void Draw(GameTime gameTime){
@@ -33,6 +22,7 @@ namespace Game{
                     _spriteBatch.Draw(_filler, vector, Color.White);
                 }
             }
+
             _spriteBatch.End();
             Desktop.Render();
         }
@@ -42,16 +32,8 @@ namespace Game{
 
         public override void Load(){
             _spriteBatch = new SpriteBatch(Game.GraphicsDevice);
-            _interface = new MainUi();
-            Desktop.Root = _interface;
+            AddNewUI(new MainUi());
             _filler = Game.Content.Load<Texture2D>("dirt");
-        }
-
-        public override void OnWindowResize(){
-        }
-
-        public override void Unload(){
-            
         }
     }
 }

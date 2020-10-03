@@ -12,13 +12,13 @@ using Color = Microsoft.Xna.Framework.Color;
 namespace Game.UI{
     public class MapCreationUI : UserInterface{
         //map creation ui
-        private Grid _scrollGrid;
-        private Grid _buttonGrid;
-        private ScrollViewer _scrollViewer;
+        private readonly Grid _scrollGrid;
+        private readonly Grid _buttonGrid;
+
         private TextButton[] _worldButtons;
         //private TextButton createWorldButton;
-        private TextButton _deleteWorldButton;
-        private TextButton _stopDeleteWorldButton;
+        private readonly TextButton _deleteWorldButton;
+        private readonly TextButton _stopDeleteWorldButton;
 
         public MapCreationUI() : base(){
             _scrollGrid = new Grid{
@@ -62,16 +62,16 @@ namespace Game.UI{
             _deleteWorldButton.Click += DeleteWorldButtonOnClick;
             _stopDeleteWorldButton.Click += StopDeleteWorldButtonOnClick;
             createWorldButton.Click += (sender, args) => {
-                _interface = new MapCustomizerInterface();
+                RequestNewInterface(new UiChangeRequestArgs(new MapCustomizerInterface()));
             };
 
-            _scrollViewer = new ScrollViewer{
+            var scrollViewer = new ScrollViewer{
                 GridRow = 0,
                 Content = _scrollGrid,
                 Height = 400,
             };
 
-            _widgets.Add(_scrollViewer);
+            _widgets.Add(scrollViewer);
             _widgets.Add(_buttonGrid);
             _buttonGrid.Widgets.Add(createWorldButton);
             _buttonGrid.Widgets.Add(_deleteWorldButton);
@@ -122,7 +122,7 @@ namespace Game.UI{
         //methods to delete world
         private void LoadWorldOnClick(object? sender, EventArgs e){
             var tmp = sender as TextButton;
-            _context = new MapContext(MapReader.ReadMap(tmp.Text));
+            RequestContext(new ContextChangeRequested(new MapContext(MapReader.ReadMap(tmp.Text))));
         }
         private void DeleteWorld(object? sender, EventArgs e){
             var tmp = sender as TextButton;
