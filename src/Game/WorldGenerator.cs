@@ -3,6 +3,7 @@ using System;
 using Myra;
 using System.IO;
 using Game.GameContext;
+using Game.UI;
 using Types;
 
 
@@ -20,7 +21,6 @@ namespace Game{
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            _currentContext = new StartingScreenContext();
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += Window_ClientSizeChanged;
         }
@@ -38,6 +38,7 @@ namespace Game{
 
 
         protected override void LoadContent(){
+            _currentContext = new StartingScreenContext(new MainUi());
             _currentContext.Load();
         }
 
@@ -47,11 +48,13 @@ namespace Game{
 
         protected override void Update(GameTime gameTime){
             Keyboard.UpdateState();
+            
             var tmp = _currentContext.Update(gameTime);
             if (tmp != null){
-                _currentContext.Unload();
+                Content.Unload();
+                tmp.Load();
                 _currentContext = tmp;
-                ReloadContent();
+                _currentContext.Initialize();
             }
             base.Update(gameTime);
         }
@@ -61,12 +64,6 @@ namespace Game{
             GraphicsDevice.Clear(Color.Black);
             _currentContext.Draw(gameTime);
             base.Draw(gameTime);
-        }
-
-        private void ReloadContent(){
-            Content.Unload();
-            _currentContext.Load();
-            _currentContext.Initialize();
         }
 
         void Window_ClientSizeChanged(object sender, EventArgs e){

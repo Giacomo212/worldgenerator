@@ -131,7 +131,7 @@ namespace Game.UI{
             var generator = new MapGenerator(map, new SurfaceChunkGenerator(tmp));
             generator.Dispose();
             //_context = new MapContext(map);
-            RequestContext(new ContextChangeRequested(new MapContext(map)));
+            RequestContext(new ContextChangeRequested(new MapContext(map, new GameInterface())));
                 
         }
 

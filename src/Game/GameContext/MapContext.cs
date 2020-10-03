@@ -26,13 +26,13 @@ namespace Game.GameContext{
         private CameraController _cameraController;
         private ChunkController _chunkController;
 
-        public MapContext(Map map){
-            
+        public MapContext(Map map,UserInterface userInterface) : base(userInterface){
             _spriteBatch = new SpriteBatch(Context.Game.GraphicsDevice);
              _map = map;
              var pos = new Position(GameConfig.Config.Resolution.Width/Chunk.PixelSize + 1 ,GameConfig.Config.Resolution.Hight/Chunk.PixelSize + 2 );
              _chunkController = new ChunkController(pos,map );
              _cameraController = new CameraController(_map);
+             
         }
 
 
@@ -65,11 +65,10 @@ namespace Game.GameContext{
             _chunkController = new ChunkController(pos,_map);
             _cameraController = new CameraController(_map);
         }
-
-        public override void Unload(){
-            _chunkController.Dispose();
+        
+         ~MapContext(){
+             _chunkController.Dispose();
         }
-
         public override Context Update(GameTime gameTime){
             if (Keyboard.IsPressed(Keys.Left) && _cameraController.MoveLeft())
                 _chunkController.MoveLeft();
@@ -80,7 +79,7 @@ namespace Game.GameContext{
                 _chunkController.MoveUp();
             else if (Keyboard.IsPressed(Keys.Down) && _cameraController.MoveDown())
                 _chunkController.MoveDown();
-            return Keyboard.HasBeenPressed(Keys.Escape) ? new StartingScreenContext() : null;
+            return Keyboard.HasBeenPressed(Keys.Escape) ? new StartingScreenContext(new MainUi()) : null;
         }
 
         private Texture2D ParseBlock(BlockType type){

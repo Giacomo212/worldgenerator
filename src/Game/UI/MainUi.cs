@@ -14,7 +14,6 @@ namespace Game.UI{
             RowsProportions.Add(new Proportion(ProportionType.Auto));
             RowsProportions.Add(new Proportion(ProportionType.Auto));
             SetupMainButtons();
-            
         }
         private void SetupMainButtons(){
             _startGameButton = new TextButton{

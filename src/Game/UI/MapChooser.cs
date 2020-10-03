@@ -121,7 +121,7 @@ namespace Game.UI{
         //methods to delete world
         private void LoadWorldOnClick(object? sender, EventArgs e){
             var tmp = sender as TextButton;
-            RequestContext(new ContextChangeRequested(new MapContext(MapReader.ReadMap(tmp.Text))));
+            RequestContext(new ContextChangeRequested(new MapContext(MapReader.ReadMap(tmp.Text), new GameInterface())));
         }
         private void DeleteWorld(object? sender, EventArgs e){
             var tmp = sender as TextButton;
