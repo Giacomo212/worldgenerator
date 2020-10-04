@@ -9,10 +9,7 @@ namespace Game.UI{
         private TextButton _exitButton;
         
         public MainUi() : base(){
-            ColumnsProportions.Add(new Proportion(ProportionType.Auto));
-            ColumnsProportions.Add(new Proportion(ProportionType.Auto));
-            RowsProportions.Add(new Proportion(ProportionType.Auto));
-            RowsProportions.Add(new Proportion(ProportionType.Auto));
+           
             SetupMainButtons();
         }
         private void SetupMainButtons(){
@@ -21,18 +18,19 @@ namespace Game.UI{
                 Padding = new Thickness(20),
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Width = 100,
+                GridRow = 0,
             };
             _configButton = new TextButton{
                 Text = "Config",
                 Padding = new Thickness(20),
-                GridRow = 2,
+                GridRow = 1,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Width = 100,
             };
             _exitButton = new TextButton{
                 Text = "Exit",
                 Padding = new Thickness(20),
-                GridRow = 3,
+                GridRow = 2,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Width = 100,
             };

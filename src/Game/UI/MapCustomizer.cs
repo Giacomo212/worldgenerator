@@ -9,9 +9,9 @@ using Types;
 
 namespace Game.UI{
     public class MapCustomizer : UserInterface{
-        private TextBox _nameTextBox;
-        private TextBox _seedTextBox;
-        private ComboBox _sizeComboBox;
+        private readonly TextBox _nameTextBox;
+        private readonly TextBox _seedTextBox;
+        private readonly ComboBox _sizeComboBox;
 
         private Label _infolabel = new Label{
             Text = "",
@@ -50,16 +50,14 @@ namespace Game.UI{
                 Text = "Select a world type",
                 GridRow = 2,
             };
-            var largeItem = new ListItem(){
+            var largeItem = new ListItem{
                 Text = "Large",
             };
-
-            var smallItem = new ListItem(){
+            var smallItem = new ListItem{
                 Text = "Small",
             };
-            var mediumItem = new ListItem(){
+            var mediumItem = new ListItem{
                 Text = "Medium",
-                
             };
 
             _sizeComboBox = new ComboBox{
@@ -68,25 +66,12 @@ namespace Game.UI{
                 GridColumn = 1,
                 Width = 200,
                 SelectedIndex = 0,
+                
             };
 
             var createButton = CrateTextButton("Crate a world", 3, 0);
-            //     new TextButton{
-            //     Text = "Crate a world",
-            //     GridRow = 3,
-            //     GridColumn = 0,
-            //     Padding = new Thickness(10),
-            //     Width = 200,
-            // };
             createButton.Click += CrateNewWorld;
             var cancelButton = CrateTextButton("Cancel", 3, 1);
-            //     = new TextButton{
-            //     Text = "Cancel",
-            //     GridRow = 3,
-            //     GridColumn = 1,
-            //     Padding = new Thickness(10),
-            //     Width = 200,
-            // };
             cancelButton.Click += (sender, args) => RequestPreviousInterface();
             _widgets.Add(nameLabel);
             _widgets.Add(_nameTextBox);
@@ -130,7 +115,6 @@ namespace Game.UI{
             var map = new Map(_nameTextBox.Text, Parse(_sizeComboBox.SelectedItem.Text), tmp);
             var generator = new MapGenerator(map, new SurfaceChunkGenerator(tmp));
             generator.Dispose();
-            //_context = new MapContext(map);
             RequestContext(new ContextChangeRequested(new MapContext(map, new GameInterface())));
                 
         }

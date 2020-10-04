@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Game.Configs;
 using Newtonsoft.Json;
 using Types;
 
@@ -10,12 +11,11 @@ namespace Game {
         public static GameConfig Config = new GameConfig();
         public float Sensivity { get; set; } = 4.0f;
         public Resolution Resolution { get; set; } 
-        
+        public KeyboardMap KeyboardMap{ get; set; }
 
         private GameConfig() {
             Resolution = new Resolution(1280, 720, false);
-            
-            
+
         }
         public void Save(){
             var separator = Path.DirectorySeparatorChar;

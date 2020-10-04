@@ -8,7 +8,6 @@ namespace Game.UI{
     public class ConfigUI : UserInterface{
         public ConfigUI() : base(){
             var scrollLabel = new Label{
-                HorizontalAlignment = HorizontalAlignment.Center,
                 Text = "Scroll speed",
                 GridRow = 0,
                 GridColumn = 0
@@ -17,24 +16,21 @@ namespace Game.UI{
                 Minimum = 0.3f,
                 Maximum = 40f,
                 Width = 150,
-                GridRow = 1,
+                GridRow = 0,
                 Padding = new Thickness(2),
                 GridColumn = 1
             };
-            var button = new TextButton(){
-                Padding = new Thickness(20),
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Text = "Apply",
-                GridRow = 4,
-            };
+            var button = CrateTextButton("apply", 2, 0);
+            var cancelButton = CrateTextButton("Cancel", 2, 1);
+            cancelButton.Click += (sender, args) => RequestPreviousInterface();
             var comboText = new Label{
                 Text = "Resolution",
-                GridRow = 2,
-                Padding = new Thickness(2),
+                GridRow = 1,
+                GridColumn = 0,
             };
             var comboBox = new ComboBox{
-                GridRow = 3,
-                Padding = new Thickness(2),
+                GridRow = 1,
+                GridColumn = 1,
             };
             var item = new ListItem{
                 Text = "Test",
@@ -45,7 +41,7 @@ namespace Game.UI{
             _widgets.Add(button);
             _widgets.Add(comboText);
             _widgets.Add(comboBox);
-            
+            _widgets.Add(cancelButton);
         }
     }
 }

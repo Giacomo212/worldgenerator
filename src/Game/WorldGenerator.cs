@@ -25,7 +25,6 @@ namespace Game{
             Window.ClientSizeChanged += Window_ClientSizeChanged;
         }
 
-
         protected override void Initialize(){
             base.Initialize();
             Keyboard.Initialize();
@@ -35,7 +34,6 @@ namespace Game{
             _graphics.IsFullScreen = GameConfig.Config.Resolution.IsFullScreen;
             _graphics.ApplyChanges();
         }
-
 
         protected override void LoadContent(){
             _currentContext = new StartingScreenContext(new MainUi());
@@ -66,7 +64,7 @@ namespace Game{
             base.Draw(gameTime);
         }
 
-        void Window_ClientSizeChanged(object sender, EventArgs e){
+        private void Window_ClientSizeChanged(object sender, EventArgs e){
             _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
             _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
             _graphics.ApplyChanges();
