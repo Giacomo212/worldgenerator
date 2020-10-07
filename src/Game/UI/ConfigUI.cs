@@ -20,7 +20,7 @@ namespace Game.UI{
                 Padding = new Thickness(2),
                 GridColumn = 1
             };
-            var button = CrateTextButton("apply", 2, 0);
+            var button = CrateTextButton("Apply", 2, 0);
             var cancelButton = CrateTextButton("Cancel", 2, 1);
             cancelButton.Click += (sender, args) => RequestPreviousInterface();
             var comboText = new Label{

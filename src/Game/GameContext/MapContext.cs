@@ -29,7 +29,7 @@ namespace Game.GameContext{
         public MapContext(Map map,UserInterface userInterface) : base(userInterface){
             _spriteBatch = new SpriteBatch(Context.Game.GraphicsDevice);
              _map = map;
-             var pos = new Position(GameConfig.Config.Resolution.Width/Chunk.PixelSize + 1 ,GameConfig.Config.Resolution.Hight/Chunk.PixelSize + 2 );
+             var pos = new Position(GameConfig.Config.Resolution.Width/Chunk.PixelSize + 2 ,GameConfig.Config.Resolution.Hight/Chunk.PixelSize + 2 );
              _chunkController = new ChunkController(pos,map );
              _cameraController = new CameraController(_map);
              
@@ -50,18 +50,18 @@ namespace Game.GameContext{
 
         public override void Load(){
             _spriteBatch = new SpriteBatch(Game.GraphicsDevice);
-            _grass = Game.Content.Load<Texture2D>("grass");
-            _sand = Game.Content.Load<Texture2D>("sand");
-            _water = Game.Content.Load<Texture2D>("water");
+            _grass = Game.Content.Load<Texture2D>("grass32");
+            _sand = Game.Content.Load<Texture2D>("sand32");
+            _water = Game.Content.Load<Texture2D>("water32");
             _dirt = Game.Content.Load<Texture2D>("dirt");
             _snow = Game.Content.Load<Texture2D>("snow");
-            _stone = Game.Content.Load<Texture2D>("stone");
+            _stone = Game.Content.Load<Texture2D>("stone32");
             _tree = Game.Content.Load<Texture2D>("tree");
         }
 
         public override void OnWindowResize(){
             _chunkController.Dispose();
-            var pos = new Position(GameConfig.Config.Resolution.Width/Chunk.PixelSize + 1 ,GameConfig.Config.Resolution.Hight/Chunk.PixelSize + 2 );
+            var pos = new Position(GameConfig.Config.Resolution.Width/Chunk.PixelSize + 2 ,GameConfig.Config.Resolution.Hight/Chunk.PixelSize + 2 );
             _chunkController = new ChunkController(pos,_map);
             _cameraController = new CameraController(_map);
         }

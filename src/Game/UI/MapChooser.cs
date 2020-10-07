@@ -56,7 +56,7 @@ namespace Game.UI{
                 OverBackground = new SolidBrush(Color.Red),
              };
              
-             var cancelButton = CrateTextButton("cancel", 0, 2);
+             var cancelButton = CrateTextButton("Cancel", 0, 2);
              cancelButton.Click += (sender, args) => RequestPreviousInterface();
             _deleteWorldButton.Click += DeleteWorldButtonOnClick;
             _stopDeleteWorldButton.Click += StopDeleteWorldButtonOnClick;

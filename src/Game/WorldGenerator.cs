@@ -4,6 +4,7 @@ using Myra;
 using System.IO;
 using Game.GameContext;
 using Game.UI;
+using Game.WorldMap;
 using Types;
 
 
@@ -23,6 +24,7 @@ namespace Game{
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += Window_ClientSizeChanged;
+            ImageGenerator.GenerateImage(MapReader.ReadMap("World"));
         }
 
         protected override void Initialize(){

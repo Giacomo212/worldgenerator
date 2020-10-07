@@ -113,8 +113,8 @@ namespace Game.UI{
             if (tmp == 0)
                 tmp = random.Next();
             var map = new Map(_nameTextBox.Text, Parse(_sizeComboBox.SelectedItem.Text), tmp);
-            var generator = new MapGenerator(map, new SurfaceChunkGenerator(tmp));
-            generator.Dispose();
+            //var generator = new MapGenerator(map, new SurfaceChunkGenerator(tmp));
+            var generator = new MapGenerator(map, new ChunkGenerator(tmp));
             RequestContext(new ContextChangeRequested(new MapContext(map, new GameInterface())));
                 
         }
