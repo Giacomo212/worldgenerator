@@ -13,10 +13,11 @@ namespace Game.WorldMap{
             _landNoise = new FastNoiseLite(seed);
             _random = new Random(seed);
             _landNoise.SetNoiseType(FastNoiseLite.NoiseType.Perlin);
-            _landNoise.SetFrequency(0.004f);
+            _landNoise.SetFractalOctaves(10);
+            //_landNoise.SetFrequency(0.004f);
             _mountainNoise = new FastNoiseLite(_random.Next());
-            _mountainNoise.SetNoiseType(FastNoiseLite.NoiseType.Perlin);
-            _mountainNoise.SetFrequency(0.006f);
+            _mountainNoise.SetNoiseType(FastNoiseLite.NoiseType.Cellular);
+            //_mountainNoise.SetFrequency(0.006f);
             
         }
 
@@ -24,9 +25,9 @@ namespace Game.WorldMap{
             _chunk = new Chunk();
             var position = new Position(chunkPosition.X * Chunk.Size, chunkPosition.Y * Chunk.Size);
             GenerateWorld(position);
-            GenerateMountains(position);
+            //GenerateMountains(position);
             
-            GenerateDesert(position);
+            //GenerateDesert(position);
             return _chunk;
         }
 

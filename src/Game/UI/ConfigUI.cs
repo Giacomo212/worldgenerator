@@ -35,6 +35,10 @@ namespace Game.UI{
             var item = new ListItem{
                 Text = "Test",
             };
+            var keyboardMenuButton = CrateTextButton("Edit a keybind", 2, 0);
+            keyboardMenuButton.GridColumnSpan = 2;
+            // keyboardMenuButton
+            _widgets.Add(keyboardMenuButton);
             comboBox.Items.Add(item);
             _widgets.Add(slider);
             _widgets.Add(scrollLabel);

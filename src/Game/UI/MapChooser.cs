@@ -15,6 +15,7 @@ namespace Game.UI{
         private readonly Grid _buttonGrid;
 
         private TextButton[] _worldButtons;
+
         //private TextButton createWorldButton;
         private readonly TextButton _deleteWorldButton;
         private readonly TextButton _stopDeleteWorldButton;
@@ -44,7 +45,7 @@ namespace Game.UI{
             //     GridColumn = 2,
             //     Padding = new Thickness(10),
             // };
-             _stopDeleteWorldButton = new TextButton(){
+            _stopDeleteWorldButton = new TextButton(){
                 Text = "Delete a World",
                 GridColumn = 1,
                 Padding = new Thickness(10),
@@ -54,10 +55,12 @@ namespace Game.UI{
                 FocusedBackground = new SolidBrush(Color.Red),
                 PressedBackground = new SolidBrush(Color.Red),
                 OverBackground = new SolidBrush(Color.Red),
-             };
-             
-             var cancelButton = CrateTextButton("Cancel", 0, 2);
-             cancelButton.Click += (sender, args) => RequestPreviousInterface();
+            };
+            var imageGeneratorButton = CrateTextButton("Generate image", 0, 2);
+            imageGeneratorButton.Click += (sender, args) =>
+                RequestNewInterface(new UiChangeRequestArgs(new GenerateImageUI()));
+            var cancelButton = CrateTextButton("Cancel", 1, 2);
+            cancelButton.Click += (sender, args) => RequestPreviousInterface();
             _deleteWorldButton.Click += DeleteWorldButtonOnClick;
             _stopDeleteWorldButton.Click += StopDeleteWorldButtonOnClick;
             createWorldButton.Click += (sender, args) => {
@@ -76,6 +79,7 @@ namespace Game.UI{
             _buttonGrid.Widgets.Add(_deleteWorldButton);
             _buttonGrid.Widgets.Add(_stopDeleteWorldButton);
             _buttonGrid.Widgets.Add(cancelButton);
+            _buttonGrid.Widgets.Add(imageGeneratorButton);
             GetAllWorlds();
             foreach (var button in _worldButtons)
                 button.Click += LoadWorldOnClick;
@@ -111,18 +115,21 @@ namespace Game.UI{
                     GridRow = i,
                     Width = 700,
                 };
-                
             }
+
             _scrollGrid.Widgets.Clear();
             foreach (var worldButton in _worldButtons){
                 _scrollGrid.Widgets.Add(worldButton);
             }
         }
+
         //methods to delete world
         private void LoadWorldOnClick(object? sender, EventArgs e){
             var tmp = sender as TextButton;
-            RequestContext(new ContextChangeRequested(new MapContext(MapReader.ReadMap(tmp.Text), new GameInterface())));
+            RequestContext(
+                new ContextChangeRequested(new MapContext(MapReader.ReadMap(tmp.Text), new GameInterface())));
         }
+
         private void DeleteWorld(object? sender, EventArgs e){
             var tmp = sender as TextButton;
             File.Delete(EnvironmentVariables.Worldfiles + EnvironmentVariables.Separator + tmp.Text + ".wg");
@@ -130,6 +137,5 @@ namespace Game.UI{
             foreach (var button in _worldButtons)
                 button.Click += DeleteWorld;
         }
-        
     }
 }

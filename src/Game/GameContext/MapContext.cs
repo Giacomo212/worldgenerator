@@ -13,7 +13,7 @@ namespace Game.GameContext{
         private Dictionary<BlockType, Texture2D> _blockDictionary = new Dictionary<BlockType, Texture2D>();
 
         private Dictionary<ItemType, Texture2D> _itemDictionary = new Dictionary<ItemType, Texture2D>();
-
+        
         //textures
         private Texture2D _grass;
         private Texture2D _sand;
@@ -29,10 +29,9 @@ namespace Game.GameContext{
         public MapContext(Map map,UserInterface userInterface) : base(userInterface){
             _spriteBatch = new SpriteBatch(Context.Game.GraphicsDevice);
              _map = map;
-             var pos = new Position(GameConfig.Config.Resolution.Width/Chunk.PixelSize + 2 ,GameConfig.Config.Resolution.Hight/Chunk.PixelSize + 2 );
-             _chunkController = new ChunkController(pos,map );
+             _chunkController = new ChunkController(new Position( 15 ,15 ),map );
              _cameraController = new CameraController(_map);
-             
+           
         }
 
 
@@ -61,8 +60,7 @@ namespace Game.GameContext{
 
         public override void OnWindowResize(){
             _chunkController.Dispose();
-            var pos = new Position(GameConfig.Config.Resolution.Width/Chunk.PixelSize + 2 ,GameConfig.Config.Resolution.Hight/Chunk.PixelSize + 2 );
-            _chunkController = new ChunkController(pos,_map);
+            _chunkController = new ChunkController(new Position( 15 , 15 ),_map);
             _cameraController = new CameraController(_map);
         }
         
@@ -70,14 +68,14 @@ namespace Game.GameContext{
              _chunkController.Dispose();
         }
         public override Context Update(GameTime gameTime){
-            if (Keyboard.IsPressed(Keys.Left) && _cameraController.MoveLeft())
+            if (Keyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveLeft) && _cameraController.MoveLeft())
                 _chunkController.MoveLeft();
-            else if (Keyboard.IsPressed(Keys.Right) && _cameraController.MoveRight())
+            else if (Keyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveRight) && _cameraController.MoveRight())
                 _chunkController.MoveRight();
             // move map vertically 
-            if (Keyboard.IsPressed(Keys.Up) && _cameraController.MoveUp())
+            if (Keyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveUp) && _cameraController.MoveUp())
                 _chunkController.MoveUp();
-            else if (Keyboard.IsPressed(Keys.Down) && _cameraController.MoveDown())
+            else if (Keyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveDown) && _cameraController.MoveDown())
                 _chunkController.MoveDown();
             return Keyboard.HasBeenPressed(Keys.Escape) ? new StartingScreenContext(new MainUi()) : null;
         }
@@ -108,8 +106,8 @@ namespace Game.GameContext{
         private void DrawMap(){
             var offset = new Vector2(_cameraController.VectorX - Chunk.PixelSize,_cameraController.VectorY - Chunk.PixelSize);
             var chunks = _chunkController.Chunks;
-            for (int i = 0; i < chunks.GetLength(0); i++){
-                for (int j = 0; j < chunks.GetLength(1); j++){
+            for (int i = 0; offset.X < GameConfig.Config.Resolution.Hight + 2 * Chunk.PixelSize; i++){
+                for (int j = 0; offset.Y < GameConfig.Config.Resolution.Width + 2 * Chunk.PixelSize; j++){
                     DrawChunk(ref chunks[i,j],offset);
                     offset.Y += Chunk.Size * Block.Size;
                 }

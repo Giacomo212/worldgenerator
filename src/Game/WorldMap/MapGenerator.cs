@@ -6,7 +6,7 @@ using Types;
 namespace Game.WorldMap{
     public class MapGenerator{
         private BinaryWriter _binaryWriter;
-        private Types.Map _map;
+        private Map _map;
         private IChunkGenerator _chunkGenerator;
         public MapGenerator(Types.Map map, IChunkGenerator generator){
             _map = map;
