@@ -1,6 +1,6 @@
 using System;
-
-namespace Game.UI{
+using Game.UI;
+namespace Game.GameContext{
     public class UiChangeRequestArgs : EventArgs{
         public readonly UserInterface Interface;
 

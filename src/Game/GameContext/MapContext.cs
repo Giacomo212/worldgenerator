@@ -13,7 +13,7 @@ namespace Game.GameContext{
         private Dictionary<BlockType, Texture2D> _blockDictionary = new Dictionary<BlockType, Texture2D>();
 
         private Dictionary<ItemType, Texture2D> _itemDictionary = new Dictionary<ItemType, Texture2D>();
-        
+
         //textures
         private Texture2D _grass;
         private Texture2D _sand;
@@ -26,12 +26,11 @@ namespace Game.GameContext{
         private CameraController _cameraController;
         private ChunkController _chunkController;
 
-        public MapContext(Map map,UserInterface userInterface) : base(userInterface){
+        public MapContext(Map map, UserInterface userInterface) : base(userInterface){
             _spriteBatch = new SpriteBatch(Context.Game.GraphicsDevice);
-             _map = map;
-             _chunkController = new ChunkController(new Position( 15 ,15 ),map );
-             _cameraController = new CameraController(_map);
-           
+            _map = map;
+            _chunkController = new ChunkController(new Position(15, 15), map);
+            _cameraController = new CameraController(_map);
         }
 
 
@@ -60,14 +59,16 @@ namespace Game.GameContext{
 
         public override void OnWindowResize(){
             _chunkController.Dispose();
-            _chunkController = new ChunkController(new Position( 15 , 15 ),_map);
+            _chunkController = new ChunkController(new Position(15, 15), _map);
             _cameraController = new CameraController(_map);
         }
-        
-         ~MapContext(){
-             _chunkController.Dispose();
+
+        ~MapContext(){
+            _chunkController.Dispose();
         }
-        public override Context Update(GameTime gameTime){
+
+        public override void Update(GameTime gameTime){
+            base.Update(gameTime);
             if (Keyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveLeft) && _cameraController.MoveLeft())
                 _chunkController.MoveLeft();
             else if (Keyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveRight) && _cameraController.MoveRight())
@@ -77,7 +78,9 @@ namespace Game.GameContext{
                 _chunkController.MoveUp();
             else if (Keyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveDown) && _cameraController.MoveDown())
                 _chunkController.MoveDown();
-            return Keyboard.HasBeenPressed(Keys.Escape) ? new StartingScreenContext(new MainUi()) : null;
+            if (Keyboard.HasBeenPressed(Keys.Escape)){
+               RequestContext(new StartingScreenContext(new MainUi()));
+            }
         }
 
         private Texture2D ParseBlock(BlockType type){
@@ -104,34 +107,37 @@ namespace Game.GameContext{
         }
 
         private void DrawMap(){
-            var offset = new Vector2(_cameraController.VectorX - Chunk.PixelSize,_cameraController.VectorY - Chunk.PixelSize);
+            var offset = new Vector2(_cameraController.VectorX - Chunk.PixelSize,
+                _cameraController.VectorY - Chunk.PixelSize);
             var chunks = _chunkController.Chunks;
             for (int i = 0; offset.X < GameConfig.Config.Resolution.Hight + 2 * Chunk.PixelSize; i++){
                 for (int j = 0; offset.Y < GameConfig.Config.Resolution.Width + 2 * Chunk.PixelSize; j++){
-                    DrawChunk(ref chunks[i,j],offset);
+                    DrawChunk(ref chunks[i, j], offset);
                     offset.Y += Chunk.Size * Block.Size;
                 }
+
                 offset.Y = _cameraController.VectorY - Chunk.PixelSize;
                 offset.X += Chunk.Size * Block.Size;
             }
-           
         }
 
         private void DrawChunk(ref Chunk chunk, Vector2 offset){
             var t = offset.Y;
             for (int i = 0; i < Chunk.Size; i++){
                 for (int j = 0; j < Chunk.Size; j++){
-                    _spriteBatch.Draw(ParseBlock(chunk[i,j].BlockType), offset, Color.White);
-                    if (chunk[i,j].ItemType != ItemType.None)
-                        _spriteBatch.Draw(ParseItem(chunk[i,j].ItemType), offset, Color.White);
+                    _spriteBatch.Draw(ParseBlock(chunk[i, j].BlockType), offset, Color.White);
+                    if (chunk[i, j].ItemType != ItemType.None)
+                        _spriteBatch.Draw(ParseItem(chunk[i, j].ItemType), offset, Color.White);
                     offset.Y += Block.Size;
                 }
 
                 offset.Y = t;
                 offset.X += Block.Size;
             }
-                
-            
+        }
+
+        public override void Unload(){
+            _chunkController.Dispose();
         }
     }
 }

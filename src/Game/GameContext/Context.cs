@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Game.UI;
 using Microsoft.Xna.Framework;
@@ -7,9 +8,8 @@ using Myra.Graphics2D.UI;
 
 
 namespace Game.GameContext{
-    public abstract class Context{
-        protected Stack<UserInterface> _userInterfaces = new Stack<UserInterface>();
-        protected Context NewContext = null;
+    public abstract class Context {
+        private readonly Stack<UserInterface> _userInterfaces = new Stack<UserInterface>();
         protected SpriteBatch _spriteBatch = null;
         protected readonly Desktop Desktop = new Desktop();
         //This allow to manipulate game parameters  within context 
@@ -19,19 +19,31 @@ namespace Game.GameContext{
         protected Context(UserInterface userInterface){
             AddNewUI(userInterface);
         }
-        public abstract Context Update(GameTime gameTime);
+
+        public virtual void Update(GameTime gameTime){
+            _userInterfaces.Peek().Update(gameTime);
+        }
+
         public abstract void Draw(GameTime gameTime);
-        public abstract void Initialize();
+
+        public virtual void Initialize(){
+            
+        }
+
         //this method allow to react context to windows resize event
         public virtual void OnWindowResize(){
         }
 
         public virtual void Load(){
+        }
+
+        public virtual void Unload(){
             
         }
+        
         protected void AddNewUI(UserInterface userInterface){
             _userInterfaces.Push(userInterface);
-            userInterface.OnContextChangeRequest += (sender, args) => NewContext = args.Context;
+            userInterface.OnContextChangeRequest += (sender, args) => RequestContext(args.Context);
             userInterface.OnNextUIRequest += (sender, args) => AddNewUI(args.Interface);
             userInterface.OnPreviousUIRequest += (sender, args) => RemoveUI();
             Desktop.Root = userInterface;
@@ -42,5 +54,12 @@ namespace Game.GameContext{
             _userInterfaces.Pop();
             Desktop.Root = _userInterfaces.Peek();
         }
+        
+        public event EventHandler<ContextChangeRequested> OnContextChangeRequest;
+
+        protected void RequestContext(Context context){
+            OnContextChangeRequest?.Invoke(this, new ContextChangeRequested(context));
+        }
+        
     }
 }

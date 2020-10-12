@@ -40,6 +40,16 @@ namespace Game{
         protected override void LoadContent(){
             _currentContext = new StartingScreenContext(new MainUi());
             _currentContext.Load();
+            _currentContext.OnContextChangeRequest += CurrentContextOnContextChangeRequest;
+        }
+
+        private void CurrentContextOnContextChangeRequest(object sender, ContextChangeRequested e){
+            Content.Unload();
+            _currentContext.Unload();
+            _currentContext = e.Context;
+            _currentContext.Load();
+            _currentContext.Initialize();
+            _currentContext.OnContextChangeRequest += CurrentContextOnContextChangeRequest;
         }
 
         protected override void UnloadContent(){
@@ -48,15 +58,8 @@ namespace Game{
 
         protected override void Update(GameTime gameTime){
             Keyboard.UpdateState();
-            
-            var tmp = _currentContext.Update(gameTime);
-            if (tmp != null){
-                Content.Unload();
-                tmp.Load();
-                _currentContext = tmp;
-                _currentContext.Initialize();
-            }
-            base.Update(gameTime);
+            _currentContext.Update(gameTime);
+             base.Update(gameTime);
         }
 
 
@@ -73,5 +76,6 @@ namespace Game{
             GameConfig.Config.Resolution = new Resolution(Window.ClientBounds.Width, Window.ClientBounds.Height, false);
             _currentContext.OnWindowResize();
         }
+
     }
 }

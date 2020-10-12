@@ -9,7 +9,7 @@ using Myra.Graphics2D.Brushes;
 using Color = Microsoft.Xna.Framework.Color;
 
 namespace Game.UI{
-    public class MapCreationUI : UserInterface{
+    public class MapCreationUi : UserInterface{
         //map creation ui
         private readonly Grid _scrollGrid;
         private readonly Grid _buttonGrid;
@@ -20,7 +20,7 @@ namespace Game.UI{
         private readonly TextButton _deleteWorldButton;
         private readonly TextButton _stopDeleteWorldButton;
 
-        public MapCreationUI() : base(){
+        public MapCreationUi() : base(){
             _scrollGrid = new Grid{
                 RowSpacing = 8,
                 ColumnSpacing = 8,

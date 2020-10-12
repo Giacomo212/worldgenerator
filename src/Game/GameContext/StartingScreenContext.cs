@@ -10,10 +10,10 @@ namespace Game.GameContext{
     public class StartingScreenContext : Context{
         
         private Texture2D _filler;
-        public override Context Update(GameTime gameTime){
+        public override void Update(GameTime gameTime){
+            base.Update(gameTime);
             if (Keyboard.IsPressed(Keys.Escape))
                 RemoveUI();
-            return NewContext;
         }
 
         public override void Draw(GameTime gameTime){
@@ -24,14 +24,10 @@ namespace Game.GameContext{
                     _spriteBatch.Draw(_filler, vector, Color.White);
                 }
             }
-
             _spriteBatch.End();
             Desktop.Render();
         }
-
-        public override void Initialize(){
-        }
-
+        
         public override void Load(){
             _spriteBatch = new SpriteBatch(Game.GraphicsDevice);
             _filler = Game.Content.Load<Texture2D>("dirt");

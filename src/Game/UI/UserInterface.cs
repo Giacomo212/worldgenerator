@@ -1,4 +1,6 @@
 using System;
+using Game.GameContext;
+using Microsoft.Xna.Framework;
 using Myra.Graphics2D;
 using Myra.Graphics2D.UI;
 using Types;
@@ -22,15 +24,15 @@ namespace Game.UI{
         public event EventHandler<UiChangeRequestArgs> OnNextUIRequest;
         public event EventHandler<ContextChangeRequested> OnContextChangeRequest;
 
-        protected virtual void RequestContext(ContextChangeRequested contextChangeRequested){
+        protected void RequestContext(ContextChangeRequested contextChangeRequested){
             OnContextChangeRequest?.Invoke(this, contextChangeRequested); ;
         }
 
-        protected virtual void RequestPreviousInterface(){
+        protected void RequestPreviousInterface(){
             OnPreviousUIRequest?.Invoke(this,new EventArgs());
         }
 
-        protected virtual void RequestNewInterface(UiChangeRequestArgs uiChangeRequestArgs){
+        protected  void RequestNewInterface(UiChangeRequestArgs uiChangeRequestArgs){
             OnNextUIRequest?.Invoke(this, uiChangeRequestArgs);
         }
 
@@ -42,6 +44,20 @@ namespace Game.UI{
                 Width = 150,
                 Padding = new Thickness(10),
             };
+        }
+
+        protected static Label CrateLabel(string text, int row, int column){
+            return new Label(){
+                Text = text,
+                GridRow = row,
+                GridColumn = column,
+                Width = 150,
+                Padding = new Thickness(10),
+            };
+        }
+
+        public virtual void Update(GameTime gameTime){
+            
         }
     }
 }

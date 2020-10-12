@@ -1,5 +1,6 @@
 using Myra.Graphics2D;
 using Myra.Graphics2D.UI;
+using Game.GameContext;
 
 namespace Game.UI{
     public class MainUi : UserInterface{
@@ -34,7 +35,7 @@ namespace Game.UI{
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Width = 100,
             };
-            _startGameButton.Click += (s, a) => { RequestNewInterface(new UiChangeRequestArgs(new MapCreationUI())); };
+            _startGameButton.Click += (s, a) => { RequestNewInterface(new UiChangeRequestArgs(new MapCreationUi())); };
             _configButton.Click += (sender, args) => RequestNewInterface(new UiChangeRequestArgs(new ConfigUI()));
             _exitButton.Click += (s, a) => { System.Environment.Exit(0); };
             Widgets.Add(_startGameButton);
