@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.Configs;
 using Game.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,12 +11,7 @@ namespace Game.GameContext{
     public class StartingScreenContext : Context{
         
         private Texture2D _filler;
-        public override void Update(GameTime gameTime){
-            base.Update(gameTime);
-            if (Keyboard.IsPressed(Keys.Escape))
-                RemoveUI();
-        }
-
+        
         public override void Draw(GameTime gameTime){
             var vector = new Vector2(0, 0);
             _spriteBatch.Begin();

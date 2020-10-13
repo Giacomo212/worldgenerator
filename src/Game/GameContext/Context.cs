@@ -4,6 +4,7 @@ using System.Linq;
 using Game.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Myra.Graphics2D.UI;
 
 
@@ -22,6 +23,8 @@ namespace Game.GameContext{
 
         public virtual void Update(GameTime gameTime){
             _userInterfaces.Peek().Update(gameTime);
+            if (Keyboard.HasBeenPressed(Keys.Escape))
+                RemoveUI();
         }
 
         public abstract void Draw(GameTime gameTime);
@@ -43,9 +46,10 @@ namespace Game.GameContext{
         
         protected void AddNewUI(UserInterface userInterface){
             _userInterfaces.Push(userInterface);
-            userInterface.OnContextChangeRequest += (sender, args) => RequestContext(args.Context);
-            userInterface.OnNextUIRequest += (sender, args) => AddNewUI(args.Interface);
-            userInterface.OnPreviousUIRequest += (sender, args) => RemoveUI();
+            userInterface.ContextChangeRequest += (sender, args) => RequestContext(args.Context);
+            userInterface.NextUIRequest += (sender, args) => AddNewUI(args.Interface);
+            userInterface.PreviousUIRequest += (sender, args) => RemoveUI();
+            userInterface.ExitRequest += (sender, args) => OnExitRequest();
             Desktop.Root = userInterface;
         }
 
@@ -55,11 +59,15 @@ namespace Game.GameContext{
             Desktop.Root = _userInterfaces.Peek();
         }
         
-        public event EventHandler<ContextChangeRequested> OnContextChangeRequest;
+        public event EventHandler<ContextChangeRequested> ContextChangeRequest;
+        public event EventHandler ExitRequest;
 
-        protected void RequestContext(Context context){
-            OnContextChangeRequest?.Invoke(this, new ContextChangeRequested(context));
+        protected virtual void RequestContext(Context context){
+            ContextChangeRequest?.Invoke(this, new ContextChangeRequested(context));
         }
-        
+
+        protected virtual void OnExitRequest(){
+            ExitRequest?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

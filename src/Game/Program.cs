@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Configs;
 
 
 namespace Game
@@ -14,8 +15,10 @@ namespace Game
         [STAThread]
         static void Main()
         {
+            GameConfig.Load();
             using (var game = new WorldGenerator())
                 game.Run();
+            
         }
         
     }

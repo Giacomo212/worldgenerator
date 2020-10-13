@@ -59,7 +59,7 @@ namespace Game.UI{
             var imageGeneratorButton = CrateTextButton("Generate image", 0, 2);
             imageGeneratorButton.Click += (sender, args) =>
                 RequestNewInterface(new UiChangeRequestArgs(new GenerateImageUI()));
-            var cancelButton = CrateTextButton("Cancel", 1, 2);
+            var cancelButton = CrateBackButton( 1, 2);
             cancelButton.Click += (sender, args) => RequestPreviousInterface();
             _deleteWorldButton.Click += DeleteWorldButtonOnClick;
             _stopDeleteWorldButton.Click += StopDeleteWorldButtonOnClick;

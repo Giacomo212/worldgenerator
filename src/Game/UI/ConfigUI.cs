@@ -1,4 +1,5 @@
 using System.Buffers.Text;
+using Game.Configs;
 using Game.GameContext;
 using Microsoft.Xna.Framework;
 using Myra.Graphics2D;
@@ -25,7 +26,7 @@ namespace Game.UI{
              };
             var applyButton = CrateTextButton("Apply", 3, 0);
             applyButton.Click += (sender, args) => GameConfig.Config.Sensivity = _slider.Value;
-            var cancelButton = CrateTextButton("Cancel", 3, 1);
+            var cancelButton = CrateBackButton(3, 1);
             cancelButton.Click += (sender, args) => RequestPreviousInterface();
             var comboText = new Label{
                 Text = "Resolution",

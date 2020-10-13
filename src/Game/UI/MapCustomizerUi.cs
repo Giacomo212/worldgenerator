@@ -71,7 +71,7 @@ namespace Game.UI{
 
             var createButton = CrateTextButton("Crate a world", 3, 0);
             createButton.Click += CrateNewWorld;
-            var cancelButton = CrateTextButton("Cancel", 3, 1);
+            var cancelButton = CrateBackButton( 3, 1);
             cancelButton.Click += (sender, args) => RequestPreviousInterface();
             _widgets.Add(nameLabel);
             _widgets.Add(_nameTextBox);

@@ -9,9 +9,6 @@ using Types;
 namespace Game.UI{
     public abstract class UserInterface : Grid{
         
-        // public UserInterface Interface => _interface;
-        
-        // public IChangeContext ContextCreator => _ContextCreator;
         protected UserInterface() : base(){
             RowSpacing = 8;
             ColumnSpacing = 8;
@@ -20,20 +17,24 @@ namespace Game.UI{
         }
         
 
-        public event EventHandler OnPreviousUIRequest;
-        public event EventHandler<UiChangeRequestArgs> OnNextUIRequest;
-        public event EventHandler<ContextChangeRequested> OnContextChangeRequest;
+        public event EventHandler PreviousUIRequest;
+        public event EventHandler<UiChangeRequestArgs> NextUIRequest;
+        public event EventHandler<ContextChangeRequested> ContextChangeRequest;
+        public event EventHandler ExitRequest;
 
         protected void RequestContext(ContextChangeRequested contextChangeRequested){
-            OnContextChangeRequest?.Invoke(this, contextChangeRequested); ;
+            ContextChangeRequest?.Invoke(this, contextChangeRequested); ;
         }
 
         protected void RequestPreviousInterface(){
-            OnPreviousUIRequest?.Invoke(this,new EventArgs());
+            PreviousUIRequest?.Invoke(this,new EventArgs());
         }
 
         protected  void RequestNewInterface(UiChangeRequestArgs uiChangeRequestArgs){
-            OnNextUIRequest?.Invoke(this, uiChangeRequestArgs);
+            NextUIRequest?.Invoke(this, uiChangeRequestArgs);
+        }
+        protected virtual void OnExitRequest(){
+            ExitRequest?.Invoke(this, EventArgs.Empty);
         }
 
         protected static TextButton CrateTextButton(string text, int row, int column){
@@ -44,6 +45,17 @@ namespace Game.UI{
                 Width = 150,
                 Padding = new Thickness(10),
             };
+        }
+        protected static TextButton CrateBackButton(int row, int column){
+            var a = new TextButton{
+                Text = "Go back",
+                GridRow = row,
+                GridColumn = column,
+                Width = 150,
+                Padding = new Thickness(10),
+            };
+           
+            return a;
         }
 
         protected static Label CrateLabel(string text, int row, int column){
@@ -59,5 +71,7 @@ namespace Game.UI{
         public virtual void Update(GameTime gameTime){
             
         }
+
+        
     }
 }

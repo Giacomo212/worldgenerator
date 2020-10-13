@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using Game.Configs;
 using Game.UI;
 using Game.WorldMap;
 using Types;

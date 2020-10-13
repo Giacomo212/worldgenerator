@@ -37,10 +37,10 @@ namespace Game.UI{
             };
             _startGameButton.Click += (s, a) => { RequestNewInterface(new UiChangeRequestArgs(new MapCreationUi())); };
             _configButton.Click += (sender, args) => RequestNewInterface(new UiChangeRequestArgs(new ConfigUI()));
-            _exitButton.Click += (s, a) => { System.Environment.Exit(0); };
-            Widgets.Add(_startGameButton);
-            Widgets.Add(_configButton);
-            Widgets.Add(_exitButton);
+            _exitButton.Click += (s, a) => { OnExitRequest(); };
+            _widgets.Add(_startGameButton);
+            _widgets.Add(_configButton);
+            _widgets.Add(_exitButton);
             
         }
 

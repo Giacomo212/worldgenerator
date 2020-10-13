@@ -29,7 +29,13 @@ namespace Game.UI{
                 };
             }
             _widgets.Add(scrollViewer);
+            var backButton = CrateBackButton(1, 0);
+            backButton.HorizontalAlignment = HorizontalAlignment.Right;
+            backButton.Click += (sender, args) => RequestPreviousInterface();
+            _widgets.Add(backButton);
         }
+
+        
         
         private void GetAllWorlds(){
             DirectoryInfo d =

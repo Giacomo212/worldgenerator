@@ -9,8 +9,8 @@ namespace Game.UI{
                 GridRow = 0,
                 GridColumn = 0,
             };
-            var okButton = CrateTextButton("ok", 0, 0);
-            var cancelButton = CrateTextButton("Cancel", 0, 1);
+            var okButton = CrateTextButton("Apply", 0, 0);
+            var cancelButton = CrateBackButton( 0, 1);
             var buttonGrid = new Grid(){
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Center,
@@ -21,6 +21,7 @@ namespace Game.UI{
             buttonGrid.Widgets.Add(cancelButton);
             _widgets.Add(buttonGrid);
             _widgets.Add(label);
+            
         }
         
     }

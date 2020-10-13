@@ -2,6 +2,7 @@
 using System;
 using Myra;
 using System.IO;
+using Game.Configs;
 using Game.GameContext;
 using Game.UI;
 using Game.WorldMap;
@@ -30,30 +31,33 @@ namespace Game{
         protected override void Initialize(){
             base.Initialize();
             Keyboard.Initialize();
-            GameConfig.Config.Save();
             _graphics.PreferredBackBufferWidth = GameConfig.Config.Resolution.Width;
             _graphics.PreferredBackBufferHeight = GameConfig.Config.Resolution.Hight;
             _graphics.IsFullScreen = GameConfig.Config.Resolution.IsFullScreen;
             _graphics.ApplyChanges();
+            
         }
 
         protected override void LoadContent(){
             _currentContext = new StartingScreenContext(new MainUi());
             _currentContext.Load();
-            _currentContext.OnContextChangeRequest += CurrentContextOnContextChangeRequest;
+            _currentContext.ContextChangeRequest += CurrentContextContextChangeRequest;
+            _currentContext.ExitRequest += (sender, args) => Exit();
         }
 
-        private void CurrentContextOnContextChangeRequest(object sender, ContextChangeRequested e){
+        private void CurrentContextContextChangeRequest(object sender, ContextChangeRequested e){
             Content.Unload();
             _currentContext.Unload();
             _currentContext = e.Context;
             _currentContext.Load();
             _currentContext.Initialize();
-            _currentContext.OnContextChangeRequest += CurrentContextOnContextChangeRequest;
+            _currentContext.ContextChangeRequest += CurrentContextContextChangeRequest;
+            _currentContext.ExitRequest += (sender, args) => Exit();
         }
 
         protected override void UnloadContent(){
             Content.Unload();
+            
         }
 
         protected override void Update(GameTime gameTime){
@@ -77,5 +81,9 @@ namespace Game{
             _currentContext.OnWindowResize();
         }
 
+        protected override void OnExiting(object sender, EventArgs args){
+            base.OnExiting(sender, args);
+            GameConfig.Save();
+        }
     }
 }
