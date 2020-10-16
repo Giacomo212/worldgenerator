@@ -1,5 +1,6 @@
 ﻿using System.IO;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Types;
 
 namespace Game.Configs{
@@ -10,8 +11,7 @@ namespace Game.Configs{
         public Resolution Resolution{ get; set; }
         public KeyboardMap KeyboardMap{ get; set; }
 
-        private GameConfig(){
-        }
+       
 
         private static void SetupDefaultValues(){
             Config = new GameConfig();
@@ -23,7 +23,7 @@ namespace Game.Configs{
         public static void Save(){
             var separator = Path.DirectorySeparatorChar;
             var settingsToSave = "";
-            settingsToSave += JsonConvert.SerializeObject(Config);
+            settingsToSave += JsonSerializer.Serialize(Config);
             try{
                 using var file = new StreamWriter(EnvironmentVariables.GameFiles + $"{separator}settings.json");
                 file.Write(settingsToSave);
@@ -36,7 +36,7 @@ namespace Game.Configs{
             try{
                 var config = System.IO.File.ReadAllText(EnvironmentVariables.GameFiles +
                                                         $"{EnvironmentVariables.Separator}settings.json");
-                Config = JsonConvert.DeserializeObject<GameConfig>(config);
+                Config = JsonSerializer.Deserialize<GameConfig>(config);
             }
             catch{
                 SetupDefaultValues();

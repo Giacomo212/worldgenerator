@@ -2,10 +2,10 @@ using System;
 using Game.GameContext;
 
 namespace Game.GameContext{
-    public class ContextChangeRequested : EventArgs{
+    public class ContextChangeRequestedArgs : EventArgs{
         public  readonly Context Context;
 
-        public ContextChangeRequested(Context context){
+        public ContextChangeRequestedArgs(Context context){
             Context = context;
         }
     }

@@ -8,7 +8,7 @@ using Myra.Graphics2D.UI;
 using Types;
 
 namespace Game.UI{
-    public class MapCustomizer : UserInterface{
+    public class MapCustomizerUI : UserInterface{
         private readonly TextBox _nameTextBox;
         private readonly TextBox _seedTextBox;
         private readonly ComboBox _sizeComboBox;
@@ -22,7 +22,7 @@ namespace Game.UI{
             //Background = new SolidBrush(Color.Red);
         };
 
-        public MapCustomizer() : base(){
+        public MapCustomizerUI() : base(){
             var nameLabel = new Label{
                 Text = "Enter a name:",
                 GridRow = 0,
@@ -115,7 +115,7 @@ namespace Game.UI{
             var map = new Map(_nameTextBox.Text, Parse(_sizeComboBox.SelectedItem.Text), tmp);
             //var generator = new MapGenerator(map, new SurfaceChunkGenerator(tmp));
             var generator = new MapGenerator(map, new ChunkGenerator(tmp));
-            RequestContext(new ContextChangeRequested(new MapContext(map, new GameInterface())));
+            RequestContext(new ContextChangeRequestedArgs(new MapContext(map, new GameInterface())));
                 
         }
 

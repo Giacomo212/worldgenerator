@@ -50,6 +50,7 @@ namespace Game.GameContext{
             userInterface.NextUIRequest += (sender, args) => AddNewUI(args.Interface);
             userInterface.PreviousUIRequest += (sender, args) => RemoveUI();
             userInterface.ExitRequest += (sender, args) => OnExitRequest();
+            userInterface.RequestFullScreen += (sender, args) => OnGoFullScreenRequest(); 
             Desktop.Root = userInterface;
         }
 
@@ -59,15 +60,20 @@ namespace Game.GameContext{
             Desktop.Root = _userInterfaces.Peek();
         }
         
-        public event EventHandler<ContextChangeRequested> ContextChangeRequest;
+        public event EventHandler<ContextChangeRequestedArgs> ContextChangeRequest;
+        public event EventHandler GoFullScreenRequest;
         public event EventHandler ExitRequest;
 
         protected virtual void RequestContext(Context context){
-            ContextChangeRequest?.Invoke(this, new ContextChangeRequested(context));
+            ContextChangeRequest?.Invoke(this, new ContextChangeRequestedArgs(context));
         }
 
         protected virtual void OnExitRequest(){
             ExitRequest?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnGoFullScreenRequest(){
+            GoFullScreenRequest?.Invoke(this, EventArgs.Empty);
         }
     }
 }

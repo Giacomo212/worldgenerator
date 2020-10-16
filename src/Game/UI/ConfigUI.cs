@@ -33,13 +33,8 @@ namespace Game.UI{
                 GridRow = 1,
                 GridColumn = 0,
             };
-            var comboBox = new ComboBox{
-                GridRow = 1,
-                GridColumn = 1,
-            };
-            var item = new ListItem{
-                Text = "Test",
-            };
+            var comboBox = CrateTextButton("Go full screen", 1, 1);
+            comboBox.Click += (sender, args) => OnRequestFullScreen(); 
             var keyboardMenuButton = CrateTextButton("Edit a key bind", 2, 0);
             keyboardMenuButton.HorizontalAlignment = HorizontalAlignment.Center;
             keyboardMenuButton.Width = 300;
@@ -47,7 +42,7 @@ namespace Game.UI{
             keyboardMenuButton.Click +=
                 (sender, args) => RequestNewInterface(new UiChangeRequestArgs(new KeyBindCustomizerUI()));  
             _widgets.Add(keyboardMenuButton);
-            comboBox.Items.Add(item);
+            
             _widgets.Add(_slider);
             _widgets.Add(scrollLabel);
             _widgets.Add(applyButton);

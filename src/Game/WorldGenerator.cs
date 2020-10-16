@@ -6,6 +6,7 @@ using Game.Configs;
 using Game.GameContext;
 using Game.UI;
 using Game.WorldMap;
+using Microsoft.Xna.Framework.Graphics;
 using Types;
 
 
@@ -24,18 +25,15 @@ namespace Game{
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
-            Window.ClientSizeChanged += Window_ClientSizeChanged;
-            ImageGenerator.GenerateImage(MapReader.ReadMap("World"));
+            _graphics.PreferredBackBufferWidth = GameConfig.Config.Resolution.Width;
+            _graphics.PreferredBackBufferHeight = GameConfig.Config.Resolution.Hight;
+            _graphics.IsFullScreen = GameConfig.Config.Resolution.IsFullScreen;
+            _graphics.ApplyChanges();
         }
 
         protected override void Initialize(){
             base.Initialize();
             Keyboard.Initialize();
-            _graphics.PreferredBackBufferWidth = GameConfig.Config.Resolution.Width;
-            _graphics.PreferredBackBufferHeight = GameConfig.Config.Resolution.Hight;
-            _graphics.IsFullScreen = GameConfig.Config.Resolution.IsFullScreen;
-            _graphics.ApplyChanges();
-            
         }
 
         protected override void LoadContent(){
@@ -43,9 +41,11 @@ namespace Game{
             _currentContext.Load();
             _currentContext.ContextChangeRequest += CurrentContextContextChangeRequest;
             _currentContext.ExitRequest += (sender, args) => Exit();
+            _currentContext.GoFullScreenRequest += (sender, args) => ScreenChangeRequest();
+            Window.ClientSizeChanged += Window_ClientSizeChanged;
         }
 
-        private void CurrentContextContextChangeRequest(object sender, ContextChangeRequested e){
+        private void CurrentContextContextChangeRequest(object sender, ContextChangeRequestedArgs e){
             Content.Unload();
             _currentContext.Unload();
             _currentContext = e.Context;
@@ -53,17 +53,17 @@ namespace Game{
             _currentContext.Initialize();
             _currentContext.ContextChangeRequest += CurrentContextContextChangeRequest;
             _currentContext.ExitRequest += (sender, args) => Exit();
+            _currentContext.GoFullScreenRequest += (sender, args) => ScreenChangeRequest();
         }
 
         protected override void UnloadContent(){
             Content.Unload();
-            
         }
 
         protected override void Update(GameTime gameTime){
             Keyboard.UpdateState();
             _currentContext.Update(gameTime);
-             base.Update(gameTime);
+            base.Update(gameTime);
         }
 
 
@@ -74,12 +74,34 @@ namespace Game{
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e){
-            _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
-            _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
-            _graphics.ApplyChanges();
-            GameConfig.Config.Resolution = new Resolution(Window.ClientBounds.Width, Window.ClientBounds.Height, false);
+            //_graphics.ApplyChanges();
+            GameConfig.Config.Resolution = new Resolution(Window.ClientBounds.Width, Window.ClientBounds.Height,
+                _graphics.IsFullScreen);
             _currentContext.OnWindowResize();
         }
+
+        private void ScreenChangeRequest(){
+            if (GameConfig.Config.Resolution.IsFullScreen){
+                _graphics.PreferredBackBufferWidth = 800;
+                _graphics.PreferredBackBufferHeight = 600;
+                _graphics.IsFullScreen = false;
+                _graphics.ApplyChanges();
+            }
+            else{
+                _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                _graphics.IsFullScreen = true;
+                _graphics.ApplyChanges();
+            }
+                
+        }
+
+        // private void GoFullScreen(){
+        //     // _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+        //     // _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+        //     // _graphics.IsFullScreen = true;
+        //     // _graphics.ApplyChanges();
+        // }
 
         protected override void OnExiting(object sender, EventArgs args){
             base.OnExiting(sender, args);

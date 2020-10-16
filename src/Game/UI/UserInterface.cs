@@ -15,15 +15,15 @@ namespace Game.UI{
             HorizontalAlignment = HorizontalAlignment.Center;
             VerticalAlignment = VerticalAlignment.Center;
         }
-        
 
+        public event EventHandler RequestFullScreen;
         public event EventHandler PreviousUIRequest;
         public event EventHandler<UiChangeRequestArgs> NextUIRequest;
-        public event EventHandler<ContextChangeRequested> ContextChangeRequest;
+        public event EventHandler<ContextChangeRequestedArgs> ContextChangeRequest;
         public event EventHandler ExitRequest;
 
-        protected void RequestContext(ContextChangeRequested contextChangeRequested){
-            ContextChangeRequest?.Invoke(this, contextChangeRequested); ;
+        protected void RequestContext(ContextChangeRequestedArgs contextChangeRequestedArgs){
+            ContextChangeRequest?.Invoke(this, contextChangeRequestedArgs); ;
         }
 
         protected void RequestPreviousInterface(){
@@ -36,7 +36,11 @@ namespace Game.UI{
         protected virtual void OnExitRequest(){
             ExitRequest?.Invoke(this, EventArgs.Empty);
         }
+        protected virtual void OnRequestFullScreen(){
+            RequestFullScreen?.Invoke(this, EventArgs.Empty);
+        }
 
+        
         protected static TextButton CrateTextButton(string text, int row, int column){
             return new TextButton{
                 Text = text,
@@ -67,7 +71,6 @@ namespace Game.UI{
                 Padding = new Thickness(10),
             };
         }
-
         public virtual void Update(GameTime gameTime){
             
         }
