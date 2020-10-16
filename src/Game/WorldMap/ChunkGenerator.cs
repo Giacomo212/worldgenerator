@@ -12,12 +12,13 @@ namespace Game.WorldMap{
             _chunk = new Chunk();
             _landNoise = new FastNoiseLite(seed);
             _random = new Random(seed);
-            _landNoise.SetNoiseType(FastNoiseLite.NoiseType.Perlin);
-            _landNoise.SetFractalOctaves(10);
-            //_landNoise.SetFrequency(0.004f);
-            _mountainNoise = new FastNoiseLite(_random.Next());
-            _mountainNoise.SetNoiseType(FastNoiseLite.NoiseType.Cellular);
-            //_mountainNoise.SetFrequency(0.006f);
+            _landNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2S);
+            //_landNoise.SetFractalOctaves(3);
+            _landNoise.SetFrequency(0.005f);
+            _mountainNoise = new FastNoiseLite(seed);
+            _mountainNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2S);
+            
+            _mountainNoise.SetFrequency(0.005f);
             
         }
 
@@ -25,9 +26,9 @@ namespace Game.WorldMap{
             _chunk = new Chunk();
             var position = new Position(chunkPosition.X * Chunk.Size, chunkPosition.Y * Chunk.Size);
             GenerateWorld(position);
-            //GenerateMountains(position);
+            GenerateMountains(position);
             
-            //GenerateDesert(position);
+            GenerateDesert(position);
             return _chunk;
         }
 
@@ -50,7 +51,7 @@ namespace Game.WorldMap{
                 for (var y = 0; y < Chunk.Size; y++){
                     if (_chunk[x, y].BlockType != BlockType.Grass && _chunk[x, y].BlockType != BlockType.Stone) continue;
                     var tmp = _mountainNoise.GetNoise(x + position.X, y + position.Y);
-                     if (tmp < -0.5f){
+                     if (tmp < -0.7f){
                         _chunk[x, y] = new Block(BlockType.Stone, BiomeType.Mountains);
                     }
                 }
@@ -62,7 +63,7 @@ namespace Game.WorldMap{
                 for (var y = 0; y < Chunk.Size; y++){
                     if (_chunk[x, y].BlockType != BlockType.Grass && _chunk[x, y].BlockType != BlockType.Sand) continue;
                     var tmp = _mountainNoise.GetNoise(x + position.X, y + position.Y);
-                    if (tmp > 0.5f){
+                    if (tmp < -0.4f){
                         _chunk[x, y] = new Block(BlockType.Sand, BiomeType.Desert);
                     }
                 }
