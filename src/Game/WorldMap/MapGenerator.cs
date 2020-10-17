@@ -5,11 +5,13 @@ using Types;
 
 namespace Game.WorldMap{
     public class MapGenerator{
+        private MemoryStream _memoryStream;
         private BinaryWriter _binaryWriter;
         private Map _map;
         private IChunkGenerator _chunkGenerator;
         public MapGenerator(Types.Map map, IChunkGenerator generator){
             _map = map;
+            _memoryStream = new MemoryStream(_map.ChunkCount * _map.ChunkCount * Chunk.SizeOf);
             _binaryWriter =
                 new BinaryWriter(File.Open(
                     EnvironmentVariables.Worldfiles + Path.DirectorySeparatorChar + map.Name + ".wg",

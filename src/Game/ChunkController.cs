@@ -6,7 +6,7 @@ using Game.WorldMap;
 namespace Game{
     public class ChunkController : IDisposable{
         private Chunk[,] _currentChunks;
-        private int _mapSize;
+        private int _chunkCount;
         private Position _chunkBeginnig = Position.Zero;
         private Position _chunkEnd;
         private MapReader _mapReader;
@@ -17,7 +17,7 @@ namespace Game{
         }
 
         public ChunkController(Position bufferSize, Map map){
-            _mapSize = (int) map.WorldType / Chunk.Size;
+            _chunkCount = (int) map.WorldType / Chunk.Size;
             _bufferSize = bufferSize;
             _currentChunks = new Chunk[bufferSize.X, bufferSize.Y];
             _chunkEnd = new Position(_bufferSize.X, _bufferSize.Y);
@@ -37,7 +37,7 @@ namespace Game{
         public ref Chunk[,] Chunks => ref _currentChunks;
 
         public void MoveRight(){
-            if (_chunkEnd.X < _mapSize){
+            if (_chunkEnd.X < _chunkCount){
                 _chunkBeginnig.X++;
                 _chunkEnd.X++;
                 GetCurrentChunks();
@@ -62,7 +62,7 @@ namespace Game{
 
         public void MoveDown(){
             
-            if (_chunkEnd.Y < _mapSize){
+            if (_chunkEnd.Y < _chunkCount){
                 _chunkBeginnig.Y++;
                 _chunkEnd.Y++;
                 GetCurrentChunks();

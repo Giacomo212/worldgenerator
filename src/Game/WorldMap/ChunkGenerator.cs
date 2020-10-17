@@ -3,22 +3,23 @@ using Types;
 
 namespace Game.WorldMap{
     public class ChunkGenerator : IChunkGenerator{
-        protected readonly FastNoiseLite _landNoise;
-        protected FastNoiseLite _mountainNoise;
+        protected  readonly FastNoiseLite _MainNoise;
+        protected  readonly FastNoiseLite _ScondaryNoise;
         protected readonly Random _random;
         protected Chunk _chunk;
 
         public ChunkGenerator(int seed){
             _chunk = new Chunk();
-            _landNoise = new FastNoiseLite(seed);
+            _MainNoise = new FastNoiseLite(seed);
             _random = new Random(seed);
-            _landNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2S);
-            //_landNoise.SetFractalOctaves(3);
-            _landNoise.SetFrequency(0.005f);
-            _mountainNoise = new FastNoiseLite(seed);
-            _mountainNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2S);
+            _ScondaryNoise = new FastNoiseLite(seed);
+            _ScondaryNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2S);
+            _MainNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2S);
             
-            _mountainNoise.SetFrequency(0.005f);
+            _MainNoise.SetFrequency(0.004f);
+           
+            
+            _ScondaryNoise.SetFrequency(0.01f);
             
         }
 
@@ -26,20 +27,18 @@ namespace Game.WorldMap{
             _chunk = new Chunk();
             var position = new Position(chunkPosition.X * Chunk.Size, chunkPosition.Y * Chunk.Size);
             GenerateWorld(position);
-            GenerateMountains(position);
+            //GenerateMountains(position);
             
-            GenerateDesert(position);
+            //GenerateDesert(position);
             return _chunk;
         }
 
         protected virtual void GenerateWorld(Position position){
             for (var x = 0; x < Chunk.Size; x++){
                 for (var y = 0; y < Chunk.Size; y++){
-                    var tmp = _landNoise.GetNoise(x + position.X, y + position.Y);
+                    var tmp =  _MainNoise.GetNoise(x + position.X, y + position.Y)  +  0.25 * _ScondaryNoise.GetNoise(2* (x + position.X), 2*(y + position.Y)) ;
                     if (tmp < 0.2)
                         _chunk[x, y] = new Block(BlockType.Grass, BiomeType.Grassland);
-                    else if (tmp < 0.25)
-                        _chunk[x, y] = new Block(BlockType.Sand, BiomeType.Beach);
                     else
                         _chunk[x, y] = new Block(BlockType.Water, BiomeType.Ocean);
                 }
@@ -50,7 +49,7 @@ namespace Game.WorldMap{
             for (var x = 0; x < Chunk.Size; x++){
                 for (var y = 0; y < Chunk.Size; y++){
                     if (_chunk[x, y].BlockType != BlockType.Grass && _chunk[x, y].BlockType != BlockType.Stone) continue;
-                    var tmp = _mountainNoise.GetNoise(x + position.X, y + position.Y);
+                    var tmp = _ScondaryNoise.GetNoise(x + position.X, y + position.Y);
                      if (tmp < -0.7f){
                         _chunk[x, y] = new Block(BlockType.Stone, BiomeType.Mountains);
                     }
@@ -62,7 +61,7 @@ namespace Game.WorldMap{
             for (var x = 0; x < Chunk.Size; x++){
                 for (var y = 0; y < Chunk.Size; y++){
                     if (_chunk[x, y].BlockType != BlockType.Grass && _chunk[x, y].BlockType != BlockType.Sand) continue;
-                    var tmp = _mountainNoise.GetNoise(x + position.X, y + position.Y);
+                    var tmp = _ScondaryNoise.GetNoise(x + position.X, y + position.Y);
                     if (tmp < -0.4f){
                         _chunk[x, y] = new Block(BlockType.Sand, BiomeType.Desert);
                     }
