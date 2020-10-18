@@ -117,11 +117,19 @@ namespace Game.UI{
             }
         }
 
-        private static WorldSize Parse(string text){
-            return text switch{
-                "Large" => WorldSize.Large,
-                "Medium" => WorldSize.Medium,
-                _ => WorldSize.Small
+        private static WorldSize ParseWorldSize(string text){
+            return text.ToLower() switch{
+                "large" => WorldSize.Large,
+                "medium" => WorldSize.Medium,
+                "small" => WorldSize.Small
+            };
+        }
+
+        private static IChunkGenerator ParseWorldType(string text, Map map){
+            return text.ToLower() switch{
+                "archipelago" => new IslandWorldGenerator(map),
+                "land" => new LandChunkGenerator(map),
+                "continents" => new ContinentChunkGenerator(map),
             };
         }
 
@@ -136,9 +144,9 @@ namespace Game.UI{
             var random = new Random();
             if (tmp == 0)
                 tmp = random.Next();
-            var map = new Map(_nameTextBox.Text, Parse(_sizeComboBox.SelectedItem.Text), tmp);
-            //var generator = new MapGenerator(map, new SurfaceChunkGenerator(tmp));
-            var generator = new MapGenerator(map, new ChunkGenerator(tmp));
+            var map = new Map(_nameTextBox.Text, ParseWorldSize(_sizeComboBox.SelectedItem.Text), tmp);
+            var generator = new MapGenerator(map, ParseWorldType(_typeComboBox.SelectedItem.Text,map));
+            generator.GenerateNewWorld();
             RequestContext(new ContextChangeRequestedArgs(new MapContext(map, new GameInterface())));
                 
         }
