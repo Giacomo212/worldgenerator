@@ -5,6 +5,7 @@ namespace Game.WorldMap{
     public class ChunkGenerator : IChunkGenerator{
         protected  readonly FastNoiseLite _MainNoise;
         protected  readonly FastNoiseLite _ScondaryNoise;
+        protected readonly FastNoiseLite _noise;
         protected readonly Random _random;
         protected Chunk _chunk;
 
@@ -13,14 +14,14 @@ namespace Game.WorldMap{
             _MainNoise = new FastNoiseLite(seed);
             _random = new Random(seed);
             _ScondaryNoise = new FastNoiseLite(seed);
+            _noise = new FastNoiseLite(seed);
+            _noise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2S);
+            
             _ScondaryNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2S);
             _MainNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2S);
-            
             _MainNoise.SetFrequency(0.004f);
-           
-            
-            _ScondaryNoise.SetFrequency(0.01f);
-            
+            _ScondaryNoise.SetFrequency(0.005f);
+            _noise.SetFrequency(0.04f);
         }
 
         public Chunk GenerateChunk(Position chunkPosition){
@@ -36,8 +37,8 @@ namespace Game.WorldMap{
         protected virtual void GenerateWorld(Position position){
             for (var x = 0; x < Chunk.Size; x++){
                 for (var y = 0; y < Chunk.Size; y++){
-                    var tmp =  _MainNoise.GetNoise(x + position.X, y + position.Y)  +  0.25 * _ScondaryNoise.GetNoise(2* (x + position.X), 2*(y + position.Y)) ;
-                    if (tmp < 0.2)
+                    var tmp =  _MainNoise.GetNoise(x + position.X, y + position.Y)  +  0.75f * _ScondaryNoise.GetNoise( (x + position.X), (y + position.Y)) + 0.25 * _noise.GetNoise( (x + position.X), (y + position.Y)) ; ;
+                    if (tmp < -0.4f)
                         _chunk[x, y] = new Block(BlockType.Grass, BiomeType.Grassland);
                     else
                         _chunk[x, y] = new Block(BlockType.Water, BiomeType.Ocean);

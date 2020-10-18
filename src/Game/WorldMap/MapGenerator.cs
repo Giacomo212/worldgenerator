@@ -12,10 +12,8 @@ namespace Game.WorldMap{
         public MapGenerator(Types.Map map, IChunkGenerator generator){
             _map = map;
             _memoryStream = new MemoryStream(_map.ChunkCount * _map.ChunkCount * Chunk.SizeOf);
-            _binaryWriter =
-                new BinaryWriter(File.Open(
-                    EnvironmentVariables.Worldfiles + Path.DirectorySeparatorChar + map.Name + ".wg",
-                    FileMode.CreateNew));
+            // _binaryWriter = new BinaryWriter(File.Open(EnvironmentVariables.Worldfiles + Path.DirectorySeparatorChar + map.Name + ".wg", FileMode.CreateNew));
+            _binaryWriter = new BinaryWriter(_memoryStream);
             _binaryWriter.Write(map.Seed);
             _binaryWriter.Write((int) map.WorldType);
             _chunkGenerator = generator;
@@ -42,10 +40,7 @@ namespace Game.WorldMap{
             _binaryWriter.Write((int) block.BiomeType);
             _binaryWriter.Write((int) block.ItemType);
         }
-
-        private void Close(){
-            _binaryWriter.Close();
-        }
+        
 
         private void GenerateNewWorld(){
             for (int i = 0; i < (int)_map.WorldType /Chunk.Size; i++){
@@ -53,9 +48,12 @@ namespace Game.WorldMap{
                     Write(_chunkGenerator.GenerateChunk(new Position(i,j)));
                 }
             }
-            Close();
-            _binaryWriter.Close();
-            _binaryWriter.Dispose();
+            _memoryStream.Flush();
+            _memoryStream.Position = 0;
+            using (var fs = File.Open(EnvironmentVariables.Worldfiles + Path.DirectorySeparatorChar + _map.Name + ".wg", FileMode.CreateNew)){
+                _memoryStream.CopyTo(fs);
+                fs.Close();
+            }
         }
     }
 }

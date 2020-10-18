@@ -12,6 +12,7 @@ namespace Game.UI{
         private readonly TextBox _nameTextBox;
         private readonly TextBox _seedTextBox;
         private readonly ComboBox _sizeComboBox;
+        private readonly ComboBox _typeComboBox;
 
         private Label _infolabel = new Label{
             Text = "",
@@ -26,6 +27,11 @@ namespace Game.UI{
             var nameLabel = new Label{
                 Text = "Enter a name:",
                 GridRow = 0,
+                GridColumn = 0
+            };
+            var typeLabel = new Label{
+                Text = "Select a type",
+                GridRow = 3,
                 GridColumn = 0
             };
             _nameTextBox = new TextBox(){
@@ -47,7 +53,7 @@ namespace Game.UI{
                 Width = 200,
             };
             var sizeLabel = new Label(){
-                Text = "Select a world type",
+                Text = "Select a world size",
                 GridRow = 2,
             };
             var largeItem = new ListItem{
@@ -59,7 +65,15 @@ namespace Game.UI{
             var mediumItem = new ListItem{
                 Text = "Medium",
             };
-
+            var archipelagoItem = new ListItem{
+                Text = "Archipelago",
+            };
+            var continentItem = new ListItem{
+                Text = "Continents",
+            };
+            var landItem = new ListItem{
+                Text = "Land",
+            };
             _sizeComboBox = new ComboBox{
                 Items = {largeItem, mediumItem, smallItem},
                 GridRow = 2,
@@ -68,10 +82,18 @@ namespace Game.UI{
                 SelectedIndex = 0,
                 
             };
+            _typeComboBox = new ComboBox{
+                Items = {archipelagoItem, continentItem, landItem},
+                GridRow = 3,
+                GridColumn = 1,
+                Width = 200,
+                SelectedIndex = 0,
+                
+            };
 
-            var createButton = CrateTextButton("Crate a world", 3, 0);
+            var createButton = CrateTextButton("Crate a world", 4, 0);
             createButton.Click += CrateNewWorld;
-            var cancelButton = CrateBackButton( 3, 1);
+            var cancelButton = CrateBackButton( 4, 1);
             cancelButton.Click += (sender, args) => RequestPreviousInterface();
             _widgets.Add(nameLabel);
             _widgets.Add(_nameTextBox);
@@ -82,6 +104,8 @@ namespace Game.UI{
             _widgets.Add(createButton);
             _widgets.Add(cancelButton);
             _widgets.Add(_infolabel);
+            _widgets.Add(_typeComboBox);
+            _widgets.Add(typeLabel);
         }
         
         private static int GetNumber(string text){
@@ -94,11 +118,11 @@ namespace Game.UI{
         }
 
         private static WorldSize Parse(string text){
-            if (text == "Large")
-                return WorldSize.Large;
-            if (text == "Medium")
-                return WorldSize.Medium;
-            return WorldSize.Small;
+            return text switch{
+                "Large" => WorldSize.Large,
+                "Medium" => WorldSize.Medium,
+                _ => WorldSize.Small
+            };
         }
 
         private void CrateNewWorld(object? sender, EventArgs args){
