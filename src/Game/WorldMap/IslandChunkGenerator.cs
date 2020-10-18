@@ -1,41 +1,53 @@
+using System.Linq;
 using Types;
 
 namespace Game.WorldMap{
     public class IslandWorldGenerator : ChunkGenerator{
-        
-        private Position _islandCenter = new Position(50,50);
-        private int _islandDiameter = 40;
-        
+        private Position _islandCenter = new Position(800, 800);
+        private int _islandDiameter = 620;
         private Chunk _waterChunk;
+
         public IslandWorldGenerator(Map map) : base(map){
             _waterChunk = new Chunk();
             for (int i = 0; i < Chunk.Size; i++){
                 for (int j = 0; j < Chunk.Size; j++){
-                    _waterChunk[i,j] = new Block(BlockType.Water,BiomeType.Ocean);
+                    _waterChunk[i, j] = new Block(BlockType.Water, BiomeType.Ocean);
                 }
-                
             }
         }
 
         protected override void GenerateWorld(Position position){
-            var pos = new Position(position.X/Chunk.Size,position.Y/Chunk.Size);
-            if (Position.CalculateDistance(_islandCenter, pos) > _islandDiameter){
-                _chunk = _waterChunk;
-                return;
-            }
-            
+            //CheckIfContainsWater(CrateChunk(new Position(position.X + Chunk.Size, position.Y + Chunk.Size)))
+            var pos = new Position(position.X, position.Y);
+            // if (Position.CalculateDistance(_islandCenter, pos) > _islandDiameter){
+            //     _chunk = _waterChunk;
+            //     return;
+            // }
+            _chunk = CrateLand(new Position(position.X,position.Y) );
+        }
+
+        private Chunk CrateLand(Position position){
+            var gradient = new DistanceRatioCalculator(_map.BlockCount,_map.BlockCount);
+            var chunk = new Chunk();
             for (var x = 0; x < Chunk.Size; x++){
                 for (var y = 0; y < Chunk.Size; y++){
                     var tmp = _MainNoise.GetNoise(x + position.X, y + position.Y) +
                               0.75f * _ScondaryNoise.GetNoise((x + position.X), (y + position.Y)) +
-                              0.25 * _noise.GetNoise((x + position.X), (y + position.Y));
-                    ;
+                              0.25 * _noise.GetNoise((x + position.X), (y + position.Y)) ;
+                    tmp *= gradient.GetValue(new Position((x + position.X), (y + position.Y)));
                     if (tmp < -0.4f)
-                        _chunk[x, y] = new Block(BlockType.Grass, BiomeType.Grassland);
+                        chunk[x, y] = new Block(BlockType.Grass, BiomeType.Grassland);
                     else
-                        _chunk[x, y] = new Block(BlockType.Water, BiomeType.Ocean);
+                        chunk[x, y] = new Block(BlockType.Water, BiomeType.Ocean);
                 }
             }
+
+            return chunk;
         }
+
+        private static bool CheckIfContainsOnlyWater(Chunk chunk){
+            return chunk.Cast<Block>().Any(block => block.BlockType == BlockType.Water);
+        }
+        
     }
 }

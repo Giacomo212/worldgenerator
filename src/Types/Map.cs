@@ -5,13 +5,11 @@ namespace Types {
          public readonly string Name;
          public readonly int Seed;
          private readonly WorldSize _worldType;
-         private readonly int _chunkCount; 
-         
-
          public WorldSize WorldType => _worldType;
-
-         public int ChunkCount => _chunkCount; 
-        //private Block[,] _grid;
+        
+         public int ChunkCount{ get; }
+         public int BlockCount{ get; }
+         //private Block[,] _grid;
         //public Block this[int x, int y] => _grid[x, y];
 
         public Map(string name, WorldSize worldWorldType, int seed){
@@ -19,7 +17,8 @@ namespace Types {
             _worldType = worldWorldType;
             var size = (int) worldWorldType;
             Seed = seed;
-            _chunkCount = (int) _worldType / Chunk.Size;
+            ChunkCount = (int) _worldType / Chunk.Size;
+            BlockCount = (int) _worldType;
 
         }
         // public Map(string filename) {
