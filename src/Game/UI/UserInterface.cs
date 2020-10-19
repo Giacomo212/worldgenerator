@@ -75,6 +75,9 @@ namespace Game.UI{
             
         }
 
+        public virtual void Awake(){
+            
+        }
         
     }
 }

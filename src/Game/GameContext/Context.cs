@@ -58,6 +58,7 @@ namespace Game.GameContext{
             if (_userInterfaces.Count <= 1) return;
             _userInterfaces.Pop();
             Desktop.Root = _userInterfaces.Peek();
+            _userInterfaces.Peek().Awake();
         }
         
         public event EventHandler<ContextChangeRequestedArgs> ContextChangeRequest;

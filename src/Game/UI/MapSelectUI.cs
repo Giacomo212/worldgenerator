@@ -20,5 +20,10 @@ namespace Game.UI{
             RequestContext(
                 new ContextChangeRequestedArgs(new MapContext(MapReader.ReadMap(tmp.Text), new GameInterface())));
         }
+
+        public override void Awake(){
+            _scrollGrid.Widgets.Clear();
+            GetAllWorlds();
+        }
     }
 }
