@@ -3,12 +3,15 @@ using Types;
 
 namespace Game.WorldMap{
     public class IslandWorldGenerator : ChunkGenerator{
-        private Position _islandCenter = new Position(800, 800);
-        private int _islandDiameter = 620;
         private Chunk _waterChunk;
         private DistanceRatioCalculator _distanceRatioCalculator;
-
+        private FastNoiseLite _biomeNoise;
         public IslandWorldGenerator(Map map) : base(map){
+            
+            _biomeNoise = new FastNoiseLite(_random.Next());
+            _biomeNoise.SetFrequency(0.009f);
+            _biomeNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2S);
+            
             _distanceRatioCalculator = new DistanceRatioCalculator(map.BlockCount, map.BlockCount);
             _waterChunk = new Chunk();
             for (int i = 0; i < Chunk.Size; i++){
@@ -18,32 +21,50 @@ namespace Game.WorldMap{
             }
         }
 
-        protected override void GenerateWorld(Position position){
-            //CheckIfContainsWater(CrateChunk(new Position(position.X + Chunk.Size, position.Y + Chunk.Size)))
-            var pos = new Position(position.X, position.Y);
-            // if (Position.CalculateDistance(_islandCenter, pos) > _islandDiameter){
-            //     _chunk = _waterChunk;
-            //     return;
-            // }
-            _chunk = CrateLand(new Position(position.X, position.Y));
-        }
-
-        private Chunk CrateLand(Position position){
-            var chunk = new Chunk();
+        protected override void GenerateWorld(Position blockPosition){
+           
             for (var x = 0; x < Chunk.Size; x++){
                 for (var y = 0; y < Chunk.Size; y++){
-                    var tmp = _MainNoise.GetNoise(x + position.X, y + position.Y) +
-                              0.75f * _ScondaryNoise.GetNoise((x + position.X), (y + position.Y)) +
-                              0.25 * _noise.GetNoise((x + position.X), (y + position.Y));
-                    tmp *= _distanceRatioCalculator.GetValue(new Position((x + position.X), (y + position.Y)));
+                    var pos = new Position(x + blockPosition.X, y + blockPosition.Y);
+                    var tmp = _MainNoise.GetNoise(x + blockPosition.X, y + blockPosition.Y) +
+                              0.75f * _ScondaryNoise.GetNoise((x + blockPosition.X), (y + blockPosition.Y)) +
+                              0.25 * _noise.GetNoise((x + blockPosition.X), (y + blockPosition.Y));
+
+                    tmp *= _distanceRatioCalculator.GetValue(new Position((x + blockPosition.X),
+                        (y + blockPosition.Y)));
                     if (tmp < -0.4f)
-                        chunk[x, y] = new Block(BlockType.Grass, BiomeType.Grassland);
+                        // _chunk[x, y] = new Block(BlockType.Grass, BiomeType.Grassland);
+                        _chunk[x, y] = GetLandBlock(tmp,pos);
                     else
-                        chunk[x, y] = new Block(BlockType.Water, BiomeType.Ocean);
+                        _chunk[x, y] = new Block(BlockType.Water, BiomeType.Ocean);
                 }
             }
-
-            return chunk;
         }
+
+        private Block GetLandBlock(double noiseValue, Position position){
+            if (noiseValue > -0.45f && _biomeNoise.GetNoise(position.X,position.Y) > 0){
+                return new Block(BlockType.Sand,BiomeType.Beach);
+            }
+            if(noiseValue < -1.0f && _biomeNoise.GetNoise(position.X,position.Y) < 0)
+                return new Block(BlockType.Stone,BiomeType.Mountains);
+            return new Block(BlockType.Grass ,BiomeType.Grassland);
+        }
+        // private Chunk CrateLand(Position blockPosition){
+        //     var _chunk = new Chunk();
+        //     for (var x = 0; x < Chunk.Size; x++){
+        //         for (var y = 0; y < Chunk.Size; y++){
+        //             var tmp = _MainNoise.GetNoise(x + blockPosition.X, y + blockPosition.Y) +
+        //                       0.75f * _ScondaryNoise.GetNoise((x + blockPosition.X), (y + blockPosition.Y)) +
+        //                       0.25 * _noise.GetNoise((x + blockPosition.X), (y + blockPosition.Y));
+        //             tmp *= _distanceRatioCalculator.GetValue(new Position((x + blockPosition.X), (y + blockPosition.Y)));
+        //             if (tmp < -0.4f)
+        //                 _chunk[x, y] = new Block(BlockType.Grass, BiomeType.Grassland);
+        //             else
+        //                 _chunk[x, y] = new Block(BlockType.Water, BiomeType.Ocean);
+        //         }
+        //     }
+        //
+        //     return _chunk;
+        // }
     }
 }

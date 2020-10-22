@@ -29,37 +29,15 @@ namespace Game.WorldMap{
             _chunk = new Chunk();
             var position = new Position(chunkPosition.X * Chunk.Size, chunkPosition.Y * Chunk.Size);
             GenerateWorld(position);
-            //GenerateMountains(position);
-            //GenerateDesert(position);
+            GenerateItems(position);
             return _chunk;
         }
 
-        protected abstract void GenerateWorld(Position position);
+        protected abstract void GenerateWorld(Position blockPosition);
             
         
-
-        protected virtual void GenerateMountains(Position position){
-            for (var x = 0; x < Chunk.Size; x++){
-                for (var y = 0; y < Chunk.Size; y++){
-                    if (_chunk[x, y].BlockType != BlockType.Grass && _chunk[x, y].BlockType != BlockType.Stone) continue;
-                    var tmp = _ScondaryNoise.GetNoise(x + position.X, y + position.Y);
-                     if (tmp < -0.7f){
-                        _chunk[x, y] = new Block(BlockType.Stone, BiomeType.Mountains);
-                    }
-                }
-            }
-        }
-
-        protected virtual void GenerateDesert(Position position){
-            for (var x = 0; x < Chunk.Size; x++){
-                for (var y = 0; y < Chunk.Size; y++){
-                    if (_chunk[x, y].BlockType != BlockType.Grass && _chunk[x, y].BlockType != BlockType.Sand) continue;
-                    var tmp = _ScondaryNoise.GetNoise(x + position.X, y + position.Y);
-                    if (tmp < -0.4f){
-                        _chunk[x, y] = new Block(BlockType.Sand, BiomeType.Desert);
-                    }
-                }
-            }
+        protected virtual void GenerateItems(Position blockPosition){
+            
         }
 
         

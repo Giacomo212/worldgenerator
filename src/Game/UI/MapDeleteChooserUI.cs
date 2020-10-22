@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Game.GameContext;
 using Microsoft.Xna.Framework;
 using Myra.Graphics2D;
 using Myra.Graphics2D.Brushes;
@@ -14,7 +15,9 @@ namespace Game.UI{
             _deleteWorldButton.FocusedBackground = new SolidBrush(Color.Red);
             _deleteWorldButton.PressedBackground = new SolidBrush(Color.Red);
             _deleteWorldButton.OverBackground = new SolidBrush(Color.Red);
-            _deleteWorldButton.Click += (sender, args) => RequestPreviousInterface(); 
+            _deleteWorldButton.Click += (sender, args) => RequestPreviousInterface();
+            _imageGeneratorButton.Click += (sender, args) =>
+                OnPreviousUiAndLoadRequest(new UiChangeRequestArgs(new MapImageGeneratorUI()));
             foreach (var button in _worldButtons){
                 button.Click += DeleteWorld;
             }

@@ -5,7 +5,7 @@ namespace Game.WorldMap{
         public ContinentChunkGenerator(Map map) : base(map){
         }
 
-        protected override void GenerateWorld(Position position){
+        protected override void GenerateWorld(Position blockPosition){
             throw new System.NotImplementedException();
         }
     }

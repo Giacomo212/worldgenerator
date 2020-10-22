@@ -18,6 +18,7 @@ namespace Game.UI{
 
         public event EventHandler RequestFullScreen;
         public event EventHandler PreviousUIRequest;
+        public event EventHandler<UiChangeRequestArgs> PreviousUIAndLoadRequest;
         public event EventHandler<UiChangeRequestArgs> NextUIRequest;
         public event EventHandler<ContextChangeRequestedArgs> ContextChangeRequest;
         public event EventHandler ExitRequest;
@@ -39,7 +40,9 @@ namespace Game.UI{
         protected virtual void OnRequestFullScreen(){
             RequestFullScreen?.Invoke(this, EventArgs.Empty);
         }
-
+        protected virtual void OnPreviousUiAndLoadRequest(UiChangeRequestArgs e){
+            PreviousUIAndLoadRequest?.Invoke(this, e);
+        }
         
         protected static TextButton CrateTextButton(string text, int row, int column){
             return new TextButton{
@@ -78,6 +81,7 @@ namespace Game.UI{
         public virtual void Awake(){
             
         }
+
         
     }
 }

@@ -12,7 +12,7 @@ using Types;
 
 namespace Game{
     public class WorldGenerator : Microsoft.Xna.Framework.Game{
-        private GraphicsDeviceManager _graphics;
+        private readonly GraphicsDeviceManager _graphics;
         private Context _currentContext;
 
         public WorldGenerator(){
@@ -95,14 +95,7 @@ namespace Game{
             }
                 
         }
-
-        // private void GoFullScreen(){
-        //     // _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-        //     // _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-        //     // _graphics.IsFullScreen = true;
-        //     // _graphics.ApplyChanges();
-        // }
-
+        
         protected override void OnExiting(object sender, EventArgs args){
             base.OnExiting(sender, args);
             GameConfig.Save();
