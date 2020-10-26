@@ -133,7 +133,7 @@ namespace Game.UI{
             };
         }
 
-        private void CrateNewWorld(object? sender, EventArgs args){
+        private void CrateNewWorld(object sender, EventArgs args){
             if (File.Exists(EnvironmentVariables.Worldfiles + EnvironmentVariables.Separator + _nameTextBox.Text + ".wg")){
                 var window = new Window();
                 _infolabel.Text = "File already exist";

@@ -23,10 +23,12 @@ namespace Game.GameContext{
         private Texture2D _snow;
         private Texture2D _tree;
         private Texture2D _stone;
-
+        
+        //Map management
         private CameraController _cameraController;
         private ChunkController _chunkController;
 
+        private int start = 0;
         public MapContext(Map map, UserInterface userInterface) : base(userInterface){
             _spriteBatch = new SpriteBatch(Context.Game.GraphicsDevice);
             _map = map;
@@ -44,6 +46,7 @@ namespace Game.GameContext{
         public override void Initialize(){
             InitializeBlockDirectory();
             InitializeItemDirectory();
+            
         }
 
 
@@ -114,11 +117,11 @@ namespace Game.GameContext{
             for (int i = 0; offset.X < GameConfig.Config.Resolution.Hight + 2 * Chunk.PixelSize; i++){
                 for (int j = 0; offset.Y < GameConfig.Config.Resolution.Width + 2 * Chunk.PixelSize; j++){
                     DrawChunk(ref chunks[i, j], offset);
-                    offset.Y += Chunk.Size * Block.Size;
+                    offset.Y += Chunk.Size * Block.PixelSize;
                 }
 
                 offset.Y = _cameraController.VectorY - Chunk.PixelSize;
-                offset.X += Chunk.Size * Block.Size;
+                offset.X += Chunk.Size * Block.PixelSize;
             }
         }
 
@@ -129,11 +132,11 @@ namespace Game.GameContext{
                     _spriteBatch.Draw(ParseBlock(chunk[i, j].BlockType), offset, Color.White);
                     if (chunk[i, j].ItemType != ItemType.None)
                         _spriteBatch.Draw(ParseItem(chunk[i, j].ItemType), offset, Color.White);
-                    offset.Y += Block.Size;
+                    offset.Y += Block.PixelSize;
                 }
 
                 offset.Y = t;
-                offset.X += Block.Size;
+                offset.X += Block.PixelSize;
             }
         }
 

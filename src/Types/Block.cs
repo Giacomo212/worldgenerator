@@ -1,8 +1,8 @@
 ﻿
 namespace Types {
     public class Block {
-        public static int Size { get; } = 32;
-        public static int SizeOf{ get; } = sizeof(int) * 3;
+        public static int PixelSize { get; } = 32;
+        public static int SizeInMemory{ get; } = sizeof(int) * 3;
         private BiomeType _biomeType;
         private BlockType _blockType;
         private ItemType _itemType = ItemType.None;

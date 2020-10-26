@@ -23,6 +23,8 @@ namespace Game{
             _chunkEnd = new Position(_bufferSize.X, _bufferSize.Y);
             _mapReader = new MapReader(map);
             GetCurrentChunks();
+            var chunk = new Chunk();
+            
         }
 
         private void GetCurrentChunks(){

@@ -1,33 +1,31 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Types{
     public class ChunkEnum : IEnumerator {
-        private int _i = -1, _j = 0;
+        public int I{ get; private set; } = -1;
+
+        public int J{ get; private set; } = 0;
+
         private Block[,] _blocks;
         public ChunkEnum(Block[,] blocks){
             _blocks = blocks;
         }
         public bool MoveNext(){
-            if (++_i >= Chunk.Size ){
-                _i = 0;
-                ++_j;
+            if (++I >= Chunk.Size ){
+                I = 0;
+                ++J;
             }
-            return _j < Chunk.Size;
+            return J < Chunk.Size;
         }
 
         public void Reset(){
-            _i = -1;
-            _j = 0;
+            I = -1;
+            J = 0;
         }
 
-        object IEnumerator.Current
-        {
-            get
-            {
-                return Current;
-            }
-        }
+        object IEnumerator.Current => Current;
 
         public Block Current
         {
@@ -35,13 +33,17 @@ namespace Types{
             {
                 try
                 {
-                    return _blocks[_i,_j];
+                    return _blocks[I,J];
                 }
                 catch (IndexOutOfRangeException)
                 {
                     throw new InvalidOperationException();
                 }
             }
+        }
+
+        public void Dispose(){
+            
         }
     }
 }

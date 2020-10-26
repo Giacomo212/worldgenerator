@@ -54,7 +54,7 @@ namespace Game.UI{
         }
         
 
-        protected void GetAllWorlds(){
+        protected virtual void GetAllWorlds(){
             DirectoryInfo d =
                 new DirectoryInfo(EnvironmentVariables.Worldfiles);
             var files = d.GetFiles("*.wg");

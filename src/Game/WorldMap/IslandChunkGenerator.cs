@@ -3,9 +3,8 @@ using Types;
 
 namespace Game.WorldMap{
     public class IslandWorldGenerator : ChunkGenerator{
-        private Chunk _waterChunk;
-        private DistanceRatioCalculator _distanceRatioCalculator;
-        private FastNoiseLite _biomeNoise;
+        private readonly DistanceRatioCalculator _distanceRatioCalculator;
+        private readonly FastNoiseLite _biomeNoise;
         public IslandWorldGenerator(Map map) : base(map){
             
             _biomeNoise = new FastNoiseLite(_random.Next());
@@ -13,12 +12,7 @@ namespace Game.WorldMap{
             _biomeNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2S);
             
             _distanceRatioCalculator = new DistanceRatioCalculator(map.BlockCount, map.BlockCount);
-            _waterChunk = new Chunk();
-            for (int i = 0; i < Chunk.Size; i++){
-                for (int j = 0; j < Chunk.Size; j++){
-                    _waterChunk[i, j] = new Block(BlockType.Water, BiomeType.Ocean);
-                }
-            }
+            
         }
 
         protected override void GenerateWorld(Position blockPosition){
@@ -49,22 +43,6 @@ namespace Game.WorldMap{
                 return new Block(BlockType.Stone,BiomeType.Mountains);
             return new Block(BlockType.Grass ,BiomeType.Grassland);
         }
-        // private Chunk CrateLand(Position blockPosition){
-        //     var _chunk = new Chunk();
-        //     for (var x = 0; x < Chunk.Size; x++){
-        //         for (var y = 0; y < Chunk.Size; y++){
-        //             var tmp = _MainNoise.GetNoise(x + blockPosition.X, y + blockPosition.Y) +
-        //                       0.75f * _ScondaryNoise.GetNoise((x + blockPosition.X), (y + blockPosition.Y)) +
-        //                       0.25 * _noise.GetNoise((x + blockPosition.X), (y + blockPosition.Y));
-        //             tmp *= _distanceRatioCalculator.GetValue(new Position((x + blockPosition.X), (y + blockPosition.Y)));
-        //             if (tmp < -0.4f)
-        //                 _chunk[x, y] = new Block(BlockType.Grass, BiomeType.Grassland);
-        //             else
-        //                 _chunk[x, y] = new Block(BlockType.Water, BiomeType.Ocean);
-        //         }
-        //     }
-        //
-        //     return _chunk;
-        // }
+        
     }
 }

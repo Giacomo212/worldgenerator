@@ -23,15 +23,15 @@ namespace Game.UI{
         public event EventHandler<ContextChangeRequestedArgs> ContextChangeRequest;
         public event EventHandler ExitRequest;
 
-        protected void RequestContext(ContextChangeRequestedArgs contextChangeRequestedArgs){
+        protected virtual void RequestContext(ContextChangeRequestedArgs contextChangeRequestedArgs){
             ContextChangeRequest?.Invoke(this, contextChangeRequestedArgs); ;
         }
 
-        protected void RequestPreviousInterface(){
+        protected virtual void RequestPreviousInterface(){
             PreviousUIRequest?.Invoke(this,new EventArgs());
         }
 
-        protected  void RequestNewInterface(UiChangeRequestArgs uiChangeRequestArgs){
+        protected virtual void RequestNewInterface(UiChangeRequestArgs uiChangeRequestArgs){
             NextUIRequest?.Invoke(this, uiChangeRequestArgs);
         }
         protected virtual void OnExitRequest(){

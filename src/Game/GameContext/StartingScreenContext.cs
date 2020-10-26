@@ -15,8 +15,8 @@ namespace Game.GameContext{
         public override void Draw(GameTime gameTime){
             var vector = new Vector2(0, 0);
             _spriteBatch.Begin();
-            for (; vector.X < GameConfig.Config.Resolution.Width; vector.X += Block.Size){
-                for (vector.Y = 0; vector.Y < GameConfig.Config.Resolution.Hight; vector.Y += Block.Size){
+            for (; vector.X < GameConfig.Config.Resolution.Width; vector.X += Block.PixelSize){
+                for (vector.Y = 0; vector.Y < GameConfig.Config.Resolution.Hight; vector.Y += Block.PixelSize){
                     _spriteBatch.Draw(_filler, vector, Color.White);
                 }
             }

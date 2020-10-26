@@ -45,7 +45,7 @@ namespace Game{
             Window.ClientSizeChanged += Window_ClientSizeChanged;
         }
 
-        private void CurrentContextContextChangeRequest(object sender, ContextChangeRequestedArgs e){
+        private void CurrentContextContextChangeRequest(object senderR, ContextChangeRequestedArgs e){
             Content.Unload();
             _currentContext.Unload();
             _currentContext = e.Context;
@@ -74,7 +74,7 @@ namespace Game{
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e){
-            //_graphics.ApplyChanges();
+            
             GameConfig.Config.Resolution = new Resolution(Window.ClientBounds.Width, Window.ClientBounds.Height,
                 _graphics.IsFullScreen);
             _currentContext.OnWindowResize();

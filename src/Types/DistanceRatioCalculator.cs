@@ -2,7 +2,7 @@ namespace Types{
     public class DistanceRatioCalculator{
         private  readonly Position _size;
         private readonly Position _centerOfMap;
-        public double CalculationRatio{ get; set; } = 2;
+        public double CalculationRatio{ get; set; } = 1.5;
         
         public DistanceRatioCalculator(int xSize, int ySize){
             _centerOfMap = new Position(xSize/2, ySize/2 );
@@ -10,8 +10,9 @@ namespace Types{
         }
 
         public double GetValue(Position position){
-            var distance = _centerOfMap.X - Position.CalculateDistance(position,_centerOfMap);
-            return distance / _centerOfMap.X * CalculationRatio  ;
+            var tmp = Position.CalculateDistance(Position.Zero, _centerOfMap);
+            var distance = tmp - Position.CalculateDistance(position,_centerOfMap);
+            return tmp != 0? distance / tmp * CalculationRatio:0 ;
         }
     }
 }

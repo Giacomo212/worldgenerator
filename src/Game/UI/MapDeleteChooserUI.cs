@@ -9,7 +9,6 @@ using Types;
 
 namespace Game.UI{
     public class MapDeleteChooserUI : MapChooserUI{
-
         public MapDeleteChooserUI() : base(){
             _deleteWorldButton.Background = new SolidBrush(Color.Red);
             _deleteWorldButton.FocusedBackground = new SolidBrush(Color.Red);
@@ -18,19 +17,20 @@ namespace Game.UI{
             _deleteWorldButton.Click += (sender, args) => RequestPreviousInterface();
             _imageGeneratorButton.Click += (sender, args) =>
                 OnPreviousUiAndLoadRequest(new UiChangeRequestArgs(new MapImageGeneratorUI()));
-            foreach (var button in _worldButtons){
-                button.Click += DeleteWorld;
-            }
         }
-        
-        
-        
-        private void DeleteWorld(object? sender, EventArgs e){
+
+
+        private void DeleteWorld(object sender, EventArgs e){
             var tmp = sender as TextButton;
             File.Delete(EnvironmentVariables.Worldfiles + EnvironmentVariables.Separator + tmp.Text + ".wg");
             GetAllWorlds();
-            foreach (var button in _worldButtons)
+        }
+
+        protected override void GetAllWorlds(){
+            base.GetAllWorlds();
+            foreach (var button in _worldButtons){
                 button.Click += DeleteWorld;
+            }
         }
     }
 }
