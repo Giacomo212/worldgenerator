@@ -5,7 +5,6 @@ using System.IO;
 using Game.Configs;
 using Game.GameContext;
 using Game.UI;
-using Game.WorldMap;
 using Microsoft.Xna.Framework.Graphics;
 using Types;
 

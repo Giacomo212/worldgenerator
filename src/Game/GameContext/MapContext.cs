@@ -23,17 +23,17 @@ namespace Game.GameContext{
         private Texture2D _snow;
         private Texture2D _tree;
         private Texture2D _stone;
-        
+
         //Map management
         private CameraController _cameraController;
         private ChunkController _chunkController;
 
-        private int start = 0;
+        private Position _start = Position.Zero;
+
         public MapContext(Map map, UserInterface userInterface) : base(userInterface){
             _spriteBatch = new SpriteBatch(Context.Game.GraphicsDevice);
             _map = map;
-            _chunkController = new ChunkController(new Position(15, 15), map);
-            _cameraController = new CameraController(_map);
+            SetUpController();
         }
 
 
@@ -46,7 +46,6 @@ namespace Game.GameContext{
         public override void Initialize(){
             InitializeBlockDirectory();
             InitializeItemDirectory();
-            
         }
 
 
@@ -63,7 +62,15 @@ namespace Game.GameContext{
 
         public override void OnWindowResize(){
             _chunkController.Dispose();
-            _chunkController = new ChunkController(new Position(15, 15), _map);
+            SetUpController();
+        }
+
+        private void SetUpController(){
+            var a = GameConfig.Config.Resolution.Width / Chunk.PixelSize;
+            _chunkController =
+                new ChunkController(
+                    new Position(GameConfig.Config.Resolution.Width / Chunk.PixelSize + 2,
+                        GameConfig.Config.Resolution.Hight / Chunk.PixelSize + 2), _map);
             _cameraController = new CameraController(_map);
         }
 
@@ -83,7 +90,7 @@ namespace Game.GameContext{
             else if (Keyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveDown) && _cameraController.MoveDown())
                 _chunkController.MoveDown();
             if (Keyboard.HasBeenPressed(Keys.Escape)){
-               RequestContext(new StartingScreenContext(new MainUi()));
+                RequestContext(new StartingScreenContext(new MainUi()));
             }
         }
 
@@ -114,24 +121,25 @@ namespace Game.GameContext{
             var offset = new Vector2(_cameraController.VectorX - Chunk.PixelSize,
                 _cameraController.VectorY - Chunk.PixelSize);
             var chunks = _chunkController.Chunks;
-            for (int i = 0; offset.X < GameConfig.Config.Resolution.Hight + 2 * Chunk.PixelSize; i++){
-                for (int j = 0; offset.Y < GameConfig.Config.Resolution.Width + 2 * Chunk.PixelSize; j++){
+
+            for (var i = 0; offset.X <= GameConfig.Config.Resolution.Width; i++){
+                for (var j = 0; offset.Y <= GameConfig.Config.Resolution.Hight; j++){
                     DrawChunk(ref chunks[i, j], offset);
-                    offset.Y += Chunk.Size * Block.PixelSize;
+                    offset.Y += Chunk.BlockCount * Block.PixelSize;
                 }
 
                 offset.Y = _cameraController.VectorY - Chunk.PixelSize;
-                offset.X += Chunk.Size * Block.PixelSize;
+                offset.X += Chunk.BlockCount * Block.PixelSize;
             }
         }
 
         private void DrawChunk(ref Chunk chunk, Vector2 offset){
             var t = offset.Y;
-            for (int i = 0; i < Chunk.Size; i++){
-                for (int j = 0; j < Chunk.Size; j++){
+            for (var i = 0; i < Chunk.BlockCount; i++){
+                for (var j = 0; j < Chunk.BlockCount; j++){
                     _spriteBatch.Draw(ParseBlock(chunk[i, j].BlockType), offset, Color.White);
                     if (chunk[i, j].ItemType != ItemType.None)
-                        _spriteBatch.Draw(ParseItem(chunk[i, j].ItemType), offset, Color.White);
+                        _spriteBatch.Draw(_tree, offset, Color.White);
                     offset.Y += Block.PixelSize;
                 }
 

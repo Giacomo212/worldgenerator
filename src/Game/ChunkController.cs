@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using Types;
 using Game.WorldMap;
 
@@ -17,7 +16,7 @@ namespace Game{
         }
 
         public ChunkController(Position bufferSize, Map map){
-            _chunkCount = (int) map.WorldType / Chunk.Size;
+            _chunkCount = (int) map.WorldType / Chunk.BlockCount;
             _bufferSize = bufferSize;
             _currentChunks = new Chunk[bufferSize.X, bufferSize.Y];
             _chunkEnd = new Position(_bufferSize.X, _bufferSize.Y);
@@ -39,36 +38,31 @@ namespace Game{
         public ref Chunk[,] Chunks => ref _currentChunks;
 
         public void MoveRight(){
-            if (_chunkEnd.X < _chunkCount){
-                _chunkBeginnig.X++;
-                _chunkEnd.X++;
-                GetCurrentChunks();
-            }
+            if (_chunkEnd.X >= _chunkCount) return;
+            _chunkBeginnig.X++;
+            _chunkEnd.X++;
+            GetCurrentChunks();
         }
 
         public void MoveLeft(){
-            if (_chunkBeginnig.X > 0){
-                _chunkBeginnig.X--;
-                _chunkEnd.X--;
-                GetCurrentChunks();
-            }
+            if (_chunkBeginnig.X <= 0) return;
+            _chunkBeginnig.X--;
+            _chunkEnd.X--;
+            GetCurrentChunks();
         }
 
         public void MoveUp(){
-            if (_chunkBeginnig.Y > 0){
-                _chunkBeginnig.Y--;
-                _chunkEnd.Y--;
-                GetCurrentChunks();
-            }
+            if (_chunkBeginnig.Y <= 0) return;
+            _chunkBeginnig.Y--;
+            _chunkEnd.Y--;
+            GetCurrentChunks();
         }
 
         public void MoveDown(){
-            
-            if (_chunkEnd.Y < _chunkCount){
-                _chunkBeginnig.Y++;
-                _chunkEnd.Y++;
-                GetCurrentChunks();
-            }
+            if (_chunkEnd.Y >= _chunkCount) return;
+            _chunkBeginnig.Y++;
+            _chunkEnd.Y++;
+            GetCurrentChunks();
         }
 
 

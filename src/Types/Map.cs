@@ -17,7 +17,7 @@ namespace Types {
             _worldType = worldWorldType;
             var size = (int) worldWorldType;
             Seed = seed;
-            ChunkCount = (int) _worldType / Chunk.Size;
+            ChunkCount = (int) _worldType / Chunk.BlockCount;
             BlockCount = (int) _worldType;
 
         }

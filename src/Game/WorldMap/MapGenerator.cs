@@ -9,6 +9,7 @@ namespace Game.WorldMap{
         private BinaryWriter _binaryWriter;
         private Map _map;
         private IChunkGenerator _chunkGenerator;
+        private bool IsLocked = false;
         public MapGenerator(Types.Map map, IChunkGenerator generator){
             _map = map;
             _memoryStream = new MemoryStream(_map.ChunkCount * _map.ChunkCount * Chunk.SizeOf);
@@ -19,14 +20,14 @@ namespace Game.WorldMap{
         }
 
         private void Write(Chunk chunk){
-            for (int i = 0; i < Chunk.Size; i++){
-                for (int j = 0; j < Chunk.Size; j++){
+            for (var i = 0; i < Chunk.BlockCount; i++){
+                for (var j = 0; j < Chunk.BlockCount; j++){
                     Write( chunk[i, j]);
                 }
             }
         }
 
-        private void WirteAt(Chunk chunk, Position position){
+        private void WriteChunkAt(Chunk chunk, Position position){
             _binaryWriter.Seek(
                 sizeof(int) * 2 + Chunk.SizeOf * position.X * (int) _map.WorldType + Chunk.SizeOf * position.Y,
                 SeekOrigin.Begin);
@@ -41,8 +42,8 @@ namespace Game.WorldMap{
         
 
         public void GenerateNewWorld(){
-            for (int i = 0; i < (int)_map.WorldType /Chunk.Size; i++){
-                for (int j = 0; j < (int)_map.WorldType /Chunk.Size; j++){
+            for (int i = 0; i < (int)_map.WorldType /Chunk.BlockCount; i++){
+                for (int j = 0; j < (int)_map.WorldType /Chunk.BlockCount; j++){
                     Write(_chunkGenerator.GenerateChunk(new Position(i,j)));
                 }
             }

@@ -1,26 +1,29 @@
 using System;
 using System.IO;
+using System.IO.MemoryMappedFiles;
 using Types;
 
 namespace Game.WorldMap{
     public class MapReader : IDisposable{
         private FileStream _fileStream;
+        private MemoryMappedFile _mappedFile;
         private BinaryReader _binaryReader;
         private Types.Map _map;
         private  readonly int _sizeofMap;
         public MapReader( Types.Map map){
+            
             _fileStream = File.Open(EnvironmentVariables.Worldfiles + EnvironmentVariables.Separator + map.Name + ".wg",
                 FileMode.Open);
             _map = map;
             _fileStream.Seek(sizeof(int) * 2 , SeekOrigin.Begin);
             _binaryReader = new BinaryReader(_fileStream);
-            _sizeofMap = Chunk.SizeOf * (int) _map.WorldType / Chunk.Size;
+            _sizeofMap = Chunk.SizeOf * (int) _map.WorldType / Chunk.BlockCount;
         }
 
         private Chunk ReadChunk(){
             var chunk = new Chunk();
-            for (int i = 0; i < Chunk.Size; i++){
-                for (int j = 0; j < Chunk.Size; j++){
+            for (var i = 0; i < Chunk.BlockCount; i++){
+                for (var j = 0; j < Chunk.BlockCount; j++){
                     chunk[i, j] = ReadBlock();
                 }
             }
@@ -46,9 +49,9 @@ namespace Game.WorldMap{
             if (mapName.Contains("/") || mapName.Contains("\\"))
                 throw new IOException("invalid file name");
             using var file = new BinaryReader(File.Open(EnvironmentVariables.Worldfiles + EnvironmentVariables.Separator  + mapName + ".wg", FileMode.Open));
-            int seed = file.ReadInt32();
+            var seed = file.ReadInt32();
             WorldSize worldSize = (WorldSize)file.ReadInt32();
-            file.Close();
+            //file.Close(); this shouldn't  be needed, dispose() is called at the end of the brackets 
             return new Types.Map(mapName, worldSize,seed);
         }
 

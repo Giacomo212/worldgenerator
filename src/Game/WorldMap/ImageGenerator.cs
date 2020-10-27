@@ -15,10 +15,10 @@ namespace Game.WorldMap{
             for (var i = 0; i < map.ChunkCount; i++){
                 for (var j = 0; j < map.ChunkCount; j++){
                     var chunk = mapReader.ReadChunkAt(new Position(i, j));
-                    for (var k = 0; k < Chunk.Size; k++){
-                        for (var l = 0; l < Chunk.Size; l++){
+                    for (var k = 0; k < Chunk.BlockCount; k++){
+                        for (var l = 0; l < Chunk.BlockCount; l++){
                             dictionary.TryGetValue(chunk[k, l].BlockType, out var tmp);
-                            image[Chunk.Size * i + k, l + Chunk.Size * j] = Rgba32.ParseHex(tmp);
+                            image[Chunk.BlockCount * i + k, l + Chunk.BlockCount * j] = Rgba32.ParseHex(tmp);
                         }
                     }
                 }

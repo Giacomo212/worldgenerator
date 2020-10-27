@@ -13,11 +13,11 @@ namespace Types{
             _blocks = blocks;
         }
         public bool MoveNext(){
-            if (++I >= Chunk.Size ){
+            if (++I >= Chunk.BlockCount ){
                 I = 0;
                 ++J;
             }
-            return J < Chunk.Size;
+            return J < Chunk.BlockCount;
         }
 
         public void Reset(){

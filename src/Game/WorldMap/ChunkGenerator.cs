@@ -27,7 +27,7 @@ namespace Game.WorldMap{
 
         public Chunk GenerateChunk(Position chunkPosition){
             _chunk = new Chunk();
-            var position = new Position(chunkPosition.X * Chunk.Size, chunkPosition.Y * Chunk.Size);
+            var position = new Position(chunkPosition.X * Chunk.BlockCount, chunkPosition.Y * Chunk.BlockCount);
             GenerateWorld(position);
             GenerateItems(position);
             return _chunk;
