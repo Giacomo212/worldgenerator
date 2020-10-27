@@ -8,7 +8,7 @@ using Types;
 
 namespace Game.UI{
     public abstract class UserInterface : Grid{
-        
+        public bool CanBeCanceled{ get; protected set; } = true;
         protected UserInterface() : base(){
             RowSpacing = 8;
             ColumnSpacing = 8;

@@ -1,11 +1,18 @@
+using Types;
+
 namespace Game.WorldMap{
     public class MapImageGenerationRunner : ICheckableProcess{
+        
+        private readonly ImageGenerator _imageGenerator;
+        public MapImageGenerationRunner(Map map){
+            _imageGenerator = new ImageGenerator(map);
+        }
         public int CheckPercentDone(){
-            throw new System.NotImplementedException();
+            return _imageGenerator.PercentDone;
         }
 
         public void Run(){
-            throw new System.NotImplementedException();
+            _imageGenerator.GenerateImage();
         }
     }
 }

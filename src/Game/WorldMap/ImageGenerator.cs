@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using SixLabors.ImageSharp;
@@ -6,14 +7,20 @@ using Types;
 
 
 namespace Game.WorldMap{
-    public static class ImageGenerator{
-        public static void GenerateImage(Map map){
+    public  class ImageGenerator{
+        private Map _map;
+        public int PercentDone{ get; private set; } = 0;
+        public ImageGenerator(Map map){
+            _map = map;
+        }
+        
+        public void GenerateImage(){
             var dictionary = CrateDictionary();
-            var mapSize = (int) map.WorldType;
-            using var mapReader = new MapReader(map);
+            var mapSize = (int) _map.WorldType;
+            using var mapReader = new MapReader(_map);
             using var image = new Image<Rgba32>(mapSize, mapSize);
-            for (var i = 0; i < map.ChunkCount; i++){
-                for (var j = 0; j < map.ChunkCount; j++){
+            for (var i = 0; i < _map.ChunkCount; i++){
+                for (var j = 0; j < _map.ChunkCount; j++){
                     var chunk = mapReader.ReadChunkAt(new Position(i, j));
                     for (var k = 0; k < Chunk.BlockCount; k++){
                         for (var l = 0; l < Chunk.BlockCount; l++){
@@ -22,9 +29,10 @@ namespace Game.WorldMap{
                         }
                     }
                 }
+                PercentDone =  (int)(Convert.ToDouble(i)/ _map.ChunkCount * 100.0);
             }
 
-            image.Save(EnvironmentVariables.Worldfiles + EnvironmentVariables.Separator + map.Name + ".jpg");
+            image.Save(EnvironmentVariables.Worldfiles + EnvironmentVariables.Separator + _map.Name + ".jpg");
         }
 
         private static Dictionary<BlockType, string> CrateDictionary(){

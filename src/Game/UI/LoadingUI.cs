@@ -6,10 +6,12 @@ using Myra.Graphics2D.UI;
 //public delegate void Run();
 namespace Game.UI{
     public class LoadingUI : UserInterface{
-        private HorizontalProgressBar _progressBar;
-        private ICheckableProcess _process;
-        private Thread _thread;
+        
+        private readonly HorizontalProgressBar _progressBar;
+        private readonly ICheckableProcess _process;
+        private readonly Thread _thread;
         public LoadingUI(ICheckableProcess process, string textLabel){
+            CanBeCanceled = false;
             var label = new Label{
                 Text =  textLabel,
                 GridColumn = 0,

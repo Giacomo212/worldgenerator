@@ -23,7 +23,7 @@ namespace Game.GameContext{
 
         public virtual void Update(GameTime gameTime){
             _userInterfaces.Peek().Update(gameTime);
-            if (Keyboard.HasBeenPressed(Keys.Escape))
+            if (Keyboard.HasBeenPressed(Keys.Escape) && _userInterfaces.Peek().CanBeCanceled)
                 RemoveUI();
         }
 
