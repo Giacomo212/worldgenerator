@@ -7,9 +7,9 @@ namespace Game.WorldMap{
     public class MapGenerator{
         private MemoryStream _memoryStream;
         private BinaryWriter _binaryWriter;
+        public int PercentDone{ get; private set; } = 0;
         private Map _map;
         private IChunkGenerator _chunkGenerator;
-        private bool IsLocked = false;
         public MapGenerator(Types.Map map, IChunkGenerator generator){
             _map = map;
             _memoryStream = new MemoryStream(_map.ChunkCount * _map.ChunkCount * Chunk.SizeOf);
@@ -42,15 +42,19 @@ namespace Game.WorldMap{
         
 
         public void GenerateNewWorld(){
-            for (int i = 0; i < (int)_map.WorldType /Chunk.BlockCount; i++){
+            for (int i = 0; i < _map.ChunkCount; i++){
                 for (int j = 0; j < (int)_map.WorldType /Chunk.BlockCount; j++){
                     Write(_chunkGenerator.GenerateChunk(new Position(i,j)));
                 }
+
+               
+                PercentDone =  (int)(Convert.ToDouble(i)/ _map.ChunkCount * 100.0);
             }
             _memoryStream.Flush();
             _memoryStream.Position = 0;
             using var fs = File.Open(EnvironmentVariables.Worldfiles + Path.DirectorySeparatorChar + _map.Name + ".wg", FileMode.CreateNew);
             _memoryStream.CopyTo(fs);
+            fs.Flush();
         }
     }
 }

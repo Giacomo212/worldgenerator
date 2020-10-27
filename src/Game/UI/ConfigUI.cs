@@ -24,8 +24,9 @@ namespace Game.UI{
                 GridColumn = 1,
                 Value = GameConfig.Config.Sensivity,
              };
-            var applyButton = CrateTextButton("Apply", 3, 0);
-            applyButton.Click += (sender, args) => GameConfig.Config.Sensivity = _slider.Value;
+             _slider.ValueChanged += (sender, args) => GameConfig.Config.Sensivity = args.NewValue;
+            // var applyButton = CrateTextButton("Apply", 3, 0);
+            // applyButton.Click += (sender, args) => GameConfig.Config.Sensivity = _slider.Value;
             var cancelButton = CrateBackButton(3, 1);
             cancelButton.Click += (sender, args) => RequestPreviousInterface();
             var comboText = new Label{
@@ -45,7 +46,7 @@ namespace Game.UI{
             
             _widgets.Add(_slider);
             _widgets.Add(scrollLabel);
-            _widgets.Add(applyButton);
+            // _widgets.Add(applyButton);
             _widgets.Add(comboText);
             _widgets.Add(comboBox);
             _widgets.Add(cancelButton);

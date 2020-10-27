@@ -6,7 +6,6 @@ using Types;
 namespace Game.WorldMap{
     public class MapReader : IDisposable{
         private FileStream _fileStream;
-        private MemoryMappedFile _mappedFile;
         private BinaryReader _binaryReader;
         private Types.Map _map;
         private  readonly int _sizeofMap;
@@ -56,7 +55,6 @@ namespace Game.WorldMap{
         }
 
         public void Dispose(){
-            _fileStream.Close();
             _fileStream?.Dispose();
             _binaryReader?.Dispose();
         }

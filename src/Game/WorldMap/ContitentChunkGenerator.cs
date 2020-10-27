@@ -8,7 +8,8 @@ namespace Game.WorldMap{
         private readonly FastNoiseLite _biomeNoise;
 
         public ContinentChunkGenerator(Map map) : base(map){
-            _firstDistanceRatioCalculator = new DistanceRatioCalculator(_map.BlockCount,map.BlockCount);
+            _firstDistanceRatioCalculator = new DistanceRatioCalculator(new Position(800,800), new Position(400,400));
+            _firstDistanceRatioCalculator.CalculationRatio = 4.0;
             _firstDistanceRatioCalculator.CalculationRatio = 0.5;
             _biomeNoise = new FastNoiseLite(_random.Next());
             _biomeNoise.SetFrequency(0.009f);

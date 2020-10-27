@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
+using System.Threading;
 using Game.GameContext;
 using Game.WorldMap;
 using Myra.Graphics2D;
@@ -13,6 +15,7 @@ namespace Game.UI{
         private readonly TextBox _seedTextBox;
         private readonly ComboBox _sizeComboBox;
         private readonly ComboBox _typeComboBox;
+        private Map _map;
 
         private Label _infolabel = new Label{
             Text = "",
@@ -80,7 +83,6 @@ namespace Game.UI{
                 GridColumn = 1,
                 Width = 200,
                 SelectedIndex = 0,
-                
             };
             _typeComboBox = new ComboBox{
                 Items = {archipelagoItem, continentItem, landItem},
@@ -88,12 +90,11 @@ namespace Game.UI{
                 GridColumn = 1,
                 Width = 200,
                 SelectedIndex = 0,
-                
             };
 
             var createButton = CrateTextButton("Crate a world", 4, 0);
             createButton.Click += CrateNewWorld;
-            var cancelButton = CrateBackButton( 4, 1);
+            var cancelButton = CrateBackButton(4, 1);
             cancelButton.Click += (sender, args) => RequestPreviousInterface();
             _widgets.Add(nameLabel);
             _widgets.Add(_nameTextBox);
@@ -107,7 +108,7 @@ namespace Game.UI{
             _widgets.Add(_typeComboBox);
             _widgets.Add(typeLabel);
         }
-        
+
         private static int GetNumber(string text){
             try{
                 return Convert.ToInt32(text);
@@ -134,7 +135,8 @@ namespace Game.UI{
         }
 
         private void CrateNewWorld(object sender, EventArgs args){
-            if (File.Exists(EnvironmentVariables.Worldfiles + EnvironmentVariables.Separator + _nameTextBox.Text + ".wg")){
+            if (File.Exists(
+                EnvironmentVariables.Worldfiles + EnvironmentVariables.Separator + _nameTextBox.Text + ".wg")){
                 var window = new Window();
                 _infolabel.Text = "File already exist";
                 return;
@@ -144,13 +146,16 @@ namespace Game.UI{
             var random = new Random();
             if (tmp == 0)
                 tmp = random.Next();
-            var map = new Map(_nameTextBox.Text, ParseWorldSize(_sizeComboBox.SelectedItem.Text), tmp);
-            var generator = new MapGenerator(map, ParseWorldType(_typeComboBox.SelectedItem.Text,map));
-            generator.GenerateNewWorld();
-            RequestContext(new ContextChangeRequestedArgs(new MapContext(map, new GameInterface())));
-                
+            _map = new Map(_nameTextBox.Text, ParseWorldSize(_sizeComboBox.SelectedItem.Text), tmp);
+            var process = new MapGenerationRunner(_map,ParseWorldType(_typeComboBox.SelectedItem.Text, _map)); 
+            RequestNewInterface(new UiChangeRequestArgs(new LoadingUI(process,"Generating a world")));
+            // var generator = new MapGenerator(_map, ParseWorldType(_typeComboBox.SelectedItem.Text, _map));
+            // generator.GenerateNewWorld();
         }
 
-      
+        public override void Awake(){
+            //Thread.Sleep(1000);
+            RequestContext(new ContextChangeRequestedArgs(new MapContext(_map, new GameInterface())));
+        }
     }
 }
