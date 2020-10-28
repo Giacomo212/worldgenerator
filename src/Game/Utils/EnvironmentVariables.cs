@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace Types{
+namespace Game.Utils{
     public static class EnvironmentVariables{
         private static string _gameFiles;
         private static char _separator;

@@ -1,5 +1,7 @@
 using System;
-using Types;
+using Game.DataContainers;
+using Game.Utils;
+
 
 namespace Game.WorldMap{
     public abstract class ChunkGenerator : IChunkGenerator{

@@ -1,6 +1,8 @@
-using Types;
+using Game.DataContainers;
+using Game.WorldMap;
 
-namespace Game.WorldMap{
+
+namespace Game.Runners{
     public class MapImageGenerationRunner : ICheckableProcess{
         
         private readonly ImageGenerator _imageGenerator;

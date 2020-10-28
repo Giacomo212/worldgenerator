@@ -1,11 +1,10 @@
 using System;
 using System.IO;
-using Game.GameContext;
+using Game.EventArg;
 using Microsoft.Xna.Framework;
-using Myra.Graphics2D;
 using Myra.Graphics2D.Brushes;
 using Myra.Graphics2D.UI;
-using Types;
+using EnvironmentVariables = Game.Utils.EnvironmentVariables;
 
 namespace Game.UI{
     public class MapDeleteChooserUI : MapChooserUI{

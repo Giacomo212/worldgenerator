@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Input;
 
-namespace Game {
-    static class Keyboard {
+namespace Game.Utils {
+    public static class ExtendedKeyboard {
         private static KeyboardState _currentKeyState;
         private static KeyboardState _previousKeyState;
         public static void Initialize() {

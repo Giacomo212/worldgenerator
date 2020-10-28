@@ -1,5 +1,6 @@
 using System.Buffers.Text;
 using Game.Configs;
+using Game.EventArg;
 using Game.GameContext;
 using Microsoft.Xna.Framework;
 using Myra.Graphics2D;

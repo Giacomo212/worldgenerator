@@ -1,6 +1,8 @@
 using System;
-using Types;
+using Game.DataContainers;
+using Game.Utils;
 using Game.WorldMap;
+
 
 namespace Game{
     public class ChunkController : IDisposable{

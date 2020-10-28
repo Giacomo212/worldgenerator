@@ -1,7 +1,7 @@
 using System;
 using Game.GameContext;
 
-namespace Game.GameContext{
+namespace Game.EventArg{
     public class ContextChangeRequestedArgs : EventArgs{
         public  readonly Context Context;
 

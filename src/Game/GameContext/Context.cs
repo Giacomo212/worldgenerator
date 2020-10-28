@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using Game.EventArg;
 using Game.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Myra.Graphics2D.UI;
+using Game.Utils;
 
 
 namespace Game.GameContext{
@@ -23,7 +24,7 @@ namespace Game.GameContext{
 
         public virtual void Update(GameTime gameTime){
             _userInterfaces.Peek().Update(gameTime);
-            if (Keyboard.HasBeenPressed(Keys.Escape) && _userInterfaces.Peek().CanBeCanceled)
+            if (ExtendedKeyboard.HasBeenPressed(Keys.Escape) && _userInterfaces.Peek().CanBeCanceled)
                 RemoveUI();
         }
 

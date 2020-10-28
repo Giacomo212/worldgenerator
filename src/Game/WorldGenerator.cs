@@ -3,10 +3,12 @@ using System;
 using Myra;
 using System.IO;
 using Game.Configs;
+using Game.EventArg;
 using Game.GameContext;
 using Game.UI;
+using Game.Utils;
 using Microsoft.Xna.Framework.Graphics;
-using Types;
+
 
 
 namespace Game{
@@ -32,7 +34,7 @@ namespace Game{
 
         protected override void Initialize(){
             base.Initialize();
-            Keyboard.Initialize();
+            ExtendedKeyboard.Initialize();
         }
 
         protected override void LoadContent(){
@@ -60,7 +62,7 @@ namespace Game{
         }
 
         protected override void Update(GameTime gameTime){
-            Keyboard.UpdateState();
+            ExtendedKeyboard.UpdateState();
             _currentContext.Update(gameTime);
             base.Update(gameTime);
         }

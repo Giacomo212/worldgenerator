@@ -1,4 +1,4 @@
-namespace Types{
+namespace Game.Utils{
     public class DistanceRatioCalculator{
         private readonly Position _beginning;
         private  readonly Position _size;

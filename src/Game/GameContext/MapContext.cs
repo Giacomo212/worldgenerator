@@ -4,8 +4,12 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using Game.Configs;
 using Game.UI;
-using Game.WorldMap;
-using Types;
+using Game.Utils;
+using Block = Game.DataContainers.Block;
+using BlockType = Game.DataContainers.BlockType;
+using Chunk = Game.DataContainers.Chunk;
+using ItemType = Game.DataContainers.ItemType;
+using Map = Game.DataContainers.Map;
 
 
 namespace Game.GameContext{
@@ -74,22 +78,22 @@ namespace Game.GameContext{
             _cameraController = new CameraController(_map);
         }
 
-        ~MapContext(){
-            _chunkController.Dispose();
-        }
+        // ~MapContext(){
+        //     _chunkController.Dispose();
+        // }
 
         public override void Update(GameTime gameTime){
             base.Update(gameTime);
-            if (Keyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveLeft) && _cameraController.MoveLeft())
+            if (ExtendedKeyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveLeft) && _cameraController.MoveLeft())
                 _chunkController.MoveLeft();
-            else if (Keyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveRight) && _cameraController.MoveRight())
+            else if (ExtendedKeyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveRight) && _cameraController.MoveRight())
                 _chunkController.MoveRight();
             // move map vertically 
-            if (Keyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveUp) && _cameraController.MoveUp())
+            if (ExtendedKeyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveUp) && _cameraController.MoveUp())
                 _chunkController.MoveUp();
-            else if (Keyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveDown) && _cameraController.MoveDown())
+            else if (ExtendedKeyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveDown) && _cameraController.MoveDown())
                 _chunkController.MoveDown();
-            if (Keyboard.HasBeenPressed(Keys.Escape)){
+            if (ExtendedKeyboard.HasBeenPressed(Keys.Escape)){
                 RequestContext(new StartingScreenContext(new MainUi()));
             }
         }

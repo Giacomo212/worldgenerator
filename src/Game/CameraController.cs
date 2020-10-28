@@ -1,18 +1,19 @@
 using Game.Configs;
-using Types;
-
+using Game.Utils;
+using Chunk = Game.DataContainers.Chunk;
+using Map = Game.DataContainers.Map;
+using Game.Utils;
 
 namespace Game{
     public class CameraController{
         //vectors which are responsible for map shift
-        private float _vectorX = 0;
-        private float _vectorY = 0;
         private Position _renderPosition = new Position(0, 0);
         private readonly Map _map;
         
         // propertes
-        public float VectorX => _vectorX;
-        public float VectorY => _vectorY;
+        public float VectorX{ get; private set; } = 0;
+
+        public float VectorY{ get; private set; } = 0;
 
 
         public CameraController(Map map){
@@ -21,46 +22,46 @@ namespace Game{
 
         //private methods
         public bool MoveRight(){
-            var tmp = _vectorX - GameConfig.Config.Sensivity;
+            var tmp = VectorX - GameConfig.Config.Sensivity;
             if (_renderPosition.X < _map.ChunkCount && tmp <= 0){
                 _renderPosition.X++;
-                _vectorX = Chunk.PixelSize;
+                VectorX = Chunk.PixelSize;
                 return true;
             }
-            _vectorX = tmp > 0 ? tmp : _vectorX;
+            VectorX = tmp > 0 ? tmp : VectorX;
             return false;
         }
 
         public bool MoveLeft(){
-            var tmp = _vectorX + GameConfig.Config.Sensivity;
+            var tmp = VectorX + GameConfig.Config.Sensivity;
             if (_renderPosition.X > 0 && tmp >= Chunk.PixelSize){
                 _renderPosition.X--;
-                _vectorX = 0;
+                VectorX = 0;
                 return true;
             }
-            _vectorX = tmp < Chunk.PixelSize ? tmp : _vectorX;
+            VectorX = tmp < Chunk.PixelSize ? tmp : VectorX;
             return false;
         }
 
         public bool MoveUp(){
-            var tmp = _vectorY + GameConfig.Config.Sensivity;
+            var tmp = VectorY + GameConfig.Config.Sensivity;
             if (_renderPosition.Y > 0 && tmp >= Chunk.PixelSize){
                 _renderPosition.Y--;
-                _vectorY = 0;
+                VectorY = 0;
                 return true;
             }
-            _vectorY = tmp < Chunk.PixelSize ? tmp : _vectorY;
+            VectorY = tmp < Chunk.PixelSize ? tmp : VectorY;
             return false;
         }
 
         public bool MoveDown(){
-            var tmp = _vectorY - GameConfig.Config.Sensivity;
+            var tmp = VectorY - GameConfig.Config.Sensivity;
             if (_renderPosition.Y < _map.ChunkCount && tmp <= 0){
                 _renderPosition.Y++;
-                _vectorY = Chunk.PixelSize;
+                VectorY = Chunk.PixelSize;
                 return true;
             }
-            _vectorY = tmp > 0 ? tmp : _vectorY;
+            VectorY = tmp > 0 ? tmp : VectorY;
             return false;
         }
         

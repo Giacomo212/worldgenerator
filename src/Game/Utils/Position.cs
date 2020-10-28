@@ -1,6 +1,6 @@
 using System;
 
-namespace Types{
+namespace Game.Utils{
     public class Position{
         public int X{ get; set; }
 

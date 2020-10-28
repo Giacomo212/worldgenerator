@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿
 using Game.Configs;
 using Game.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Types;
+
+using Block = Game.DataContainers.Block;
 
 
 namespace Game.GameContext{

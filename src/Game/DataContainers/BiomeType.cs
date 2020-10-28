@@ -1,4 +1,4 @@
-namespace Types{
+namespace Game.DataContainers{
     public enum BiomeType{
         Mountains,
         Ocean,

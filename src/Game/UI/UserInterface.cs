@@ -1,9 +1,10 @@
 using System;
+using Game.EventArg;
 using Game.GameContext;
 using Microsoft.Xna.Framework;
 using Myra.Graphics2D;
 using Myra.Graphics2D.UI;
-using Types;
+
 
 
 namespace Game.UI{

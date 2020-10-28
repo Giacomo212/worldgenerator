@@ -1,4 +1,5 @@
-using Game.GameContext;
+using Game.EventArg;
+using Game.Runners;
 using Game.WorldMap;
 using Microsoft.Xna.Framework;
 using Myra.Graphics2D.Brushes;

@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿
 
-namespace Types {
+namespace Game.DataContainers {
     public class Map{
          public readonly string Name;
          public readonly int Seed;
@@ -17,7 +17,7 @@ namespace Types {
             _worldType = worldWorldType;
             var size = (int) worldWorldType;
             Seed = seed;
-            ChunkCount = (int) _worldType / Chunk.BlockCount;
+            ChunkCount = (int) _worldType / Game.DataContainers.Chunk.BlockCount;
             BlockCount = (int) _worldType;
 
         }

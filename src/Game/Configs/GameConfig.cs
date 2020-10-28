@@ -1,11 +1,13 @@
 ﻿using System.IO;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using Types;
+using Game.Utils;
+
 
 namespace Game.Configs{
     public class GameConfig{
         //sigleton
+        
+        
         public static GameConfig Config;
         public float Sensivity{ get; set; }
         public Resolution Resolution{ get; set; }

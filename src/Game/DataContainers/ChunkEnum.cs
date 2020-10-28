@@ -1,23 +1,22 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 
-namespace Types{
+namespace Game.DataContainers{
     public class ChunkEnum : IEnumerator {
         public int I{ get; private set; } = -1;
 
         public int J{ get; private set; } = 0;
 
-        private Block[,] _blocks;
-        public ChunkEnum(Block[,] blocks){
+        private Game.DataContainers.Block[,] _blocks;
+        public ChunkEnum(Game.DataContainers.Block[,] blocks){
             _blocks = blocks;
         }
         public bool MoveNext(){
-            if (++I >= Chunk.BlockCount ){
+            if (++I >= Game.DataContainers.Chunk.BlockCount ){
                 I = 0;
                 ++J;
             }
-            return J < Chunk.BlockCount;
+            return J < Game.DataContainers.Chunk.BlockCount;
         }
 
         public void Reset(){
@@ -27,7 +26,7 @@ namespace Types{
 
         object IEnumerator.Current => Current;
 
-        public Block Current
+        public Game.DataContainers.Block Current
         {
             get
             {

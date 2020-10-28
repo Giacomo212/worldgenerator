@@ -1,4 +1,4 @@
-namespace Types{
+namespace Game.DataContainers{
     public enum WorldSize{
         Small = 400,
         Medium = 800,
