@@ -1,5 +1,5 @@
 using System;
-using Game.DataContainers;
+using Game.MapHandler;
 using Game.Utils;
 using Game.WorldMap;
 

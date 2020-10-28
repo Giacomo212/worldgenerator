@@ -1,7 +1,7 @@
-using Game.DataContainers;
 using Game.Utils;
+using Game.WorldMap;
 
-namespace Game.WorldMap{
+namespace Game.MapHandler{
     public class LandChunkGenerator : ChunkGenerator{
         public LandChunkGenerator(Map map) : base(map){
         }

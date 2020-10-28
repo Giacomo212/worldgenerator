@@ -1,7 +1,7 @@
 using Game.Configs;
 using Game.Utils;
-using Chunk = Game.DataContainers.Chunk;
-using Map = Game.DataContainers.Map;
+using Chunk = Game.WorldMap.Chunk;
+using Map = Game.WorldMap.Map;
 using Game.Utils;
 
 namespace Game{

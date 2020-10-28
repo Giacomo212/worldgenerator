@@ -1,9 +1,8 @@
 using System;
-using Game.DataContainers;
 using Game.Utils;
+using Game.WorldMap;
 
-
-namespace Game.WorldMap{
+namespace Game.MapHandler{
     public abstract class ChunkGenerator : IChunkGenerator{
         protected  readonly FastNoiseLite _MainNoise;
         protected  readonly FastNoiseLite _ScondaryNoise;

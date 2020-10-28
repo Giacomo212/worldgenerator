@@ -12,11 +12,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 
 namespace Game{
-    public class WorldGenerator : Microsoft.Xna.Framework.Game{
+    public class MainLoop : Microsoft.Xna.Framework.Game{
         private readonly GraphicsDeviceManager _graphics;
         private Context _currentContext;
 
-        public WorldGenerator(){
+        public MainLoop(){
             var separator = Path.DirectorySeparatorChar;
             Directory.CreateDirectory(EnvironmentVariables.GameFiles);
             Directory.CreateDirectory(EnvironmentVariables.GameFiles + $"{separator}worlds");

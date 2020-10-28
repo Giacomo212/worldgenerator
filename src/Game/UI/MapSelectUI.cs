@@ -1,7 +1,7 @@
 using System;
 using Game.EventArg;
 using Game.GameContext;
-using Game.WorldMap;
+using Game.MapHandler;
 using Myra.Graphics2D.UI;
 
 namespace Game.UI{

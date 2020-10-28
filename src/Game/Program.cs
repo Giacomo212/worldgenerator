@@ -16,7 +16,7 @@ namespace Game
         private static void Main()
         {
             GameConfig.Load();
-            using (var game = new WorldGenerator())
+            using (var game = new MainLoop())
                 game.Run();
             
         }

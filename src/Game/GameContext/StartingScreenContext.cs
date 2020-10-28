@@ -4,7 +4,7 @@ using Game.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using Block = Game.DataContainers.Block;
+using Block = Game.WorldMap.Block;
 
 
 namespace Game.GameContext{

@@ -1,7 +1,7 @@
 ﻿
 
 
-namespace Game.DataContainers {
+namespace Game.WorldMap {
     public class Block {
         public static int PixelSize { get; } = 32;
         public static int SizeInMemory{ get; } = sizeof(int) * 3;
@@ -10,13 +10,13 @@ namespace Game.DataContainers {
 
         public BlockType BlockType{ get; }
 
-        public Game.DataContainers.BiomeType BiomeType{ get; }
+        public BiomeType BiomeType{ get; }
 
-        public Block(BlockType blockBlockType, Game.DataContainers.BiomeType biomeType){
+        public Block(BlockType blockBlockType, BiomeType biomeType){
             BlockType = blockBlockType;
             BiomeType = biomeType;
         }
-        public Block(BlockType blockBlockType,Game.DataContainers.BiomeType biomeType,ItemType itemType){
+        public Block(BlockType blockBlockType,BiomeType biomeType,ItemType itemType){
             BlockType = blockBlockType;
             ItemType = itemType;
             BiomeType = biomeType;

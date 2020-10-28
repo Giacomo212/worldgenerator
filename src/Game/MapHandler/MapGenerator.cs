@@ -1,10 +1,9 @@
 using System;
 using System.IO;
-using Game.DataContainers;
 using Game.Utils;
+using Game.WorldMap;
 
-
-namespace Game.WorldMap{
+namespace Game.MapHandler{
     public class MapGenerator{
         private MemoryStream _memoryStream;
         private BinaryWriter _binaryWriter;

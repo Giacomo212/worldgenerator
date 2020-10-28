@@ -1,11 +1,9 @@
 using System;
 using System.IO;
-using Game.DataContainers;
 using Game.Utils;
+using Game.WorldMap;
 
-
-
-namespace Game.WorldMap{
+namespace Game.MapHandler{
     public class MapReader : IDisposable{
         private FileStream _fileStream;
         private BinaryReader _binaryReader;

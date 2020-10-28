@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Game.DataContainers;
 using Game.Utils;
+using Game.WorldMap;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
-
-
-
-namespace Game.WorldMap{
+namespace Game.MapHandler{
     public  class ImageGenerator{
         private Map _map;
         public int PercentDone{ get; private set; } = 0;

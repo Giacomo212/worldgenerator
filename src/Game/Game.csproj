@@ -17,7 +17,7 @@
         <PackageReference Include="SixLabors.ImageSharp" Version="1.0.1" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\FastNoiseLite\FastNoiseLite.csproj" />
+        <ProjectReference Include="..\FastNoiseLite\FastNoiseLite.csproj" />
     </ItemGroup>
 
 </Project>

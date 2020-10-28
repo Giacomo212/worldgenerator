@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using Game.Configs;
 using Game.UI;
 using Game.Utils;
-using Block = Game.DataContainers.Block;
-using BlockType = Game.DataContainers.BlockType;
-using Chunk = Game.DataContainers.Chunk;
-using ItemType = Game.DataContainers.ItemType;
-using Map = Game.DataContainers.Map;
+using Block = Game.WorldMap.Block;
+using BlockType = Game.WorldMap.BlockType;
+using Chunk = Game.WorldMap.Chunk;
+using ItemType = Game.WorldMap.ItemType;
+using Map = Game.WorldMap.Map;
 
 
 namespace Game.GameContext{

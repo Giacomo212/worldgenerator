@@ -1,22 +1,20 @@
-using Game.DataContainers;
 using Game.Utils;
+using Game.WorldMap;
 
-
-
-namespace Game.WorldMap{
-    public class ContinentChunkGenerator : ChunkGenerator{
-        private readonly DistanceRatioCalculator _firstDistanceRatioCalculator; //= new DistanceRatioCalculator(400, 200);
-        //private readonly DistanceRatioCalculator _secondDistanceRatioCalculator = new DistanceRatioCalculator(400, 200);
-        //private readonly DistanceRatioCalculator _thirdDistanceRatioCalculator = new DistanceRatioCalculator(400, 200);
+namespace Game.MapHandler{
+    public class IslandWorldGenerator : ChunkGenerator{
+        private readonly DistanceRatioCalculator _distanceRatioCalculator;
         private readonly FastNoiseLite _biomeNoise;
+        private readonly FastNoiseLite _itemNoise;
 
-        public ContinentChunkGenerator(Map map) : base(map){
-            _firstDistanceRatioCalculator = new DistanceRatioCalculator(new Position(800,800), new Position(400,400));
-            _firstDistanceRatioCalculator.CalculationRatio = 4.0;
-            _firstDistanceRatioCalculator.CalculationRatio = 0.5;
+        public IslandWorldGenerator(Map map) : base(map){
             _biomeNoise = new FastNoiseLite(_random.Next());
             _biomeNoise.SetFrequency(0.009f);
             _biomeNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2S);
+            _itemNoise = new FastNoiseLite(_random.Next());
+            _itemNoise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2S);
+            _itemNoise.SetFrequency(0.9f);
+            _distanceRatioCalculator = new DistanceRatioCalculator(map.BlockCount, map.BlockCount);
         }
 
         protected override void GenerateWorld(Position blockPosition){
@@ -27,9 +25,10 @@ namespace Game.WorldMap{
                               0.75f * _ScondaryNoise.GetNoise((x + blockPosition.X), (y + blockPosition.Y)) +
                               0.25 * _noise.GetNoise((x + blockPosition.X), (y + blockPosition.Y));
 
-                    tmp *= _firstDistanceRatioCalculator.GetValue(new Position((x + blockPosition.X),
+                    tmp *= _distanceRatioCalculator.GetValue(new Position((x + blockPosition.X),
                         (y + blockPosition.Y)));
-                    if (tmp < -0.2f)
+                    if (tmp < -0.4f)
+                        // _chunk[x, y] = new Block(BlockType.Grass, BiomeType.Grassland);
                         _chunk[x, y] = GetLandBlock(tmp, pos);
                     else
                         _chunk[x, y] = new Block(BlockType.Water, BiomeType.Ocean);
@@ -45,6 +44,18 @@ namespace Game.WorldMap{
             if (noiseValue < -1.0f && _biomeNoise.GetNoise(position.X, position.Y) < 0)
                 return new Block(BlockType.Stone, BiomeType.Mountains);
             return new Block(BlockType.Grass, BiomeType.Grassland);
+        }
+
+        protected override void GenerateItems(Position blockPosition){
+            for (int i = 0; i < Chunk.BlockCount; i++){
+                for (int j = 0; j < Chunk.BlockCount; j++){
+                    if (_random.Next(0, 25) > 23 &&
+                        _chunk[i, j].BlockType == BlockType.Grass
+                    ){
+                        _chunk[i, j].ItemType = ItemType.Tree;
+                    }
+                }
+            }
         }
     }
 }

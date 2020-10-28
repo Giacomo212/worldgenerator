@@ -1,6 +1,6 @@
 using Game.EventArg;
+using Game.MapHandler;
 using Game.Runners;
-using Game.WorldMap;
 using Microsoft.Xna.Framework;
 using Myra.Graphics2D.Brushes;
 using Myra.Graphics2D.UI;
