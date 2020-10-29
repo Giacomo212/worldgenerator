@@ -1,8 +1,7 @@
 using Game.MapHandler;
 using Game.WorldMap;
 
-
-namespace Game.Runners{
+namespace Game.Process{
     public class MapImageGenerationRunner : ICheckableProcess{
         
         private readonly ImageGenerator _imageGenerator;

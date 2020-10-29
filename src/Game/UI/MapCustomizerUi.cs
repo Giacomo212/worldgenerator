@@ -4,7 +4,7 @@ using System.Linq;
 using Game.EventArg;
 using Game.GameContext;
 using Game.MapHandler;
-using Game.Runners;
+using Game.Process;
 using Game.Utils;
 using Game.WorldMap;
 using Myra.Graphics2D;

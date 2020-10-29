@@ -1,4 +1,4 @@
-namespace Game.Runners{
+namespace Game.Process{
     public interface ICheckableProcess{
         
         //returns values form 0 to 100

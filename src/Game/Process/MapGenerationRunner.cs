@@ -1,7 +1,7 @@
 using Game.MapHandler;
 using Game.WorldMap;
 
-namespace Game.Runners{
+namespace Game.Process{
     public class MapGenerationRunner : ICheckableProcess{
         protected readonly Map _map;
         protected readonly IChunkGenerator ChunkGenerator;
