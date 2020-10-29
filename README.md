@@ -12,7 +12,7 @@ Using dotnet CLI
   
 ```
 git clone https://github.com/Giacomo212/worldgenerator.git  
-cd ./worldgenerator/Game  
+cd ./worldgenerator/src/WorldGenerator  
 dotnet run
 ```
   
