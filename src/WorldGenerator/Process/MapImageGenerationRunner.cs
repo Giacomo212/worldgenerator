@@ -1,4 +1,4 @@
-using WorldGenerator.MapHandler;
+using WorldGenerator.MapHandlers;
 using WorldGenerator.WorldMap;
 
 namespace WorldGenerator.Process{

@@ -1,7 +1,7 @@
 using WorldGenerator.Utils;
 using WorldGenerator.WorldMap;
 
-namespace WorldGenerator.MapHandler{
+namespace WorldGenerator.MapHandlers{
     public class IslandWorldGenerator : ChunkGenerator{
         private readonly DistanceRatioCalculator _distanceRatioCalculator;
         private readonly FastNoiseLite.FastNoiseLite _biomeNoise;

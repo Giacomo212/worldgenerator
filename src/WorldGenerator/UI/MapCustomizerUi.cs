@@ -5,7 +5,7 @@ using Myra.Graphics2D;
 using Myra.Graphics2D.UI;
 using WorldGenerator.EventArg;
 using WorldGenerator.GameContext;
-using WorldGenerator.MapHandler;
+using WorldGenerator.MapHandlers;
 using WorldGenerator.Process;
 using WorldGenerator.Utils;
 using WorldGenerator.WorldMap;

@@ -3,7 +3,7 @@ using System.IO;
 using WorldGenerator.Utils;
 using WorldGenerator.WorldMap;
 
-namespace WorldGenerator.MapHandler{
+namespace WorldGenerator.MapHandlers{
     public class MapGenerator{
         private MemoryStream _memoryStream;
         private BinaryWriter _binaryWriter;

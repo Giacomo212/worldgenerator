@@ -1,7 +1,7 @@
 using WorldGenerator.Utils;
 using WorldGenerator.WorldMap;
 
-namespace WorldGenerator.MapHandler{
+namespace WorldGenerator.MapHandlers{
     public class ContinentChunkGenerator : ChunkGenerator{
         private readonly DistanceRatioCalculator _firstDistanceRatioCalculator; //= new DistanceRatioCalculator(400, 200);
         //private readonly DistanceRatioCalculator _secondDistanceRatioCalculator = new DistanceRatioCalculator(400, 200);

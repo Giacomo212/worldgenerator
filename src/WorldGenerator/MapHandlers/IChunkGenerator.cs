@@ -1,7 +1,7 @@
 using WorldGenerator.Utils;
 using WorldGenerator.WorldMap;
 
-namespace WorldGenerator.MapHandler{
+namespace WorldGenerator.MapHandlers{
     public interface IChunkGenerator{
         public Chunk GenerateChunk(Position position);
     }

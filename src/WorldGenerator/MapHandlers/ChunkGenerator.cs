@@ -2,7 +2,7 @@ using System;
 using WorldGenerator.Utils;
 using WorldGenerator.WorldMap;
 
-namespace WorldGenerator.MapHandler{
+namespace WorldGenerator.MapHandlers{
     public abstract class ChunkGenerator : IChunkGenerator{
         protected  readonly FastNoiseLite.FastNoiseLite _MainNoise;
         protected  readonly FastNoiseLite.FastNoiseLite _ScondaryNoise;

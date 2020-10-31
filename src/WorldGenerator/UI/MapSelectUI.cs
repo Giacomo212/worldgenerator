@@ -2,7 +2,7 @@ using System;
 using Myra.Graphics2D.UI;
 using WorldGenerator.EventArg;
 using WorldGenerator.GameContext;
-using WorldGenerator.MapHandler;
+using WorldGenerator.MapHandlers;
 
 namespace WorldGenerator.UI{
     public class MapSelectUI : MapChooserUI{

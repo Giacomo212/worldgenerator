@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Myra.Graphics2D.Brushes;
 using Myra.Graphics2D.UI;
 using WorldGenerator.EventArg;
-using WorldGenerator.MapHandler;
+using WorldGenerator.MapHandlers;
 using WorldGenerator.Process;
 
 namespace WorldGenerator.UI{

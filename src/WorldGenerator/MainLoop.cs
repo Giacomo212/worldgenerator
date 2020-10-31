@@ -10,7 +10,7 @@ using WorldGenerator.UI;
 using WorldGenerator.Utils;
 
 namespace WorldGenerator{
-    public class MainLoop : Microsoft.Xna.Framework.Game{
+    public class MainLoop : Game{
         private readonly GraphicsDeviceManager _graphics;
         private Context _currentContext;
 

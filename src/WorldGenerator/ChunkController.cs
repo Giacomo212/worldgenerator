@@ -1,5 +1,5 @@
 using System;
-using WorldGenerator.MapHandler;
+using WorldGenerator.MapHandlers;
 using WorldGenerator.Utils;
 using WorldGenerator.WorldMap;
 

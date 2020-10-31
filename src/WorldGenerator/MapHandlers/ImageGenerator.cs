@@ -5,7 +5,7 @@ using SixLabors.ImageSharp.PixelFormats;
 using WorldGenerator.Utils;
 using WorldGenerator.WorldMap;
 
-namespace WorldGenerator.MapHandler{
+namespace WorldGenerator.MapHandlers{
     public  class ImageGenerator{
         private Map _map;
         public int PercentDone{ get; private set; } = 0;

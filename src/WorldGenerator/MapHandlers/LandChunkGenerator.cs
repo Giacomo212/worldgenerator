@@ -1,7 +1,7 @@
 using WorldGenerator.Utils;
 using WorldGenerator.WorldMap;
 
-namespace WorldGenerator.MapHandler{
+namespace WorldGenerator.MapHandlers{
     public class LandChunkGenerator : ChunkGenerator{
         public LandChunkGenerator(Map map) : base(map){
         }

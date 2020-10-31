@@ -3,7 +3,7 @@ using System.IO;
 using WorldGenerator.Utils;
 using WorldGenerator.WorldMap;
 
-namespace WorldGenerator.MapHandler{
+namespace WorldGenerator.MapHandlers{
     public class MapReader : IDisposable{
         private FileStream _fileStream;
         private BinaryReader _binaryReader;
