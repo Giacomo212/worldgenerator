@@ -1,6 +1,6 @@
 using System;
+using WorldGenerator.MapElements;
 using WorldGenerator.Utils;
-using WorldGenerator.WorldMap;
 
 namespace WorldGenerator.MapHandlers{
     public abstract class ChunkGenerator : IChunkGenerator{

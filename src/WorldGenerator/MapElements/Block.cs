@@ -1,7 +1,7 @@
 ﻿
 
 
-namespace WorldGenerator.WorldMap {
+namespace WorldGenerator.MapElements {
     public class Block {
         public static int PixelSize { get; } = 32;
         public static int SizeInMemory{ get; } = sizeof(int) * 3;

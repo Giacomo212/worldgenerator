@@ -1,14 +1,12 @@
 using WorldGenerator.Configs;
+using WorldGenerator.MapElements;
 using WorldGenerator.Utils;
-using WorldGenerator.WorldMap;
 
 namespace WorldGenerator{
     public class CameraController{
         //vectors which are responsible for map shift
-        private Position _renderPosition = new Position(0, 0);
+        private readonly Position _renderPosition = new Position(0, 0);
         private readonly Map _map;
-        
-        // propertes
         public float VectorX{ get; private set; } = 0;
 
         public float VectorY{ get; private set; } = 0;
@@ -62,6 +60,7 @@ namespace WorldGenerator{
             VectorY = tmp > 0 ? tmp : VectorY;
             return false;
         }
+        
         
     }
 }

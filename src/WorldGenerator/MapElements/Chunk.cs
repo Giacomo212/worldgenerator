@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace WorldGenerator.WorldMap{
+namespace WorldGenerator.MapElements{
     public class Chunk : IEnumerable{
         private readonly Block[,] _blocks = new Block[BlockCount, BlockCount];
         public const int BlockCount = 16;

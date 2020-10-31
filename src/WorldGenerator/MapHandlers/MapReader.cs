@@ -1,7 +1,7 @@
 using System;
 using System.IO;
+using WorldGenerator.MapElements;
 using WorldGenerator.Utils;
-using WorldGenerator.WorldMap;
 
 namespace WorldGenerator.MapHandlers{
     public class MapReader : IDisposable{

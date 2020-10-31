@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using WorldGenerator.Configs;
 using WorldGenerator.UI;
-using Block = WorldGenerator.WorldMap.Block;
+using Block = WorldGenerator.MapElements.Block;
 
 
 namespace WorldGenerator.GameContext{

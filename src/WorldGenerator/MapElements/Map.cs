@@ -1,6 +1,6 @@
 ﻿
 
-namespace WorldGenerator.WorldMap {
+namespace WorldGenerator.MapElements {
     public class Map{
          public readonly string Name;
          public readonly int Seed;

@@ -1,4 +1,4 @@
-namespace WorldGenerator.WorldMap{
+namespace WorldGenerator.MapElements{
     public enum WorldSize{
         Small = 400,
         Medium = 800,

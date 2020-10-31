@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
+using WorldGenerator.MapElements;
 using WorldGenerator.Utils;
-using WorldGenerator.WorldMap;
 
 namespace WorldGenerator.MapHandlers{
     public  class ImageGenerator{

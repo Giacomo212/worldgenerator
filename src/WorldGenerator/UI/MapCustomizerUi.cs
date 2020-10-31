@@ -5,10 +5,10 @@ using Myra.Graphics2D;
 using Myra.Graphics2D.UI;
 using WorldGenerator.EventArg;
 using WorldGenerator.GameContext;
+using WorldGenerator.MapElements;
 using WorldGenerator.MapHandlers;
 using WorldGenerator.Process;
 using WorldGenerator.Utils;
-using WorldGenerator.WorldMap;
 
 namespace WorldGenerator.UI{
     public class MapCustomizerUI : UserInterface{

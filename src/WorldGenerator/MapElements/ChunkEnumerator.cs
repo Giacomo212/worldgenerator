@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 
-namespace WorldGenerator.WorldMap{
+namespace WorldGenerator.MapElements{
     public class ChunkEnumerator : IEnumerator {
         public int I{ get; private set; } = -1;
 

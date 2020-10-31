@@ -1,5 +1,5 @@
+using WorldGenerator.MapElements;
 using WorldGenerator.MapHandlers;
-using WorldGenerator.WorldMap;
 
 namespace WorldGenerator.Process{
     public class MapImageGenerationRunner : ICheckableProcess{

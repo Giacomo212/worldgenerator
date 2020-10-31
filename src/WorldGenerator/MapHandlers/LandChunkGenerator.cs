@@ -1,5 +1,5 @@
+using WorldGenerator.MapElements;
 using WorldGenerator.Utils;
-using WorldGenerator.WorldMap;
 
 namespace WorldGenerator.MapHandlers{
     public class LandChunkGenerator : ChunkGenerator{
