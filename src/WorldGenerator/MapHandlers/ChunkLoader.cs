@@ -5,10 +5,10 @@ using WorldGenerator.Utils;
 namespace WorldGenerator.MapHandlers{
     public class ChunkLoader : IDisposable{
         private Chunk[,] _currentChunks;
-        private int _chunkCount;
-        private Position _bufferBeginningPointer = Position.Zero;
+        private readonly int _chunkCount;
+        private readonly Position _bufferBeginningPointer = Position.Zero;
         private Position _bufferEndPointer;
-        private MapReader _mapReader;
+        private readonly MapReader _mapReader;
         private Position _bufferSize;
 
         public ChunkLoader(Position bufferSize, Map map){
