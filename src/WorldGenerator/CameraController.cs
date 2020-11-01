@@ -8,7 +8,6 @@ namespace WorldGenerator{
         private readonly Position _renderPosition = new Position(0, 0);
         private readonly Map _map;
         public float VectorX{ get; private set; } = 0;
-
         public float VectorY{ get; private set; } = 0;
 
 
@@ -24,6 +23,7 @@ namespace WorldGenerator{
                 VectorX = Chunk.PixelSize;
                 return true;
             }
+
             VectorX = tmp > 0 ? tmp : VectorX;
             return false;
         }
@@ -35,6 +35,7 @@ namespace WorldGenerator{
                 VectorX = 0;
                 return true;
             }
+
             VectorX = tmp < Chunk.PixelSize ? tmp : VectorX;
             return false;
         }
@@ -46,6 +47,7 @@ namespace WorldGenerator{
                 VectorY = 0;
                 return true;
             }
+
             VectorY = tmp < Chunk.PixelSize ? tmp : VectorY;
             return false;
         }
@@ -57,10 +59,9 @@ namespace WorldGenerator{
                 VectorY = Chunk.PixelSize;
                 return true;
             }
+
             VectorY = tmp > 0 ? tmp : VectorY;
             return false;
         }
-        
-        
     }
 }

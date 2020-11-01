@@ -21,7 +21,7 @@ namespace WorldGenerator.UI{
 
         private void DeleteWorld(object sender, EventArgs e){
             var tmp = sender as TextButton;
-            File.Delete(EnvironmentVariables.Worldfiles + EnvironmentVariables.Separator + tmp.Text + ".wg");
+            File.Delete(EnvironmentVariables.WorldFiles + EnvironmentVariables.Separator + tmp.Text + ".wg");
             GetAllWorlds();
         }
 

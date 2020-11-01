@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using WorldGenerator.Configs;
+using WorldGenerator.Utils;
 
 namespace WorldGenerator
 {
@@ -14,9 +16,11 @@ namespace WorldGenerator
         [STAThread]
         private static void Main()
         {
+            Directory.CreateDirectory(EnvironmentVariables.GameFiles);
+            Directory.CreateDirectory(EnvironmentVariables.WorldFiles);
             GameConfig.Load();
-            using (var game = new MainLoop())
-                game.Run();
+            using var game = new MainLoop();
+            game.Run();
             
         }
         

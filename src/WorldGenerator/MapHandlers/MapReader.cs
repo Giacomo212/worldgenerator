@@ -11,7 +11,7 @@ namespace WorldGenerator.MapHandlers{
         private readonly int _sizeofMap;
 
         public MapReader(Map map){
-            _fileStream = File.Open(EnvironmentVariables.Worldfiles + EnvironmentVariables.Separator + map.Name + ".wg",
+            _fileStream = File.Open(EnvironmentVariables.WorldFiles + EnvironmentVariables.Separator + map.Name + ".wg",
                 FileMode.Open);
             _map = map;
             _fileStream.Seek(sizeof(int) * 2, SeekOrigin.Begin);
@@ -47,7 +47,7 @@ namespace WorldGenerator.MapHandlers{
             if (mapName.Contains("/") || mapName.Contains("\\"))
                 throw new IOException("invalid file name");
             using var file = new BinaryReader(File.Open(
-                EnvironmentVariables.Worldfiles + EnvironmentVariables.Separator + mapName + ".wg", FileMode.Open));
+                EnvironmentVariables.WorldFiles + EnvironmentVariables.Separator + mapName + ".wg", FileMode.Open));
             var seed = file.ReadInt32();
             WorldSize worldSize = (WorldSize) file.ReadInt32();
             //file.Close(); this shouldn't  be needed, dispose() is called at the end of the brackets 

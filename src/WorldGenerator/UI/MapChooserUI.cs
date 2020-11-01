@@ -52,7 +52,7 @@ namespace WorldGenerator.UI{
 
         protected virtual void GetAllWorlds(){
             DirectoryInfo d =
-                new DirectoryInfo(EnvironmentVariables.Worldfiles);
+                new DirectoryInfo(EnvironmentVariables.WorldFiles);
             var files = d.GetFiles("*.wg");
             _worldButtons = new TextButton[files.Length];
             for (var i = 0; i < files.Length; i++){

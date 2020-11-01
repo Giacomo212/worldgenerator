@@ -31,7 +31,7 @@ namespace WorldGenerator.MapHandlers{
                 PercentDone =  (int)(Convert.ToDouble(i)/ _map.ChunkCount * 100.0);
             }
 
-            image.Save(EnvironmentVariables.Worldfiles + EnvironmentVariables.Separator + _map.Name + ".jpg");
+            image.Save(EnvironmentVariables.WorldFiles + EnvironmentVariables.Separator + _map.Name + ".jpg");
         }
 
         private static Dictionary<BlockType, string> CrateDictionary(){

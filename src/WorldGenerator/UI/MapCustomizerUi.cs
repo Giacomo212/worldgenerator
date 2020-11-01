@@ -137,7 +137,7 @@ namespace WorldGenerator.UI{
 
         private void CrateNewWorld(object sender, EventArgs args){
             if (File.Exists(
-                EnvironmentVariables.Worldfiles + EnvironmentVariables.Separator + _nameTextBox.Text + ".wg")){
+                EnvironmentVariables.WorldFiles + EnvironmentVariables.Separator + _nameTextBox.Text + ".wg")){
                 var window = new Window();
                 _infolabel.Text = "File already exist";
                 return;

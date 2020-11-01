@@ -5,11 +5,11 @@ using WorldGenerator.Utils;
 
 namespace WorldGenerator.MapHandlers{
     public class MapGenerator{
-        private MemoryStream _memoryStream;
-        private BinaryWriter _binaryWriter;
+        private readonly MemoryStream _memoryStream;
+        private readonly BinaryWriter _binaryWriter;
         public int PercentDone{ get; private set; } = 0;
-        private Map _map;
-        private IChunkGenerator _chunkGenerator;
+        private readonly Map _map;
+        private readonly IChunkGenerator _chunkGenerator;
 
         public MapGenerator(Map map, IChunkGenerator generator){
             _map = map;
@@ -52,7 +52,7 @@ namespace WorldGenerator.MapHandlers{
 
             _memoryStream.Flush();
             _memoryStream.Position = 0;
-            using var fs = File.Open(EnvironmentVariables.Worldfiles + Path.DirectorySeparatorChar + _map.Name + ".wg",
+            using var fs = File.Open(EnvironmentVariables.WorldFiles + Path.DirectorySeparatorChar + _map.Name + ".wg",
                 FileMode.CreateNew);
             _memoryStream.CopyTo(fs);
         }

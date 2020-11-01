@@ -15,9 +15,6 @@ namespace WorldGenerator{
         private Context _currentContext;
 
         public MainLoop(){
-            var separator = Path.DirectorySeparatorChar;
-            Directory.CreateDirectory(EnvironmentVariables.GameFiles);
-            Directory.CreateDirectory(EnvironmentVariables.GameFiles + $"{separator}worlds");
             Context.Game = this;
             MyraEnvironment.Game = this;
             _graphics = new GraphicsDeviceManager(this);
@@ -73,7 +70,6 @@ namespace WorldGenerator{
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e){
-            
             GameConfig.Config.Resolution = new Resolution(Window.ClientBounds.Width, Window.ClientBounds.Height,
                 _graphics.IsFullScreen);
             _currentContext.OnWindowResize();
@@ -81,8 +77,8 @@ namespace WorldGenerator{
 
         private void ScreenChangeRequest(){
             if (GameConfig.Config.Resolution.IsFullScreen){
-                _graphics.PreferredBackBufferWidth = 800;
-                _graphics.PreferredBackBufferHeight = 600;
+                _graphics.PreferredBackBufferWidth = 1280;
+                _graphics.PreferredBackBufferHeight = 920;
                 _graphics.IsFullScreen = false;
                 _graphics.ApplyChanges();
             }
@@ -92,9 +88,8 @@ namespace WorldGenerator{
                 _graphics.IsFullScreen = true;
                 _graphics.ApplyChanges();
             }
-                
         }
-        
+
         protected override void OnExiting(object sender, EventArgs args){
             base.OnExiting(sender, args);
             GameConfig.Save();
