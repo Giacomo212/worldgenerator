@@ -15,7 +15,7 @@ namespace WorldGenerator.GameContext{
         protected readonly Desktop Desktop = new Desktop();
         //This allow to manipulate game parameters  within context 
         //needs to be set up before using this class
-        public static Microsoft.Xna.Framework.Game Game;
+        public static Game Game;
 
         protected Context(UserInterface userInterface){
             AddNewUI(userInterface);

@@ -28,6 +28,11 @@ namespace WorldGenerator.GameContext{
         private Texture2D _snow;
         private Texture2D _tree;
         private Texture2D _stone;
+        private Texture2D _snowTree;
+        private Texture2D _berry;
+        private Texture2D _bush;
+        private Texture2D _deadBush;
+        private Texture2D _cactus;
         //Map management
         private CameraController _cameraController;
         private ChunkLoader _chunkLoader;
@@ -53,12 +58,12 @@ namespace WorldGenerator.GameContext{
 
         public override void Load(){
             _spriteBatch = new SpriteBatch(Game.GraphicsDevice);
-            _grass = Game.Content.Load<Texture2D>("grass32");
-            _sand = Game.Content.Load<Texture2D>("sand32");
-            _water = Game.Content.Load<Texture2D>("water32");
+            _grass = Game.Content.Load<Texture2D>("grass");
+            _sand = Game.Content.Load<Texture2D>("sand");
+            _water = Game.Content.Load<Texture2D>("water");
             _dirt = Game.Content.Load<Texture2D>("dirt");
             _snow = Game.Content.Load<Texture2D>("snow");
-            _stone = Game.Content.Load<Texture2D>("stone32");
+            _stone = Game.Content.Load<Texture2D>("stone");
             _tree = Game.Content.Load<Texture2D>("tree");
         }
 
@@ -78,15 +83,12 @@ namespace WorldGenerator.GameContext{
             _cameraController = new CameraController(_map);
         }
 
-        // ~MapContext(){
-        //     _chunkController.Dispose();
-        // }
-
         public override void Update(GameTime gameTime){
             base.Update(gameTime);
             if (ExtendedKeyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveLeft) && _cameraController.MoveLeft())
                 _chunkLoader.MoveLeft();
-            else if (ExtendedKeyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveRight) && _cameraController.MoveRight())
+            else if (ExtendedKeyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveRight) &&
+                     _cameraController.MoveRight())
                 _chunkLoader.MoveRight();
             // move map vertically 
             if (ExtendedKeyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveUp) && _cameraController.MoveUp())
@@ -143,7 +145,7 @@ namespace WorldGenerator.GameContext{
                 for (var j = 0; j < Chunk.BlockCount; j++){
                     _spriteBatch.Draw(ParseBlock(chunk[i, j].BlockType), offset, Color.White);
                     if (chunk[i, j].ItemType != ItemType.None)
-                        _spriteBatch.Draw(_tree, offset, Color.White);
+                        _spriteBatch.Draw(ParseItem(chunk[i, j].ItemType), offset, Color.White);
                     offset.Y += Block.PixelSize;
                 }
 
