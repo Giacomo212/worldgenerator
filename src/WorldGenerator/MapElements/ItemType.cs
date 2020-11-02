@@ -5,5 +5,7 @@ namespace WorldGenerator.MapElements{
         Pine,
         Berry,
         Bush,
+        Cactus,
+        DeadBush,
     }
 }

@@ -32,6 +32,7 @@ namespace WorldGenerator.GameContext{
         private Texture2D _berry;
         private Texture2D _bush;
         private Texture2D _deadBush;
+        private Texture2D _pine;
 
         private Texture2D _cactus;
 
@@ -67,11 +68,12 @@ namespace WorldGenerator.GameContext{
             _snow = Game.Content.Load<Texture2D>("snow");
             _stone = Game.Content.Load<Texture2D>("stone");
             _tree = Game.Content.Load<Texture2D>("tree");
-            _snowTree = Game.Content.Load<Texture2D>("tree snow");;
-            _berry = Game.Content.Load<Texture2D>("berry");;
-            _bush = Game.Content.Load<Texture2D>("bush");;
-            _deadBush = Game.Content.Load<Texture2D>("deadBush");;
-            _cactus = Game.Content.Load<Texture2D>("cactus");;
+            _snowTree = Game.Content.Load<Texture2D>("tree snow");
+            _berry = Game.Content.Load<Texture2D>("berry");
+            _bush = Game.Content.Load<Texture2D>("bush");
+            _deadBush = Game.Content.Load<Texture2D>("deadBush");
+            _cactus = Game.Content.Load<Texture2D>("cactus");
+            _pine = Game.Content.Load<Texture2D>("pine");
         }
 
         public override void OnWindowResize(){
@@ -128,6 +130,11 @@ namespace WorldGenerator.GameContext{
 
         private void InitializeItemDirectory(){
             _itemDictionary.Add(ItemType.Tree, _tree);
+            _itemDictionary.Add(ItemType.Berry,_berry);
+            _itemDictionary.Add(ItemType.Cactus,_cactus);
+            _itemDictionary.Add(ItemType.Pine,_pine);
+            _itemDictionary.Add(ItemType.DeadBush,_deadBush);
+            _itemDictionary.Add(ItemType.Bush,_bush);
         }
 
         private void DrawMap(){

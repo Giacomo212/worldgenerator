@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldGenerator", "src\WorldGenerator\WorldGenerator.csproj", "{1A8B821D-917F-4FFD-9048-D416B1A043E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastNoiseLite", "src\FastNoiseLite\FastNoiseLite.csproj", "{4D5C8D6D-7A1F-4538-B4A4-D8C9E354360A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastNoise", "src\FastNoise\FastNoise.csproj", "{4D5C8D6D-7A1F-4538-B4A4-D8C9E354360A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

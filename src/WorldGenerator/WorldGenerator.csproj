@@ -17,8 +17,9 @@
         <PackageReference Include="Myra" Version="1.0.1.209" />
         <PackageReference Include="SixLabors.ImageSharp" Version="1.0.1" />
     </ItemGroup>
+
     <ItemGroup>
-        <ProjectReference Include="..\FastNoiseLite\FastNoiseLite.csproj" />
+      <ProjectReference Include="..\FastNoise\FastNoise.csproj" />
     </ItemGroup>
 
 </Project>

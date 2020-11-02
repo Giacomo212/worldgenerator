@@ -1,33 +1,60 @@
+using FastNoise;
+using Myra;
 using WorldGenerator.MapElements;
 using WorldGenerator.Utils;
 
+
 namespace WorldGenerator.MapHandlers{
     public class LandChunkGenerator : ChunkGenerator{
+        private BlockNoiseCalculator _biomeNoiseCalculator;
+        
+
         public LandChunkGenerator(Map map) : base(map, 0.4f){
+            _biomeNoiseCalculator = new BlockNoiseCalculator(_random.Next());
         }
 
-        // protected override void GenerateWorld(Position blockPosition){
-        //     for (var x = 0; x < Chunk.BlockCount; x++){
-        //         for (var y = 0; y < Chunk.BlockCount; y++){
-        //             var tmp = _MainNoise.GetNoise(x + blockPosition.X , y + blockPosition.Y) +
-        //                       0.75f * _ScondaryNoise.GetNoise((x + blockPosition.X), (y + blockPosition.Y)) +
-        //                       0.25 * _noise.GetNoise((x + blockPosition.X), (y + blockPosition.Y));
-        //             ;
-        //             if (tmp < 0.4f)
-        //                 _chunk[x, y] = new Block(BlockType.Grass, BiomeType.Grassland);
-        //             else
-        //                 _chunk[x, y] = new Block(BlockType.Water, BiomeType.Ocean);
-        //         }
-        //     }
-        // }
         protected override double CalculateBlockValue(Position position){
-            return _MainNoise.GetNoise(position.X, position.Y) +
-                   0.75f * _ScondaryNoise.GetNoise(position.X, position.Y) +
-                   0.25 * _noise.GetNoise(position.X, position.Y);
+            return _blockNoiseCalculator.GetValue(position);
         }
 
         protected override Block GetLandBlock(double noiseValue, Position position){
-            return new Block(BlockType.Grass, BiomeType.Grassland);
+            var tmp = _biomeNoiseCalculator.GetValue(position);
+            if (noiseValue > 0.35f && tmp > 0){
+                return new Block(BlockType.Sand, BiomeType.Beach);
+            }
+
+            if (tmp < -0.6f){
+                return new Block(BlockType.Sand, BiomeType.Desert);
+            }
+
+            if (tmp > 0.6f){
+                return new Block(BlockType.Snow, BiomeType.Taiga);
+            }
+
+            return new Block(BlockType.Grass, BiomeType.Forest);
+        }
+
+        protected override void GenerateItems(Position blockPosition){
+            for (var i = 0; i < Chunk.BlockCount; i++){
+                for (var j = 0; j < Chunk.BlockCount; j++){
+                    if (_random.Next(0, 25) > 23){
+                        switch (_chunk[i, j].BiomeType){
+                            case BiomeType.Desert:
+                                _chunk[i, j].ItemType = ItemType.Cactus;
+                                break;
+                            case BiomeType.Forest:
+                                _chunk[i, j].ItemType = ItemType.Tree;
+                                break;
+                            case BiomeType.Taiga:
+                                _chunk[i, j].ItemType = ItemType.Pine;
+                                break;
+                            default:
+                                ;
+                                break;
+                        }
+                    }
+                }
+            }
         }
     }
 }
