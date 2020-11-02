@@ -10,9 +10,10 @@ namespace WorldGenerator.MapHandlers{
         protected readonly Random _random;
         protected Chunk _chunk;
         protected Map _map;
-
-        protected ChunkGenerator(Map  map){
+        protected readonly float _maximalWaterValue;
+        protected ChunkGenerator(Map  map, float maximalWaterValue){
             _map = map;
+            _maximalWaterValue = maximalWaterValue;
             _chunk = new Chunk();
             _MainNoise = new FastNoiseLite.FastNoiseLite(_map.Seed);
             _random = new Random(_map.Seed);
@@ -34,9 +35,24 @@ namespace WorldGenerator.MapHandlers{
             return _chunk;
         }
 
-        protected abstract void GenerateWorld(Position blockPosition);
+        protected virtual void GenerateWorld(Position blockPosition){
             
+            for (var x = 0; x < Chunk.BlockCount; x++){
+                for (var y = 0; y < Chunk.BlockCount; y++){
+                    var pos = new Position(x + blockPosition.X, y + blockPosition.Y);
+                    var tmp = CalculateBlockValue(pos);
+                    if (tmp < -0.4f)
+                        _chunk[x, y] = GetLandBlock(tmp, pos);
+                    else
+                        _chunk[x, y] = new Block(BlockType.Water, BiomeType.Ocean);
+                }
+            }
         
+        }
+
+        protected abstract double CalculateBlockValue(Position position);
+
+        protected abstract Block GetLandBlock(double noiseValue, Position position);
         protected virtual void GenerateItems(Position blockPosition){
             
         }

@@ -32,7 +32,9 @@ namespace WorldGenerator.GameContext{
         private Texture2D _berry;
         private Texture2D _bush;
         private Texture2D _deadBush;
+
         private Texture2D _cactus;
+
         //Map management
         private CameraController _cameraController;
         private ChunkLoader _chunkLoader;
@@ -65,6 +67,11 @@ namespace WorldGenerator.GameContext{
             _snow = Game.Content.Load<Texture2D>("snow");
             _stone = Game.Content.Load<Texture2D>("stone");
             _tree = Game.Content.Load<Texture2D>("tree");
+            _snowTree = Game.Content.Load<Texture2D>("tree snow");;
+            _berry = Game.Content.Load<Texture2D>("berry");;
+            _bush = Game.Content.Load<Texture2D>("bush");;
+            _deadBush = Game.Content.Load<Texture2D>("deadBush");;
+            _cactus = Game.Content.Load<Texture2D>("cactus");;
         }
 
         public override void OnWindowResize(){
