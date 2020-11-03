@@ -81,6 +81,7 @@ namespace WorldGenerator.GameContext{
             //SetUpController();
             _chunkLoader.ChangeBuffer(new Position(GameConfig.Config.Resolution.Width / Chunk.PixelSize + 2,
                 GameConfig.Config.Resolution.Hight / Chunk.PixelSize + 2));
+            _cameraController.ReactOnBufferChange();
         }
 
         private void SetUpController(){

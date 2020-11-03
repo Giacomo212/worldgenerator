@@ -9,16 +9,15 @@ namespace WorldGenerator.MapElements {
         
          public int ChunkCount{ get; }
          public int BlockCount{ get; }
-         //private Block[,] _grid;
-        //public Block this[int x, int y] => _grid[x, y];
+        
 
-        public Map(string name, WorldSize worldWorldType, int seed){
+        public Map(string name, WorldSize worldType, int seed){
             Name = name;
-            _worldType = worldWorldType;
-            var size = (int) worldWorldType;
+            _worldType = worldType;
+            var size = (int) worldType;
             Seed = seed;
-            ChunkCount = (int) _worldType / Chunk.BlockCount;
-            BlockCount = (int) _worldType;
+            ChunkCount = size / Chunk.BlockCount;
+            BlockCount = size;
 
         }
         // public Map(string filename) {

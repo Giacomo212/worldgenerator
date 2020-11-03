@@ -4,21 +4,25 @@ using WorldGenerator.Utils;
 
 namespace WorldGenerator{
     public class CameraController{
-        //vectors which are responsible for map shift
-        private readonly Position _renderPosition = new Position(0, 0);
+        private readonly Position _renderPosition; //= new Position(0, 0);
         private readonly Map _map;
+
+        private Position _maximalPosition;
         public float VectorX{ get; private set; } = 0;
         public float VectorY{ get; private set; } = 0;
 
 
         public CameraController(Map map){
+            _maximalPosition = new Position(  map.ChunkCount - (GameConfig.Config.Resolution.Width / Chunk.PixelSize + 2),
+                map.ChunkCount - (GameConfig.Config.Resolution.Hight / Chunk.PixelSize + 2));
             _map = map;
+            _renderPosition = new Position(_map.ChunkCount / 2, _map.ChunkCount / 2);
         }
 
         //private methods
         public bool MoveRight(){
             var tmp = VectorX - GameConfig.Config.Sensivity;
-            if (_renderPosition.X < _map.ChunkCount && tmp <= 0){
+            if (_renderPosition.X < _maximalPosition.X && tmp <= 0){
                 _renderPosition.X++;
                 VectorX = Chunk.PixelSize;
                 return true;
@@ -54,7 +58,7 @@ namespace WorldGenerator{
 
         public bool MoveDown(){
             var tmp = VectorY - GameConfig.Config.Sensivity;
-            if (_renderPosition.Y < _map.ChunkCount && tmp <= 0){
+            if (_renderPosition.Y < _maximalPosition.Y && tmp <= 0){
                 _renderPosition.Y++;
                 VectorY = Chunk.PixelSize;
                 return true;
@@ -62,6 +66,11 @@ namespace WorldGenerator{
 
             VectorY = tmp > 0 ? tmp : VectorY;
             return false;
+        }
+
+        public void ReactOnBufferChange(){
+            _maximalPosition = new Position(  _map.ChunkCount - (GameConfig.Config.Resolution.Width / Chunk.PixelSize + 2),
+                _map.ChunkCount - (GameConfig.Config.Resolution.Hight / Chunk.PixelSize + 2));
         }
     }
 }

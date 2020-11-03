@@ -6,19 +6,20 @@ namespace WorldGenerator.MapHandlers{
     public class ChunkLoader : IDisposable{
         private Chunk[,] _currentChunks;
         private readonly int _chunkCount;
-        private readonly Position _bufferBeginningPointer = Position.Zero;
+        private readonly Position _bufferBeginningPointer; //= Position.Zero;
         private Position _bufferEndPointer;
         private readonly MapReader _mapReader;
         private Position _bufferSize;
 
         public ChunkLoader(Position bufferSize, Map map){
+            var tmp = map.ChunkCount/2;
+            _bufferBeginningPointer = new Position(map.ChunkCount/2,map.ChunkCount/2);
             _chunkCount = (int) map.WorldType / Chunk.BlockCount;
             _bufferSize = bufferSize;
-            _currentChunks = new Chunk[bufferSize.X, bufferSize.Y];
-            _bufferEndPointer = new Position(_bufferSize.X, _bufferSize.Y);
+            _currentChunks = new Chunk[ bufferSize.X, bufferSize.Y];
+            _bufferEndPointer = new Position( map.ChunkCount/2 + _bufferSize.X,map.ChunkCount/2 + _bufferSize.Y);
             _mapReader = new MapReader(map);
             GetCurrentChunks();
-            var chunk = new Chunk();
         }
 
 
