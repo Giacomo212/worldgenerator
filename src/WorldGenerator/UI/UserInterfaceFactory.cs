@@ -5,7 +5,7 @@ namespace WorldGenerator.UI{
         public static UserInterface CrateInterface(UserInterfaceType interfaceType){
             switch (interfaceType){
                 
-                default: return null; break;
+                default: return null; 
             }
         }
     }

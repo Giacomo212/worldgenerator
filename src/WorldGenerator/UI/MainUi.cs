@@ -4,7 +4,6 @@ using WorldGenerator.EventArg;
 
 namespace WorldGenerator.UI{
     public class MainUi : UserInterface{
-        //main buttons
         private TextButton _startGameButton;
         private TextButton _configButton;
         private TextButton _exitButton;

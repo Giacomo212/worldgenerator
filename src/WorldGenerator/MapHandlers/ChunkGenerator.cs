@@ -7,7 +7,7 @@ namespace WorldGenerator.MapHandlers{
     public abstract class ChunkGenerator : IChunkGenerator{
         protected readonly Random _random;
         protected readonly Map _map;
-        
+
         protected ChunkGenerator(Map map){
             _map = map;
             _random = new Random(_map.Seed);
@@ -24,16 +24,16 @@ namespace WorldGenerator.MapHandlers{
             for (var x = 0; x < Chunk.BlockCount; x++){
                 for (var y = 0; y < Chunk.BlockCount; y++){
                     var pos = new Position(x + blockPosition.X, y + blockPosition.Y);
-                    chunk[x, y] = CalculateBlock(pos);
+                    chunk[x, y] = GenerateBlock(pos);
                     chunk[x, y].ItemType =
-                        CalculateItem(pos, chunk[x, y]);
+                        GenerateItem(pos, chunk[x, y]);
                 }
             }
 
             return chunk;
         }
 
-        protected abstract Block CalculateBlock(Position blockPosition);
-        protected abstract ItemType CalculateItem(Position blockPosition, Block block);
+        protected abstract Block GenerateBlock(Position blockPosition);
+        protected abstract ItemType GenerateItem(Position blockPosition, Block block);
     }
 }

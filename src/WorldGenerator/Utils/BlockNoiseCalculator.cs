@@ -2,12 +2,12 @@ using System;
 using FastNoise;
 
 namespace WorldGenerator.Utils{
-    public class BlockNoiseCalculator{
+    public class NoiseCalculator{
         private readonly FastNoiseLite _firstNoise;
         private readonly FastNoiseLite _secondNose;
         private readonly FastNoiseLite _thirdNoise;
 
-        public BlockNoiseCalculator(int seed){
+        public NoiseCalculator(int seed){
             var random = new Random(seed);
             _firstNoise = new FastNoiseLite(seed);
             _secondNose = new FastNoiseLite(seed);

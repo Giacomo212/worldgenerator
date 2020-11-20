@@ -123,7 +123,7 @@ namespace WorldGenerator.UI{
             return text.ToLower() switch{
                 "large" => WorldSize.Large,
                 "medium" => WorldSize.Medium,
-                "small" => WorldSize.Small
+                "small" => WorldSize.Small,
             };
         }
 
