@@ -1,12 +1,12 @@
 using System;
-using WorldGenerator.GameContext;
+using WorldGenerator.GameScreen;
 
 namespace WorldGenerator.EventArg{
     public class ContextChangeRequestedArgs : EventArgs{
-        public  readonly Context Context;
+        public  readonly Screen Screen;
 
-        public ContextChangeRequestedArgs(Context context){
-            Context = context;
+        public ContextChangeRequestedArgs(Screen screen){
+            Screen = screen;
         }
     }
 }

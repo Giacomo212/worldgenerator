@@ -4,7 +4,7 @@ using System.Linq;
 using Myra.Graphics2D;
 using Myra.Graphics2D.UI;
 using WorldGenerator.EventArg;
-using WorldGenerator.GameContext;
+using WorldGenerator.GameScreen;
 using WorldGenerator.MapElements;
 using WorldGenerator.MapHandlers;
 using WorldGenerator.Process;
@@ -156,7 +156,7 @@ namespace WorldGenerator.UI{
 
         public override void Awake(){
             //Thread.Sleep(1000);
-            RequestContext(new ContextChangeRequestedArgs(new MapContext(_map, new GameInterface())));
+            RequestContext(new ContextChangeRequestedArgs(new MapScreen(_map, new GameInterface())));
         }
     }
 }

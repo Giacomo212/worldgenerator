@@ -1,7 +1,7 @@
 using System;
 using Myra.Graphics2D.UI;
 using WorldGenerator.EventArg;
-using WorldGenerator.GameContext;
+using WorldGenerator.GameScreen;
 using WorldGenerator.MapHandlers;
 
 namespace WorldGenerator.UI{
@@ -17,7 +17,7 @@ namespace WorldGenerator.UI{
         private void LoadWorldOnClick(object sender, EventArgs e){
             var tmp = sender as TextButton;
             RequestContext(
-                new ContextChangeRequestedArgs(new MapContext(MapReader.ReadMap(tmp.Text), new GameInterface())));
+                new ContextChangeRequestedArgs(new MapScreen(MapReader.ReadMap(tmp.Text), new GameInterface())));
         }
 
         public override void Awake(){

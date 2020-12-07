@@ -13,8 +13,8 @@ using Chunk = WorldGenerator.MapElements.Chunk;
 using ItemType = WorldGenerator.MapElements.ItemType;
 
 
-namespace WorldGenerator.GameContext{
-    public class MapContext : Context{
+namespace WorldGenerator.GameScreen{
+    public class MapScreen : Screen{
         private Map _map;
         private Dictionary<BlockType, Texture2D> _blockDictionary = new Dictionary<BlockType, Texture2D>();
 
@@ -40,8 +40,8 @@ namespace WorldGenerator.GameContext{
         private CameraController _cameraController;
         private ChunkLoader _chunkLoader;
 
-        public MapContext(Map map, UserInterface userInterface) : base(userInterface){
-            _spriteBatch = new SpriteBatch(Context.Game.GraphicsDevice);
+        public MapScreen(Map map, UserInterface userInterface) : base(userInterface){
+            _spriteBatch = new SpriteBatch(Screen.Game.GraphicsDevice);
             _map = map;
             SetUpController();
         }
@@ -106,7 +106,7 @@ namespace WorldGenerator.GameContext{
             else if (ExtendedKeyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveDown) && _cameraController.MoveDown())
                 _chunkLoader.MoveDown();
             if (ExtendedKeyboard.HasBeenPressed(Keys.Escape)){
-                RequestContext(new StartingScreenContext(new MainUi()));
+                RequestContext(new StartingScreenScreen(new MainUi()));
             }
         }
 

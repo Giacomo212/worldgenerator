@@ -1,12 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using WorldGenerator.Configs;
+using WorldGenerator.MapElements;
 using WorldGenerator.UI;
-using Block = WorldGenerator.MapElements.Block;
 
 
-namespace WorldGenerator.GameContext{
-    public class StartingScreenContext : Context{
+
+namespace WorldGenerator.GameScreen{
+    public class StartingScreenScreen : Screen{
         
         private Texture2D _filler;
         
@@ -27,7 +28,7 @@ namespace WorldGenerator.GameContext{
             _filler = Game.Content.Load<Texture2D>("dirt");
         }
 
-        public StartingScreenContext(UserInterface userInterface) : base(userInterface){
+        public StartingScreenScreen(UserInterface userInterface) : base(userInterface){
             
         }
     }

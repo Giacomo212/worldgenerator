@@ -8,8 +8,8 @@ using WorldGenerator.EventArg;
 using WorldGenerator.UI;
 using WorldGenerator.Utils;
 
-namespace WorldGenerator.GameContext{
-    public abstract class Context {
+namespace WorldGenerator.GameScreen{
+    public abstract class Screen {
         private readonly Stack<UserInterface> _userInterfaces = new Stack<UserInterface>();
         protected SpriteBatch _spriteBatch = null;
         protected readonly Desktop Desktop = new Desktop();
@@ -17,7 +17,7 @@ namespace WorldGenerator.GameContext{
         //needs to be set up before using this class
         public static Game Game;
 
-        protected Context(UserInterface userInterface){
+        protected Screen(UserInterface userInterface){
             AddNewUI(userInterface);
         }
 
@@ -46,7 +46,7 @@ namespace WorldGenerator.GameContext{
         
         protected void AddNewUI(UserInterface userInterface){
             _userInterfaces.Push(userInterface);
-            userInterface.ContextChangeRequest += (sender, args) => RequestContext(args.Context);
+            userInterface.ContextChangeRequest += (sender, args) => RequestContext(args.Screen);
             userInterface.NextUIRequest += (sender, args) => AddNewUI(args.Interface);
             userInterface.PreviousUIRequest += (sender, args) => RemoveUI();
             userInterface.PreviousUIAndLoadRequest += (sender, args) => {
@@ -70,8 +70,8 @@ namespace WorldGenerator.GameContext{
         public event EventHandler GoFullScreenRequest;
         public event EventHandler ExitRequest;
 
-        protected virtual void RequestContext(Context context){
-            ContextChangeRequest?.Invoke(this, new ContextChangeRequestedArgs(context));
+        protected virtual void RequestContext(Screen screen){
+            ContextChangeRequest?.Invoke(this, new ContextChangeRequestedArgs(screen));
         }
 
         protected virtual void OnExitRequest(){

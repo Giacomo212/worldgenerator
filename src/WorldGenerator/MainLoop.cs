@@ -5,17 +5,17 @@ using Microsoft.Xna.Framework.Graphics;
 using Myra;
 using WorldGenerator.Configs;
 using WorldGenerator.EventArg;
-using WorldGenerator.GameContext;
+using WorldGenerator.GameScreen;
 using WorldGenerator.UI;
 using WorldGenerator.Utils;
 
 namespace WorldGenerator{
     public class MainLoop : Game{
         private readonly GraphicsDeviceManager _graphics;
-        private Context _currentContext;
+        private Screen _currentScreen;
 
         public MainLoop(){
-            Context.Game = this;
+            Screen.Game = this;
             MyraEnvironment.Game = this;
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -33,23 +33,23 @@ namespace WorldGenerator{
         }
 
         protected override void LoadContent(){
-            _currentContext = new StartingScreenContext(new MainUi());
-            _currentContext.Load();
-            _currentContext.ContextChangeRequest += CurrentContextContextChangeRequest;
-            _currentContext.ExitRequest += (sender, args) => Exit();
-            _currentContext.GoFullScreenRequest += (sender, args) => ScreenChangeRequest();
+            _currentScreen = new StartingScreenScreen(new MainUi());
+            _currentScreen.Load();
+            _currentScreen.ContextChangeRequest += CurrentScreenScreenChangeRequest;
+            _currentScreen.ExitRequest += (sender, args) => Exit();
+            _currentScreen.GoFullScreenRequest += (sender, args) => ScreenChangeRequest();
             Window.ClientSizeChanged += Window_ClientSizeChanged;
         }
 
-        private void CurrentContextContextChangeRequest(object senderR, ContextChangeRequestedArgs e){
+        private void CurrentScreenScreenChangeRequest(object senderR, ContextChangeRequestedArgs e){
             Content.Unload();
-            _currentContext.Unload();
-            _currentContext = e.Context;
-            _currentContext.Load();
-            _currentContext.Initialize();
-            _currentContext.ContextChangeRequest += CurrentContextContextChangeRequest;
-            _currentContext.ExitRequest += (sender, args) => Exit();
-            _currentContext.GoFullScreenRequest += (sender, args) => ScreenChangeRequest();
+            _currentScreen.Unload();
+            _currentScreen = e.Screen;
+            _currentScreen.Load();
+            _currentScreen.Initialize();
+            _currentScreen.ContextChangeRequest += CurrentScreenScreenChangeRequest;
+            _currentScreen.ExitRequest += (sender, args) => Exit();
+            _currentScreen.GoFullScreenRequest += (sender, args) => ScreenChangeRequest();
         }
 
         protected override void UnloadContent(){
@@ -58,21 +58,21 @@ namespace WorldGenerator{
 
         protected override void Update(GameTime gameTime){
             ExtendedKeyboard.UpdateState();
-            _currentContext.Update(gameTime);
+            _currentScreen.Update(gameTime);
             base.Update(gameTime);
         }
 
 
         protected override void Draw(GameTime gameTime){
             GraphicsDevice.Clear(Color.Black);
-            _currentContext.Draw(gameTime);
+            _currentScreen.Draw(gameTime);
             base.Draw(gameTime);
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e){
             GameConfig.Config.Resolution = new Resolution(Window.ClientBounds.Width, Window.ClientBounds.Height,
                 _graphics.IsFullScreen);
-            _currentContext.OnWindowResize();
+            _currentScreen.OnWindowResize();
         }
 
         private void ScreenChangeRequest(){
