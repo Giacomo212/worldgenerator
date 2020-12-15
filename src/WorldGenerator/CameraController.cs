@@ -21,7 +21,7 @@ namespace WorldGenerator{
 
         //private methods
         public bool MoveRight(){
-            var tmp = VectorX - GameConfig.Config.Sensivity;
+            var tmp = VectorX - GameConfig.Config.Sensitivity;
             if (_renderPosition.X < _maximalPosition.X && tmp <= 0){
                 _renderPosition.X++;
                 VectorX = Chunk.PixelSize;
@@ -33,7 +33,7 @@ namespace WorldGenerator{
         }
 
         public bool MoveLeft(){
-            var tmp = VectorX + GameConfig.Config.Sensivity;
+            var tmp = VectorX + GameConfig.Config.Sensitivity;
             if (_renderPosition.X > 0 && tmp >= Chunk.PixelSize){
                 _renderPosition.X--;
                 VectorX = 0;
@@ -45,7 +45,7 @@ namespace WorldGenerator{
         }
 
         public bool MoveUp(){
-            var tmp = VectorY + GameConfig.Config.Sensivity;
+            var tmp = VectorY + GameConfig.Config.Sensitivity;
             if (_renderPosition.Y > 0 && tmp >= Chunk.PixelSize){
                 _renderPosition.Y--;
                 VectorY = 0;
@@ -57,7 +57,7 @@ namespace WorldGenerator{
         }
 
         public bool MoveDown(){
-            var tmp = VectorY - GameConfig.Config.Sensivity;
+            var tmp = VectorY - GameConfig.Config.Sensitivity;
             if (_renderPosition.Y < _maximalPosition.Y && tmp <= 0){
                 _renderPosition.Y++;
                 VectorY = Chunk.PixelSize;

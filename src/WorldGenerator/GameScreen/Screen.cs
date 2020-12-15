@@ -26,23 +26,6 @@ namespace WorldGenerator.GameScreen{
             if (ExtendedKeyboard.HasBeenPressed(Keys.Escape) && _userInterfaces.Peek().CanBeCanceled)
                 RemoveUI();
         }
-
-        public abstract void Draw(GameTime gameTime);
-
-        public virtual void Initialize(){
-            
-        }
-
-        //this method allow to react context to windows resize event
-        public virtual void OnWindowResize(){
-        }
-
-        public virtual void Load(){
-        }
-
-        public virtual void Unload(){
-            
-        }
         
         protected void AddNewUI(UserInterface userInterface){
             _userInterfaces.Push(userInterface);
@@ -80,6 +63,23 @@ namespace WorldGenerator.GameScreen{
 
         protected virtual void OnGoFullScreenRequest(){
             GoFullScreenRequest?.Invoke(this, EventArgs.Empty);
+        }
+        
+        public abstract void Draw(GameTime gameTime);
+
+        public virtual void Initialize(){
+            
+        }
+
+        //this method allow to react context to windows resize event
+        public virtual void OnWindowResize(){
+        }
+
+        public virtual void Load(){
+        }
+
+        public virtual void Unload(){
+            
         }
     }
 }

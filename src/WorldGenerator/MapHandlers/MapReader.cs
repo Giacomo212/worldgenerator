@@ -31,7 +31,8 @@ namespace WorldGenerator.MapHandlers{
         }
 
         public Chunk ReadChunkAt(Position position){
-            _fileStream.Seek(sizeof(int) * 2 + position.Y * Chunk.MemorySize + position.X * _sizeofMap,
+            _fileStream.Seek(
+                sizeof(int) * 2 + position.Y * Chunk.MemorySize + position.X * _sizeofMap,
                 SeekOrigin.Begin);
             return ReadChunk();
         }

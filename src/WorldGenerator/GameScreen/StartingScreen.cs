@@ -7,7 +7,7 @@ using WorldGenerator.UI;
 
 
 namespace WorldGenerator.GameScreen{
-    public class StartingScreenScreen : Screen{
+    public class StartingScreen : Screen{
         
         private Texture2D _filler;
         
@@ -28,7 +28,7 @@ namespace WorldGenerator.GameScreen{
             _filler = Game.Content.Load<Texture2D>("dirt");
         }
 
-        public StartingScreenScreen(UserInterface userInterface) : base(userInterface){
+        public StartingScreen(UserInterface userInterface) : base(userInterface){
             
         }
     }

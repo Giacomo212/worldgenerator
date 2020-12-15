@@ -106,7 +106,7 @@ namespace WorldGenerator.GameScreen{
             else if (ExtendedKeyboard.IsPressed(GameConfig.Config.KeyboardMap.MoveDown) && _cameraController.MoveDown())
                 _chunkLoader.MoveDown();
             if (ExtendedKeyboard.HasBeenPressed(Keys.Escape)){
-                RequestContext(new StartingScreenScreen(new MainUi()));
+                RequestContext(new StartingScreen(new MainUi()));
             }
         }
 

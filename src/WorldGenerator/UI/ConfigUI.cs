@@ -19,9 +19,9 @@ namespace WorldGenerator.UI{
                 GridRow = 0,
                 Padding = new Thickness(2),
                 GridColumn = 1,
-                Value = GameConfig.Config.Sensivity,
+                Value = GameConfig.Config.Sensitivity,
              };
-             _slider.ValueChanged += (sender, args) => GameConfig.Config.Sensivity = args.NewValue;
+             _slider.ValueChanged += (sender, args) => GameConfig.Config.Sensitivity = args.NewValue;
             // var applyButton = CrateTextButton("Apply", 3, 0);
             // applyButton.Click += (sender, args) => GameConfig.Config.Sensivity = _slider.Value;
             var cancelButton = CrateBackButton(3, 1);

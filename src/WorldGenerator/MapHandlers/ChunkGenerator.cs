@@ -19,7 +19,6 @@ namespace WorldGenerator.MapHandlers{
         }
 
         private Chunk GenerateWorld(Position blockPosition){
-            var zeroY = blockPosition.Y;
             var chunk = new Chunk();
             for (var x = 0; x < Chunk.BlockCount; x++){
                 for (var y = 0; y < Chunk.BlockCount; y++){

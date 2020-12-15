@@ -33,7 +33,7 @@ namespace WorldGenerator{
         }
 
         protected override void LoadContent(){
-            _currentScreen = new StartingScreenScreen(new MainUi());
+            _currentScreen = new StartingScreen(new MainUi());
             _currentScreen.Load();
             _currentScreen.ContextChangeRequest += CurrentScreenScreenChangeRequest;
             _currentScreen.ExitRequest += (sender, args) => Exit();

@@ -26,7 +26,9 @@ namespace WorldGenerator.UI{
             _downButton = CrateTextButton(GameConfig.Config.KeyboardMap.MoveDown.ToString(), 1, 1);
             _rightButton = CrateTextButton(GameConfig.Config.KeyboardMap.MoveRight.ToString(), 2, 1);
             _leftButton = CrateTextButton(GameConfig.Config.KeyboardMap.MoveLeft.ToString(), 3, 1);
-            _upButton.Click += (sender, args) => _selectedButton = _selectedButton == 0 ? -1 : 0;
+            _upButton.Click += (sender, args) => {
+                _selectedButton = _selectedButton == 0 ? -1 : 0;
+            };
             _downButton.Click += (sender, args) => _selectedButton = _selectedButton == 1 ? -1 : 1;
             _leftButton.Click += (sender, args) => _selectedButton = _selectedButton == 2 ? -1 : 2;
             _rightButton.Click += (sender, args) => _selectedButton = _selectedButton == 3 ? -1 : 3;
@@ -72,13 +74,13 @@ namespace WorldGenerator.UI{
         }
 
         private void ChangeLeftButton(Keys key){
-            GameConfig.Config.KeyboardMap.MoveDown = key;
+            GameConfig.Config.KeyboardMap.MoveLeft = key;
             _selectedButton = -1;
             _leftButton.Text = key.ToString();
         }
 
         private void ChangeRightButton(Keys key){
-            GameConfig.Config.KeyboardMap.MoveDown = key;
+            GameConfig.Config.KeyboardMap.MoveRight = key;
             _selectedButton = -1;
             _rightButton.Text = key.ToString();
         }
