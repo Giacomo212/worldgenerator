@@ -145,7 +145,7 @@ namespace WorldGenerator.GameScreen{
 
             for (var i = 0; offset.X <= GameConfig.Config.Resolution.Width; i++){
                 for (var j = 0; offset.Y <= GameConfig.Config.Resolution.Hight; j++){
-                    DrawChunk(ref chunks[i, j], offset);
+                    DrawChunk(chunks[i][j], offset);
                     offset.Y += Chunk.BlockCount * Block.PixelSize;
                 }
 
@@ -154,7 +154,7 @@ namespace WorldGenerator.GameScreen{
             }
         }
 
-        private void DrawChunk(ref Chunk chunk, Vector2 offset){
+        private void DrawChunk( Chunk chunk, Vector2 offset){
             var t = offset.Y;
             for (var i = 0; i < Chunk.BlockCount; i++){
                 for (var j = 0; j < Chunk.BlockCount; j++){

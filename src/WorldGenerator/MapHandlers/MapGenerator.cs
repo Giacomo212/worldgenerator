@@ -52,7 +52,8 @@ namespace WorldGenerator.MapHandlers{
 
             _memoryStream.Flush();
             _memoryStream.Position = 0;
-            using var fs = File.Open(EnvironmentVariables.WorldFiles + Path.DirectorySeparatorChar + _map.Name + ".wg",
+            using var fs = File.Open(
+                EnvironmentVariables.WorldFiles + Path.DirectorySeparatorChar + _map.Name + ".wg",
                 FileMode.CreateNew);
             _memoryStream.CopyTo(fs);
         }
