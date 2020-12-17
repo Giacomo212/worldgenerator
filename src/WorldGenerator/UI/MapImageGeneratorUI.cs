@@ -22,7 +22,7 @@ namespace WorldGenerator.UI{
             foreach (var button in _worldButtons){
                 button.Click += (sender, args) => {
                     var tmp = sender as TextButton;
-                    RequestNewInterface(new UiChangeRequestArgs(new LoadingUI(new MapImageGenerationRunner(MapReader.ReadMap(tmp.Text)),"Generating an image" )));
+                    RequestNewInterface(new UiChangeRequestArgs(new LoadingUI(new MapImageGenerationProcess(MapReader.ReadMap(tmp.Text)),"Generating an image" )));
                 };
             }
         }

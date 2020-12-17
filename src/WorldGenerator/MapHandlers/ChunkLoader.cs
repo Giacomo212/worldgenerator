@@ -72,8 +72,9 @@ namespace WorldGenerator.MapHandlers{
             _bufferEndPointer.Y--;
             
             for (int i = 0; i < _bufferSize.X; i++){
+                var chunkPosition = new Position(_bufferBeginningPointer.X + i, _bufferBeginningPointer.Y);
                 _columns[i].RemoveAt(_bufferSize.Y-1);
-                _columns[i].Insert(0,_mapReader.ReadChunkAt(new Position(_bufferBeginningPointer.X + i,_bufferBeginningPointer.Y )));
+                _columns[i].Insert(0,_mapReader.ReadChunkAt(chunkPositiong));
             }
         }
 
@@ -82,8 +83,9 @@ namespace WorldGenerator.MapHandlers{
             _bufferBeginningPointer.Y++;
             _bufferEndPointer.Y++;
             for (int i = 0; i < _bufferSize.X; i++){
+                var chunkPosition = new Position(_bufferBeginningPointer.X + i, _bufferEndPointer.Y - 1);
                 _columns[i].RemoveAt(0);
-                _columns[i].Add(_mapReader.ReadChunkAt(new Position(_bufferBeginningPointer.X + i,_bufferEndPointer.Y - 1 )));
+                _columns[i].Add(_mapReader.ReadChunkAt(chunkPosition));
             }
         }
         

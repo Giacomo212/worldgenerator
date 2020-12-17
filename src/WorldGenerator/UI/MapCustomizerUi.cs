@@ -148,7 +148,7 @@ namespace WorldGenerator.UI{
             if (tmp == 0)
                 tmp = random.Next();
             _map = new Map(_nameTextBox.Text, ParseWorldSize(_sizeComboBox.SelectedItem.Text), tmp);
-            var process = new MapGenerationRunner(_map,ParseWorldType(_typeComboBox.SelectedItem.Text, _map)); 
+            var process = new MapGenerationProcess(_map,ParseWorldType(_typeComboBox.SelectedItem.Text, _map)); 
             RequestNewInterface(new UiChangeRequestArgs(new LoadingUI(process,"Generating a world")));
             // var generator = new MapGenerator(_map, ParseWorldType(_typeComboBox.SelectedItem.Text, _map));
             // generator.GenerateNewWorld();

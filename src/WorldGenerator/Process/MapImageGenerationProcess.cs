@@ -2,10 +2,10 @@ using WorldGenerator.MapElements;
 using WorldGenerator.MapHandlers;
 
 namespace WorldGenerator.Process{
-    public class MapImageGenerationRunner : ICheckableProcess{
+    public class MapImageGenerationProcess : ICheckableProcess{
         
         private readonly ImageGenerator _imageGenerator;
-        public MapImageGenerationRunner(Map map){
+        public MapImageGenerationProcess(Map map){
             _imageGenerator = new ImageGenerator(map);
         }
         public int CheckPercentDone(){
