@@ -9,7 +9,7 @@ namespace WorldGenerator.Configs{
         public float Sensitivity{ get; set; }
         public Resolution Resolution{ get; set; }
         public KeyboardMap KeyboardMap{ get; set; }
-        
+
         private static void SetupDefaultValues(){
             Config = new GameConfig();
             Config.Sensitivity = 4.0f;
@@ -19,21 +19,21 @@ namespace WorldGenerator.Configs{
 
         public static void Save(){
             var separator = Path.DirectorySeparatorChar;
-            
+
             var settingsToSave = JsonSerializer.Serialize(Config);
             try{
-                using var file = new StreamWriter(EnvironmentVariables.GameFiles + $"{separator}settings.json");
+                using var file = new StreamWriter(EnvironmentVariables.GameFiles + separator + "settings.json");
                 file.Write(settingsToSave);
             }
-            catch{ }
+            catch{
+            }
         }
 
         public static void Load(){
             try{
-                var config = 
+                var config =
                     System.IO.File.ReadAllText(
-                        EnvironmentVariables.GameFiles +
-                        $"{EnvironmentVariables.Separator}settings.json");
+                        $"{EnvironmentVariables.GameFiles}{EnvironmentVariables.Separator}settings.json");
                 Config = JsonSerializer.Deserialize<GameConfig>(config);
             }
             catch{

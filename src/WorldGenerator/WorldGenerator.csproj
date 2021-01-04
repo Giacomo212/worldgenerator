@@ -4,11 +4,16 @@
         <OutputType>WinExe</OutputType>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <RootNamespace>WorldGenerator</RootNamespace>
+        <PackageIcon>Icon.ico</PackageIcon>
+        <ApplicationIcon>Icon.ico</ApplicationIcon>
     </PropertyGroup>
-    
+
 
     <ItemGroup>
         <MonoGameContentReference Include="**\*.mgcb" />
+        <EmbeddedResource Include="Icon.bmp">
+            <LogicalName>Icon.bmp</LogicalName>
+        </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
@@ -19,7 +24,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\FastNoise\FastNoise.csproj" />
+        <ProjectReference Include="..\FastNoise\FastNoise.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="Icon.ico">
+            <Pack>True</Pack>
+        </None>
     </ItemGroup>
 
 </Project>

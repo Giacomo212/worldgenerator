@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -7,11 +8,11 @@ using WorldGenerator.Configs;
 
 namespace WorldGenerator.UI{
     public class KeyBindCustomizerUI : UserInterface{
-        private int _selectedButton = -1;
-        private readonly TextButton _upButton;
-        private readonly TextButton _downButton;
-        private readonly TextButton _rightButton;
-        private readonly TextButton _leftButton;
+        private TypesOfButtons _selectedButton = TypesOfButtons.None;
+        private readonly ToggleableButton _upButton;
+        private readonly ToggleableButton _downButton;
+        private readonly ToggleableButton _rightButton;
+        private readonly ToggleableButton _leftButton;
 
         public KeyBindCustomizerUI(){
             var upLabel = CrateLabel("Move Up: ", 0, 0);
@@ -22,67 +23,93 @@ namespace WorldGenerator.UI{
             _widgets.Add(downLabel);
             _widgets.Add(leftLabel);
             _widgets.Add(rightLabel);
-            _upButton = CrateTextButton(GameConfig.Config.KeyboardMap.MoveUp.ToString(), 0, 1);
-            _downButton = CrateTextButton(GameConfig.Config.KeyboardMap.MoveDown.ToString(), 1, 1);
-            _rightButton = CrateTextButton(GameConfig.Config.KeyboardMap.MoveRight.ToString(), 2, 1);
-            _leftButton = CrateTextButton(GameConfig.Config.KeyboardMap.MoveLeft.ToString(), 3, 1);
-            _upButton.Click += (sender, args) => {
-                _selectedButton = _selectedButton == 0 ? -1 : 0;
-            };
-            _downButton.Click += (sender, args) => _selectedButton = _selectedButton == 1 ? -1 : 1;
-            _leftButton.Click += (sender, args) => _selectedButton = _selectedButton == 2 ? -1 : 2;
-            _rightButton.Click += (sender, args) => _selectedButton = _selectedButton == 3 ? -1 : 3;
-            _widgets.Add(_upButton);
-            _widgets.Add(_downButton);
-            _widgets.Add(_leftButton);
-            _widgets.Add(_rightButton);
+            _upButton = ToggleableButton.CrateButton(GameConfig.Config.KeyboardMap.MoveUp.ToString(), 0, 1);
+            _downButton = ToggleableButton.CrateButton(GameConfig.Config.KeyboardMap.MoveDown.ToString(), 1, 1);
+            _rightButton = ToggleableButton.CrateButton(GameConfig.Config.KeyboardMap.MoveRight.ToString(), 3, 1);
+            _leftButton = ToggleableButton.CrateButton(GameConfig.Config.KeyboardMap.MoveLeft.ToString(), 2, 1);
+            SetupButtons();
             var cancelButton = CrateBackButton(4, 1);
             cancelButton.Click += (sender, args) => RequestPreviousInterface();
             _widgets.Add(cancelButton);
         }
 
+        private void SetupButtons(){
+            _upButton.Click += (sender, args) => {
+                _selectedButton = _selectedButton == TypesOfButtons.MoveUp
+                    ? TypesOfButtons.None
+                    : TypesOfButtons.MoveUp;
+                ((ToggleableButton) sender).IsToggled = true;
+            };
+            _downButton.Click += (sender, args) => {
+                _selectedButton = _selectedButton == TypesOfButtons.MoveDown
+                    ? TypesOfButtons.None
+                    : TypesOfButtons.MoveDown;
+                ((ToggleableButton) sender).IsToggled = true;
+            };
+            _leftButton.Click += (sender, args) => {
+                _selectedButton = _selectedButton == TypesOfButtons.MoveLeft
+                    ? TypesOfButtons.None
+                    : TypesOfButtons.MoveLeft;
+                ((ToggleableButton) sender).IsToggled = true;
+            };
+            _rightButton.Click += (sender, args) => {
+                _selectedButton = _selectedButton == TypesOfButtons.MoveRight
+                    ? TypesOfButtons.None
+                    : TypesOfButtons.MoveRight;
+                ((ToggleableButton) sender).IsToggled = true;
+            };
+            _widgets.Add(_upButton);
+            _widgets.Add(_downButton);
+            _widgets.Add(_leftButton);
+            _widgets.Add(_rightButton);
+        }
+
         public override void Update(GameTime gameTime){
             var map = KeyboardMap.GetPressedKeys();
-            if (!map.Any() || map[0] == Keys.Escape) return;
+            if (!map.Any() || map == null || _selectedButton == TypesOfButtons.None) return;
+            if (map[0] == Keys.Escape){
+                UntoggleButtons();
+                return;
+            }
+
             switch (_selectedButton){
-                case 0:
-                    ChangeUpButton(map[0]);
+                case TypesOfButtons.MoveUp:
+                    GameConfig.Config.KeyboardMap.MoveUp = map[0];
+                    _upButton.Text = map[0].ToString();
                     break;
-                case 1:
-                    ChangeDownButton(map[0]);
+                case TypesOfButtons.MoveDown:
+                    GameConfig.Config.KeyboardMap.MoveDown = map[0];
+                    _downButton.Text = map[0].ToString();
                     break;
-                case 2:
-                    ChangeLeftButton(map[0]);
+                case TypesOfButtons.MoveLeft:
+                    GameConfig.Config.KeyboardMap.MoveLeft = map[0];
+                    _leftButton.Text = map[0].ToString();
                     break;
-                case 3:
-                    ChangeRightButton(map[0]);
+                case TypesOfButtons.MoveRight:
+                    GameConfig.Config.KeyboardMap.MoveRight = map[0];
+                    _rightButton.Text = map[0].ToString();
                     break;
             }
-        }
 
-        private void ChangeUpButton(Keys key){
-            GameConfig.Config.KeyboardMap.MoveUp = key;
-            _selectedButton = -1;
-            _upButton.Text = key.ToString();
+            UntoggleButtons();
         }
 
 
-        private void ChangeDownButton(Keys key){
-            GameConfig.Config.KeyboardMap.MoveDown = key;
-            _selectedButton = -1;
-            _downButton.Text = key.ToString();
+        private void UntoggleButtons(){
+            _selectedButton = TypesOfButtons.None;
+            _downButton.IsToggled = false;
+            _upButton.IsToggled = false;
+            _leftButton.IsToggled = false;
+            _rightButton.IsToggled = false;
         }
+    }
 
-        private void ChangeLeftButton(Keys key){
-            GameConfig.Config.KeyboardMap.MoveLeft = key;
-            _selectedButton = -1;
-            _leftButton.Text = key.ToString();
-        }
 
-        private void ChangeRightButton(Keys key){
-            GameConfig.Config.KeyboardMap.MoveRight = key;
-            _selectedButton = -1;
-            _rightButton.Text = key.ToString();
-        }
+    public enum TypesOfButtons{
+        MoveUp,
+        MoveDown,
+        MoveLeft,
+        MoveRight,
+        None
     }
 }
