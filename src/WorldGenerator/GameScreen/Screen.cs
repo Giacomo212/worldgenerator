@@ -17,6 +17,15 @@ namespace WorldGenerator.GameScreen{
         //needs to be set up before using this class
         public static Game Game;
 
+        public static SpriteFont ErrorFont{
+            get;
+            private set;
+        }
+        public static SpriteFont HeaderFont{
+            get;
+            private set;
+        }
+
         protected Screen(UserInterface userInterface){
             AddNewUI(userInterface);
         }
@@ -70,12 +79,13 @@ namespace WorldGenerator.GameScreen{
         public virtual void Initialize(){
             
         }
-
-        //this method allow to react context to windows resize event
+        
         public virtual void OnWindowResize(){
         }
 
         public virtual void Load(){
+            ErrorFont = Game.Content.Load<SpriteFont>("ErrorInfo");
+            HeaderFont = Game.Content.Load<SpriteFont>("ErrorHeader");
         }
 
         public virtual void Unload(){

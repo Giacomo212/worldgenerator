@@ -22,6 +22,10 @@ namespace WorldGenerator.UI{
             foreach (var button in _worldButtons){
                 button.Click += (sender, args) => {
                     var tmp = sender as TextButton;
+                    if (!MapReader.CheckMapIntegrity(tmp.Text)){
+                        RequestNewInterface(new UiChangeRequestArgs(new DialogUI("Error","File is corrupted")));
+                        return;
+                    }
                     RequestNewInterface(new UiChangeRequestArgs(new LoadingUI(new MapImageGenerationProcess(MapReader.ReadMap(tmp.Text)),"Generating an image" )));
                 };
             }

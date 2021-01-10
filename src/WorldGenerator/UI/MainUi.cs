@@ -34,7 +34,7 @@ namespace WorldGenerator.UI{
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Width = 100,
             };
-            _startGameButton.Click += (s, a) => { RequestNewInterface(new UiChangeRequestArgs(new MapSelectUI())); };
+            _startGameButton.Click += (s, a) => { RequestNewInterface(new UiChangeRequestArgs(new MapLoadUI())); };
             _configButton.Click += (sender, args) => RequestNewInterface(new UiChangeRequestArgs(new ConfigUI()));
             _exitButton.Click += (s, a) => { OnExitRequest(); };
             _widgets.Add(_startGameButton);

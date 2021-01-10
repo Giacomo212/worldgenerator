@@ -24,6 +24,7 @@ namespace WorldGenerator.GameScreen{
         }
         
         public override void Load(){
+            base.Load();
             _spriteBatch = new SpriteBatch(Game.GraphicsDevice);
             _filler = Game.Content.Load<Texture2D>("dirt");
         }

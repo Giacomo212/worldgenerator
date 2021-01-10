@@ -1,7 +1,9 @@
 using System;
 using System.IO;
+using Force.Crc32;
 using WorldGenerator.MapElements;
 using WorldGenerator.Utils;
+
 
 namespace WorldGenerator.MapHandlers{
     public class MapGenerator{
@@ -28,19 +30,19 @@ namespace WorldGenerator.MapHandlers{
             }
         }
 
-        private void WriteChunkAt(Chunk chunk, Position position){
-            _binaryWriter.Seek(
-                sizeof(int) * 2 + Chunk.MemorySize * position.X * (int) _map.WorldType + Chunk.MemorySize * position.Y,
-                SeekOrigin.Begin);
-            WriteChunk(chunk);
-        }
+        // private void WriteChunkAt(Chunk chunk, Position position){
+        //     _binaryWriter.Seek(
+        //         sizeof(int) * 2 + Chunk.MemorySize * position.X * (int) _map.WorldType + Chunk.MemorySize * position.Y,
+        //         SeekOrigin.Begin);
+        //     WriteChunk(chunk);
+        // }
 
         private void WriteBlock(Block block){
             _binaryWriter.Write((int) block.BlockType);
             _binaryWriter.Write((int) block.BiomeType);
             _binaryWriter.Write((int) block.ItemType);
         }
-        
+
         public void GenerateNewWorld(){
             for (var i = 0; i < _map.ChunkCount; i++){
                 for (var j = 0; j < _map.ChunkCount; j++){
@@ -52,9 +54,12 @@ namespace WorldGenerator.MapHandlers{
 
             _memoryStream.Flush();
             _memoryStream.Position = 0;
+            var checkSum = Crc32Algorithm.Compute(_memoryStream.ToArray());
             using var fs = File.Open(
                 EnvironmentVariables.WorldFiles + Path.DirectorySeparatorChar + _map.Name + ".wg",
                 FileMode.CreateNew);
+            using var writer = new BinaryWriter(fs);
+            writer.Write(checkSum);
             _memoryStream.CopyTo(fs);
         }
 

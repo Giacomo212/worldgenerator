@@ -60,6 +60,7 @@ namespace WorldGenerator.GameScreen{
 
 
         public override void Load(){
+            base.Load();
             _spriteBatch = new SpriteBatch(Game.GraphicsDevice);
             _grass = Game.Content.Load<Texture2D>("grass");
             _sand = Game.Content.Load<Texture2D>("sand");

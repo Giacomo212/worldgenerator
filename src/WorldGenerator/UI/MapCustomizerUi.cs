@@ -22,7 +22,7 @@ namespace WorldGenerator.UI{
             Text = "",
             GridColumnSpan = 2,
             Width = 400,
-            GridRow = 4,
+            GridRow = 5,
             TextAlign = TextAlign.Center,
             //Background = new SolidBrush(Color.Red);
         };

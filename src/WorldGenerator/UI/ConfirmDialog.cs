@@ -1,3 +1,4 @@
+using Myra.Graphics2D;
 using Myra.Graphics2D.UI;
 
 namespace WorldGenerator.UI{
@@ -16,6 +17,7 @@ namespace WorldGenerator.UI{
                 HorizontalAlignment = HorizontalAlignment.Center,
                 GridRow = 1,
                 GridColumn = 0,
+                Padding = new Thickness(10)
             };
             buttonGrid.Widgets.Add(okButton);
             buttonGrid.Widgets.Add(cancelButton);
