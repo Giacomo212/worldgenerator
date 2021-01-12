@@ -31,17 +31,17 @@ namespace WorldGenerator.MapHandlers{
                 PercentDone =  (int)(Convert.ToDouble(i)/ _map.ChunkCount * 100.0);
             }
 
-            image.Save(EnvironmentVariables.WorldFiles + EnvironmentVariables.Separator + _map.Name + ".jpg");
+            image.Save(EnvironmentVariables.WorldFiles + EnvironmentVariables.Separator + _map.Name + ".png");
         }
 
         private static Dictionary<BlockType, string> CrateDictionary(){
             var dictionary = new Dictionary<BlockType, string>{
-                {BlockType.Dirt, "512a09"},
-                {BlockType.Grass, "235a23"},
-                {BlockType.Sand, "ffcd30"},
+                {BlockType.Dirt, "785446"},
+                {BlockType.Grass, "88c047"},
+                {BlockType.Sand, "ffe72f"},
                 {BlockType.Snow, "ffffff"},
-                {BlockType.Water, "2d56d8"},
-                {BlockType.Stone, "717171"}
+                {BlockType.Water, "0099f3"},
+                {BlockType.Stone, "9d9d9d"}
             };
             return dictionary;
         }
