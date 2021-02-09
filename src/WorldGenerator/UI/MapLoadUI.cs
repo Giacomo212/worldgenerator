@@ -16,12 +16,18 @@ namespace WorldGenerator.UI{
 
         private void LoadWorldOnClick(object sender, EventArgs e){
             var tmp = sender as TextButton;
-            if (!MapReader.CheckMapIntegrity(tmp.Text)){
-                RequestNewInterface(new UiChangeRequestArgs(new DialogUI("Error","File is corrupted")));
-                return;
+            try{
+                if (!MapReader.CheckMapIntegrity(tmp.Text)){
+                    RequestNewInterface(new UiChangeRequestArgs(new DialogUI("Error", "File is corrupted")));
+                    return;
+                }
+
+                RequestContext(
+                    new ContextChangeRequestedArgs(new MapScreen(MapReader.ReadMap(tmp.Text), new GameInterface())));
             }
-            RequestContext(
-                new ContextChangeRequestedArgs(new MapScreen(MapReader.ReadMap(tmp.Text), new GameInterface())));
+            catch (Exception exception){
+                RequestNewInterface(new UiChangeRequestArgs(new DialogUI("Error", "File is corrupted")));
+            }
         }
 
         public override void Awake(){
