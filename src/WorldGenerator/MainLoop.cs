@@ -24,9 +24,6 @@ namespace WorldGenerator{
             _graphics.PreferredBackBufferWidth = GameConfig.Config.Resolution.Width;
             _graphics.PreferredBackBufferHeight = GameConfig.Config.Resolution.Hight;
             _graphics.IsFullScreen = GameConfig.Config.Resolution.IsFullScreen;
-            _graphics.SynchronizeWithVerticalRetrace = false;
-            //IsFixedTimeStep = false;
-            //TargetElapsedTime = new TimeSpan(-);
             _graphics.ApplyChanges();
             
         }

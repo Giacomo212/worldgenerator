@@ -43,7 +43,6 @@ namespace WorldGenerator.MapHandlers{
             ){
                 return ItemType.Tree;
             }
-
             return ItemType.None;
         }
     }

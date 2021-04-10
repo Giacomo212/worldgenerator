@@ -39,18 +39,15 @@ namespace WorldGenerator.MapHandlers{
         }
 
         protected override ItemType GenerateItem(Position blockPosition, Block block){
-            if (!(_itemNoiseCalculator.GetValue(blockPosition) > 0.2) || _random.Next(0, 3) != 2) return ItemType.None;
+            if (block.BiomeType == BiomeType.Desert)
+                return _random.Next(0, 5) == 2 ? ItemType.Cactus : ItemType.None;
+            if (!(_itemNoiseCalculator.GetValue(blockPosition) > 0.2) || _random.Next(0, 3) != 2)
+                return ItemType.None;
             switch (block.BiomeType){
-                case BiomeType.Desert:
-                    if (_random.Next(0, 5) == 2) return ItemType.Cactus;
-                    break;
                 case BiomeType.Forest:
                     return ItemType.Tree;
                 case BiomeType.Taiga:
                     return ItemType.Pine;
-                default:
-                    ;
-                    break;
             }
 
             return ItemType.None;

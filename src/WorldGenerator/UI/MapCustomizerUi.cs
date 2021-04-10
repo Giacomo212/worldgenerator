@@ -72,9 +72,9 @@ namespace WorldGenerator.UI{
             var archipelagoItem = new ListItem{
                 Text = "Archipelago",
             };
-            var continentItem = new ListItem{
-                Text = "Continents",
-            };
+            // var continentItem = new ListItem{
+            //     Text = "Continents",
+            // };
             var landItem = new ListItem{
                 Text = "Land",
             };
@@ -86,7 +86,7 @@ namespace WorldGenerator.UI{
                 SelectedIndex = 0,
             };
             _typeComboBox = new ComboBox{
-                Items = {archipelagoItem, continentItem, landItem},
+                Items = {archipelagoItem, landItem},
                 GridRow = 3,
                 GridColumn = 1,
                 Width = 200,
