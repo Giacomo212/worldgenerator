@@ -1,36 +1,44 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <OutputType>WinExe</OutputType>
-        <TargetFramework>net5.0</TargetFramework>
-        <RootNamespace>WorldGenerator</RootNamespace>
-        <PackageIcon>Icon.ico</PackageIcon>
-        <ApplicationIcon>Icon.ico</ApplicationIcon>
-    </PropertyGroup>
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>WorldGenerator</RootNamespace>
+    <PackageIcon>Icon.ico</PackageIcon>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
 
 
-    <ItemGroup>
-        <MonoGameContentReference Include="**\*.mgcb" />
-        <EmbeddedResource Include="Icon.bmp">
-            <LogicalName>Icon.bmp</LogicalName>
-        </EmbeddedResource>
-    </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icon.bmp">
+      <LogicalName>Icon.bmp</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Crc32.NET" Version="1.2.0" />
-        <PackageReference Include="MonoGame.Content.Builder" Version="3.7.0.4" />
-        <PackageReference Include="MonoGame.Framework.DesktopGL.Core" Version="3.7.0.7" />
-        <PackageReference Include="Myra" Version="1.0.1.209" />
-        <PackageReference Include="SixLabors.ImageSharp" Version="1.0.1" />
-    </ItemGroup>
+  <ItemGroup>
+    <MonoGameContentReference Include="Content\Content.mgcb" />
+  </ItemGroup>
+  <ItemGroup>
+    <TrimmerRootAssembly Include="Microsoft.Xna.Framework.Content.ContentTypeReader" Visible="false" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
+    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\FastNoise\FastNoise.csproj" />
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="Icon.ico">
-            <Pack>True</Pack>
-        </None>
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Crc32.NET" Version="1.2.0" />
+    <PackageReference Include="Myra" Version="1.0.1.209" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FastNoise\FastNoise.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icon.ico">
+      <Pack>True</Pack>
+    </None>
+  </ItemGroup>
 
 </Project>
